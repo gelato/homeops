@@ -9,7 +9,7 @@ instance:
     - notification-controller
   sync:
     kind: GitRepository
-    url: "git@github.com:onedr0p/cluster-template.git"
+    url: "https://github.com/gelato/homeops.git"
     ref: "refs/heads/main"
     path: kubernetes/flux/cluster
     pullSecret: github-deploy-key

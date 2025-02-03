@@ -1,0 +1,357 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: harbor
+  namespace: storage
+spec:
+  interval: 30m
+  timeout: 15m
+  chart:
+    spec:
+      chart: harbor
+      version: 1.16.2
+      sourceRef:
+        kind: HelmRepository
+        name: harbor
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    logLevel: debug
+    externalURL: "https://harbor.${SECRET_DOMAIN}"
+    ipFamily:
+      ipv6:
+        enabled: false
+    imagePullPolicy: IfNotPresent
+    updateStrategy:
+      type: Recreate
+    containerSecurityContext:
+      privileged: false
+      allowPrivilegeEscalation: false
+      seccompProfile:
+        type: RuntimeDefault
+      runAsNonRoot: true
+      capabilities:
+        drop:
+          - ALL
+    expose:
+      type: ingress
+      ingress:
+        className: internal
+        hosts:
+          core: harbor.${SECRET_DOMAIN}
+        annotations:
+          nginx.ingress.kubernetes.io/ssl-redirect: "true"
+          nginx.ingress.kubernetes.io/proxy-buffering: "off"
+          nginx.ingress.kubernetes.io/proxy-request-buffering: "off"
+          nginx.ingress.kubernetes.io/proxy-body-size: "0"
+          nginx.ingress.kubernetes.io/proxy-connect-timeout: "25"
+          nginx.ingress.kubernetes.io/proxy-send-timeout: "1800"
+          nginx.ingress.kubernetes.io/proxy-read-timeout: "1800"
+      loadBalancer:
+        name: harbor
+        IP: "192.168.108.88"
+        ports:
+          httpPort: 80
+          httpsPort: 443
+        annotations: {}
+        labels: {}
+      tls:
+        enabled: true
+        certSource: none
+    persistence:
+      enabled: true
+      persistentVolumeClaim:
+        registry:
+          existingClaim: "harbor-registry"
+        jobservice:
+          jobLog:
+            existingClaim: "harbor-jobservice"
+          scanDataExports:
+            existingClaim: "harbor-jobservice-scandata"
+        trivy:
+          existingClaim: "harbor-trivy"
+      imageChartStorage:
+        disableredirect: true
+        type: s3
+        # filesystem:
+        #   rootdirectory: /mnt/storage
+        s3:
+          region: us-east-1
+          chunksize: "33554432"
+          storageclass: STANDARD
+          v4auth: true
+          secure: false
+          encrypt: false
+          bucket: harbor
+          regionendpoint: http://s3.casa
+          multipartcopychunksize: "335544320"
+          multipartcopymaxconcurrency: 32
+          multipartcopythresholdsize: "1073741824"
+          existingSecret: harbor-secret
+
+    existingSecretAdminPassword: &secret "harbor-secret"
+    existingSecretAdminPasswordKey: "HARBOR_ADMIN_PASSWORD"
+
+    database:
+      type: external
+      external:
+        host: postgres16-rw.database.svc.cluster.local
+        port: "5432"
+        username: harborpg
+        coreDatabase: harbor
+        existingSecret: *secret
+        sslmode: "disable"
+    redis:
+      type: external
+      external:
+        sentinelMasterSet: ""
+        addr: "redis-sentinel-master.database.svc.cluster.local:6379"
+        coreDatabaseIndex: "69"
+        jobserviceDatabaseIndex: "68"
+        registryDatabaseIndex: "67"
+        trivyAdapterIndex: "66"
+        harborDatabaseIndex: "65"
+        cacheLayerDatabaseIndex: "64"
+        username: ""
+        password: ""
+    portal:
+      revisionHistoryLimit: 3
+      replicas: 2
+      resources:
+        requests:
+          memory: 256Mi
+          cpu: 20m
+      # nodeSelector:
+      #   node-role.kubernetes.io/control-plane: "true"
+      # tolerations:
+      #   - key: "node-role.kubernetes.io/control-plane"
+      #     effect: "NoSchedule"
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    component: portal
+                topologyKey: kubernetes.io/hostname
+            - weight: 90
+              podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    component: portal
+                topologyKey: "topology.kubernetes.io/zone"
+    core:
+      revisionHistoryLimit: 3
+      serviceAccountName: ""
+      replicas: 2
+      startupProbe:
+        enabled: true
+        initialDelaySeconds: 10
+      gdpr:
+        deleteUser: true
+      resources:
+        requests:
+          memory: 1Gi
+          cpu: 10m
+      # nodeSelector:
+      #   node-role.kubernetes.io/control-plane: "true"
+      # tolerations:
+      #   - key: "node-role.kubernetes.io/control-plane"
+      #     effect: "NoSchedule"
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    component: core
+                topologyKey: kubernetes.io/hostname
+            - weight: 90
+              podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    component: core
+                topologyKey: "topology.kubernetes.io/zone"
+    jobservice:
+      revisionHistoryLimit: 3
+      replicas: 1
+      maxJobWorkers: 30
+      resources:
+        requests:
+          memory: 1Gi
+          cpu: 10m
+        limits:
+          memory: 4Gi
+      reaper:
+        # the max time to wait for a task to finish, if unfinished after max_update_hours, the task will be mark as error, but the task will continue to run, default value is 24
+        max_update_hours: 24
+        # the max time for execution in running state without new task created
+        max_dangling_hours: 48
+      jobLoggers:
+        - file
+      loggerSweeperDuration: 2 #days
+      # nodeSelector:
+      #   node-role.kubernetes.io/control-plane: "true"
+      # tolerations:
+      #   - key: "node-role.kubernetes.io/control-plane"
+      #     effect: "NoSchedule"
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    component: jobservice
+                topologyKey: kubernetes.io/hostname
+            - weight: 90
+              podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    component: jobservice
+                topologyKey: "topology.kubernetes.io/zone"
+    registry:
+      # set the service account to be used, default if left empty
+      serviceAccountName: ""
+      registry:
+        resources:
+          requests:
+            memory: 2Gi
+            cpu: 20m
+      controller:
+        resources:
+          requests:
+            memory: 256Mi
+            cpu: 50m
+      replicas: 2
+      revisionHistoryLimit: 3
+      upload_purging:
+        enabled: true
+        age: 6h
+        interval: 1h
+      # nodeSelector:
+      #   node-role.kubernetes.io/control-plane: "true"
+      # tolerations:
+      #   - key: "node-role.kubernetes.io/control-plane"
+      #     effect: "NoSchedule"
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    component: registry
+                topologyKey: kubernetes.io/hostname
+            - weight: 90
+              podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    component: registry
+                topologyKey: "topology.kubernetes.io/zone"
+
+      # credentials:
+      #   username: "harbor_registry_user"
+      #   password: "secret"
+      #   htpasswd: "secret"
+
+    notary:
+      enabled: false
+    trivy:
+      enabled: true
+      # image:
+      #   repository: aquasec/harbor-scanner-trivy
+      #   tag: 0.31.2
+      replicas: 2
+      vulnType: "os,library"
+      severity: "HIGH,CRITICAL"
+      ignoreUnfixed: true
+      insecure: true
+      gitHubToken: ${HARBOR_GH_TOKEN}
+      skipUpdate: false
+      offlineScan: true
+      resources:
+        requests:
+          cpu: 10m
+          memory: 2Gi
+        limits:
+          memory: 4Gi
+      # nodeSelector:
+      #   node-role.kubernetes.io/control-plane: "true"
+      # tolerations:
+      #   - key: "node-role.kubernetes.io/control-plane"
+      #     effect: "NoSchedule"
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    component: trivy
+                topologyKey: kubernetes.io/hostname
+    exporter:
+      replicas: 1
+      resources:
+        requests:
+          memory: 256Mi
+          cpu: 10m
+      revisionHistoryLimit: 1
+      podAnnotations: {}
+      serviceAccountName: ""
+      # nodeSelector:
+      #   node-role.kubernetes.io/control-plane: "true"
+      # tolerations:
+      #   - key: "node-role.kubernetes.io/control-plane"
+      #     effect: "NoSchedule"
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    component: exporter
+                topologyKey: kubernetes.io/hostname
+            - weight: 90
+              podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    component: exporter
+                topologyKey: "topology.kubernetes.io/zone"
+      cacheDuration: 30
+      cacheCleanInterval: 14400
+    metrics:
+      enabled: true
+      core:
+        path: /metrics
+        port: 8001
+      registry:
+        path: /metrics
+        port: 8001
+      jobservice:
+        path: /metrics
+        port: 8001
+      exporter:
+        path: /metrics
+        port: 8001
+      serviceMonitor:
+        enabled: true
+        interval: "60s"
+        metricRelabelings: []
+        relabelings: []
+    cache:
+      enabled: true
+      expireHours: 4

@@ -1,0 +1,87 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2beta2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: minio-tenant
+spec:
+  interval: 1h
+  maxHistory: 3
+  dependsOn:
+    - name: minio-operator
+      namespace: storage
+  chart:
+    spec:
+      chart: tenant
+      version: 7.0.0
+      sourceRef:
+        kind: HelmRepository
+        name: minio-operator-charts
+        namespace: flux-system
+  install:
+    createNamespace: true
+    crds: Create
+    replace: true
+  upgrade:
+    cleanupOnFail: true
+    crds: CreateReplace
+  uninstall:
+    keepHistory: false
+  values:
+    # for testing
+    tenant:
+      configSecret:
+        accessKey: ${MINIO_ROOT_USER}
+        secretKey: ${MINIO_ROOT_PASSWORD}
+      name: s3
+      env:
+        - name: MINIO_PROMETHEUS_URL
+          value: "http://vmselect-victoria-metrics.observability.svc.cluster.local:8481/select/0/prometheus"
+        - name: MINIO_SERVER_URL
+          value: http://minio.storage.svc
+        - name: MINIO_PROMETHEUS_AUTH_TYPE
+          value: public
+      buckets:
+        - name: loki
+          objectLock: false
+          region: us-east-1
+        - name: cloudnative-pg
+          objectLock: false
+          region: us-east-1
+        - name: thanos
+          objectLock: false
+          region: us-east-1
+      pools:
+        - name: pool
+          servers: 1
+          volumesPerServer: 1
+          size: 200Gi
+          storageClassName: longhorn-iceberg
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+            fsGroup: 1000
+            fsGroupChangePolicy: "OnRootMismatch"
+            runAsNonRoot: true
+            seccompProfile:
+              type: RuntimeDefault
+          containerSecurityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+            runAsNonRoot: true
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+      certificate:
+        requestAutoCert: false
+      prometheusOperator: true
+      metrics:
+        enabled: true
+      features:
+        bucketDNS: true
+        domains:
+          minio:
+            - &apiHost "*.s3.${SECRET_DOMAIN}"
+          console: &consoleHost minio.${SECRET_DOMAIN}
+        enableSFTP: false

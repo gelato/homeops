@@ -1,0 +1,100 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: longhorn
+  namespace: storage
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: longhorn
+      version: 1.7.2
+      sourceRef:
+        kind: HelmRepository
+        name: longhorn
+        namespace: flux-system
+      interval: 5m
+  maxHistory: 3
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    global:
+      tolerations:
+        - key: "node-role.kubernetes.io/control-plane"
+          operator: "Equal"
+          value: ""
+          effect: "NoSchedule"
+    persistence:
+      defaultClass: true
+      defaultClassReplicaCount: 1
+      defaultFsType: ext4
+      reclaimPolicy: Delete
+      defaultDataLocality: disabled
+      migratable: true
+      removeSnapshotsDuringFilesystemTrim: enabled
+    csi:
+      attacherReplicaCount: 2
+      provisionerReplicaCount: 2
+      resizerReplicaCount: 1
+      snapshotterReplicaCount: 1
+    defaultSettings:
+      defaultReplicaCount: 1
+      backupTarget: s3://longhorn@us-east-1/
+      backupTargetCredentialSecret: s3-secret
+      taintToleration: node-role.kubernetes.io/control-plane:NoSchedule
+      replicaAutoBalance: enabled
+      autoDeletePodWhenVolumeDetachedUnexpectedly: enabled
+      replicaSoftAntiAffinity: enabled
+      detachManuallyAttachedVolumesWhenCordoned: enabled
+      autoCleanupSystemGeneratedSnapshot: enabled
+      autoCleanupRecurringJobBackupSnapshot: enabled
+      snapshotDataIntegrity: enabled
+      removeSnapshotsDuringFilesystemTrim: enabled
+      allowCollectingLonghornUsageMetrics: disabled
+      snapshotMaxCount: 2
+      freezeFilesystemForSnapshot: enabled
+      autoCleanupSnapshotWhenDeleteBackup: enabled
+      rwxVolumeFastFailover: enabled
+    pspEnable: false
+    longhornManager:
+      tolerations:
+        - key: "node-role.kubernetes.io/control-plane"
+          operator: "Equal"
+          value: ""
+          effect: "NoSchedule"
+    longhornDriver:
+      tolerations:
+        - key: "node-role.kubernetes.io/control-plane"
+          operator: "Equal"
+          value: ""
+          effect: "NoSchedule"
+    longhornUI:
+      replicas: 1
+      tolerations:
+        - key: "node-role.kubernetes.io/control-plane"
+          operator: "Equal"
+          value: ""
+          effect: "NoSchedule"
+    ingress:
+      enabled: true
+      ingressClassName: internal
+      annotations:
+        hajimari.io/enable: "true"
+        hajimari.io/icon: game-icons:bull
+        hajimari.io/appName: Longhorn
+      host: "longhorn.${SECRET_DOMAIN}"
+      tls: true
+      secureBackends: false
+      path: /
+    metrics:
+      serviceMonitor:
+        enabled: true

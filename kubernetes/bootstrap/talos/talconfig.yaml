@@ -1,0 +1,156 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/budimanjojo/talhelper/master/pkg/config/schemas/talconfig.json
+---
+# renovate: datasource=docker depName=ghcr.io/siderolabs/installer
+talosVersion: v1.9.3
+# renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
+kubernetesVersion: v1.32.1
+
+clusterName: kubernetes
+endpoint: https://192.168.108.250:6443
+
+clusterPodNets:
+  - "10.111.0.0/16"
+clusterSvcNets:
+  - "10.222.0.0/16"
+
+additionalApiServerCertSans: &sans
+  - "192.168.108.250"
+  - "k8s.local"
+  - "clusterapi.local"
+  - "tallas.local"
+  - "127.0.0.1"
+additionalMachineCertSans: *sans
+
+# Disable built-in Flannel to use Cilium
+cniConfig:
+  name: none
+
+nodes:
+  - hostname: "laik"
+    ipAddress: "192.168.108.149"
+    installDisk: "/dev/sda"
+    machineSpec:
+      secureboot: false
+    talosImageURL: factory.talos.dev/installer/087db5426ee9c854188772aa5117d5458bd62b693c873bc6aaf6f73a7ce5602f
+    controlPlane: true
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "00:e0:4c:01:8f:b3"
+        dhcp: false
+        addresses:
+          - "192.168.108.149/20"
+        routes:
+          - network: "0.0.0.0/0"
+            gateway: "192.168.108.1"
+        mtu: 1500
+        vip:
+          ip: "192.168.108.250"
+  - hostname: "sart"
+    ipAddress: "192.168.108.209"
+    installDiskSelector:
+      serial: "NJR368R007597P70GX"
+    machineSpec:
+      secureboot: false
+    talosImageURL: factory.talos.dev/installer/087db5426ee9c854188772aa5117d5458bd62b693c873bc6aaf6f73a7ce5602f
+    controlPlane: true
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "e8:ff:1e:d1:26:0f"
+        dhcp: false
+        addresses:
+          - "192.168.108.209/20"
+        routes:
+          - network: "0.0.0.0/0"
+            gateway: "192.168.108.1"
+        mtu: 1500
+        vip:
+          ip: "192.168.108.250"
+  - hostname: "eri"
+    ipAddress: "192.168.108.238"
+    installDiskSelector:
+      serial: "NJR368R008680P70GX"
+    machineSpec:
+      secureboot: false
+    talosImageURL: factory.talos.dev/installer/087db5426ee9c854188772aa5117d5458bd62b693c873bc6aaf6f73a7ce5602f
+    controlPlane: true
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "e8:ff:1e:d1:24:1b"
+        dhcp: false
+        addresses:
+          - "192.168.108.238/20"
+        routes:
+          - network: "0.0.0.0/0"
+            gateway: "192.168.108.1"
+        mtu: 1500
+        vip:
+          ip: "192.168.108.250"
+  - hostname: "tau"
+    ipAddress: "192.168.108.199"
+    installDiskSelector:
+      serial: "HBSE53370100368"
+    machineSpec:
+      secureboot: false
+    talosImageURL: factory.talos.dev/installer/087db5426ee9c854188772aa5117d5458bd62b693c873bc6aaf6f73a7ce5602f
+    controlPlane: false
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "58:11:22:d1:bb:57"
+        dhcp: false
+        addresses:
+          - "192.168.108.199/20"
+        routes:
+          - network: "0.0.0.0/0"
+            gateway: "192.168.108.1"
+        mtu: 1500
+  - hostname: "weilai"
+    ipAddress: "192.168.108.212"
+    installDiskSelector:
+      serial: "CP031BM0608383"
+    machineSpec:
+      secureboot: false
+    talosImageURL: factory.talos.dev/installer/087db5426ee9c854188772aa5117d5458bd62b693c873bc6aaf6f73a7ce5602f
+    controlPlane: false
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "e8:ff:1e:d0:c2:31"
+        dhcp: false
+        addresses:
+          - "192.168.108.212/20"
+        routes:
+          - network: "0.0.0.0/0"
+            gateway: "192.168.108.1"
+        mtu: 1500
+  - hostname: "ritmhouse"
+    ipAddress: "192.168.108.115"
+    installDiskSelector:
+      serial: "50026B76860F774C"
+    machineSpec:
+      secureboot: false
+    talosImageURL: factory.talos.dev/installer/087db5426ee9c854188772aa5117d5458bd62b693c873bc6aaf6f73a7ce5602f
+    controlPlane: false
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "e8:ff:1e:d2:1b:d1"
+        dhcp: false
+        addresses:
+          - "192.168.108.115/20"
+        routes:
+          - network: "0.0.0.0/0"
+            gateway: "192.168.108.1"
+        mtu: 1500
+
+# Global patches
+patches:
+  - "@./patches/global/machine-files.yaml"
+  - "@./patches/global/machine-kubelet.yaml"
+  - "@./patches/global/machine-network.yaml"
+  - "@./patches/global/machine-sysctls.yaml"
+  - "@./patches/global/machine-time.yaml"
+
+# Controller patches
+controlPlane:
+  patches:
+    - "@./patches/controller/admission-controller-patch.yaml"
+    - "@./patches/controller/cluster.yaml"
+

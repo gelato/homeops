@@ -1,0 +1,96 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: music-assistant
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.6.1
+      interval: 30m
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+
+  values:
+    defaultPodOptions:
+      hostNetwork: true
+    controllers:
+      music-assistant:
+        annotations:
+          reloader.stakater.com/auto: "true"
+
+        pod:
+          securityContext:
+            runAsUser: 0
+            runAsGroup: 0
+            fsGroup: 1000
+            fsGroupChangePolicy: OnRootMismatch
+
+        containers:
+          app:
+            image:
+              repository: ghcr.io/music-assistant/server
+              tag: 2.3.6
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+              startup:
+                enabled: true
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 5
+            resources:
+              requests:
+                cpu: 15m
+                memory: 184M
+              limits:
+                memory: 321M
+
+    service:
+      app:
+        controller: music-assistant
+        type: LoadBalancer
+        annotations:
+          io.cilium/lb-ipam-ips: "192.168.108.22"
+        ports:
+          http:
+            port: 8095
+
+    ingress:
+      app:
+        className: internal
+        hosts:
+          - host: mass.${SECRET_DOMAIN}
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+
+    persistence:
+      data:
+        existingClaim: music-assistant-config
+        advancedMounts:
+          music-assistant:
+            app:
+              - path: /data
+      addons-hass:
+        existingClaim: music-assistant-addons-hass
+        advancedMounts:
+          music-assistant:
+            app:
+              - path: /usr/local/lib/python3.12/site-packages/hass_client
+      temp:
+        enabled: true
+        type: emptyDir
+        medium: Memory
+        sizeLimit: 2Gi
+        globalMounts:
+          - path: /tmp

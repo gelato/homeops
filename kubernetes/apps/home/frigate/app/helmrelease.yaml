@@ -1,0 +1,182 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2beta2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: frigate
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.6.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  timeout: 20m
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  dependsOn:
+    - name: mosquitto
+      namespace: home
+    - name: longhorn
+      namespace: storage
+  values:
+    # defaultPodOptions:
+      # hostNetwork: true
+      # runtimeClassName: nvidia
+    controllers:
+      main:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          main:
+            image:
+              repository: ghcr.io/blakeblackshear/frigate
+              tag: stable@sha256:22e3d0b486df52c3d669682254c2b1bf4205fa6ad8bd8f8c9f7fe76b1517005d
+            env:
+              TZ: ${TIMEZONE}
+            envFrom:
+              - secretRef:
+                  name: frigate-secret
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /api/version
+                    port: &port 5000
+                  initialDelaySeconds: 15
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+              startup:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /api/version
+                    port: 5000
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 30
+            securityContext:
+              privileged: true
+            resources:
+              requests:
+                cpu: 2162m
+                memory: 6769M
+              limits:
+                memory: 24G
+                gpu.intel.com/i915: 1
+                # nvidia.com/gpu: 1
+        pod:
+          nodeSelector:
+            google.feature.node.kubernetes.io/coral: "true"
+            intel.feature.node.kubernetes.io/gpu: "true"
+            # nvidia.com/gpu.present: "true"
+    service:
+      main:
+        controller: main
+        type: LoadBalancer
+        externalTrafficPolicy: Cluster
+        annotations:
+          io.cilium/lb-ipam-ips: 192.168.108.55
+        ports:
+          http:
+            enabled: true
+            primary: true
+            port: *port
+          go2rtc:
+            enabled: true
+            port: &api-port 1984
+          rtsp:
+            enabled: true
+            port: &restream-port 8554
+          webrtc:
+            enabled: true
+            port: 8555
+    ingress:
+      main:
+        annotations:
+          hajimari.io/enable: "true"
+          hajimari.io/icon: cbi:frigate
+          # nginx.org/proxy-read-timeout: "86400s"
+          # nginx.org/proxy-send-timeout: "86400s"
+          # nginx.org/websocket-services: "main"
+          # nginx.ingress.kubernetes.io/whitelist-source-range: |
+          #   10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
+        className: internal
+        hosts:
+          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                service:
+                  identifier: main
+                  port: http
+          - host: "go2rtc.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                service:
+                  identifier: main
+                  port: *api-port
+              - path: /ws
+                pathType: Prefix
+                service:
+                  identifier: main
+                  port: *port
+        tls:
+          - hosts:
+              - *host
+    persistence:
+      config:
+        enabled: true
+        existingClaim: frigate
+        globalMounts:
+          - path: /data
+      config-file:
+        type: configMap
+        name: frigate-configmap
+        globalMounts:
+          - path: /config/config.yml
+            subPath: config.yml
+            readOnly: false
+      # modelcache:
+      #   existingClaim: frigate-model-cache
+      #   globalMounts:
+      #     - path: /config/model_cache
+      cache:
+        enabled: true
+        type: emptyDir
+        medium: Memory
+        sizeLimit: 30Gi
+        globalMounts:
+          - path: /dev/shm
+      usb:
+        enabled: true
+        type: hostPath
+        hostPath: /dev/bus/usb
+        hostPathType: Directory
+        globalMounts:
+          - path: /dev/bus/usb
+      # dri:
+      #   enabled: true
+      #   type: hostPath
+      #   hostPath: /dev/dri
+      #   hostPathType: Directory
+      #   globalMounts:
+      #     - path: /dev/dri
+      suv:
+        existingClaim: suv-storage
+        globalMounts:
+          - path: /media

@@ -1,0 +1,114 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2beta2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: home-assistant-code
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.6.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    timeout: 45m
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    controllers:
+      main:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          main:
+            image:
+              repository: ghcr.io/coder/code-server
+              tag: 4.96.4
+            env:
+              TZ: ${TIMEZONE}
+            args:
+              - --auth
+              - "none"
+              - --user-data-dir
+              - "/config/.vscode"
+              - --extensions-dir
+              - "/config/.vscode"
+              - "--port"
+              - "80"
+              - /config
+            resources:
+              requests:
+                cpu: 23m
+                memory: 226M
+              limits:
+                memory: 2G
+        pod:
+          securityContext:
+            runAsUser: 0
+            runAsGroup: 0
+          affinity:
+            podAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+              - labelSelector:
+                  matchExpressions:
+                    - key: "app.kubernetes.io/name"
+                      operator: In
+                      values:
+                        - home-assistant
+                topologyKey: "kubernetes.io/hostname"
+    service:
+      main:
+        controller: main
+        ports:
+          http:
+            port: 80
+    ingress:
+      main:
+        annotations:
+          nginx.ingress.kubernetes.io/auth-url: |-
+            http://ak-outpost-authentik-embedded-outpost.security.svc.cluster.local:9000/outpost.goauthentik.io/auth/nginx
+          nginx.ingress.kubernetes.io/auth-signin: |-
+            https://hass-code.${SECRET_DOMAIN}/outpost.goauthentik.io/start?rd=$escaped_request_uri
+          nginx.ingress.kubernetes.io/auth-response-headers: |-
+            Set-Cookie,X-authentik-username,X-authentik-groups,X-authentik-email,X-authentik-name,X-authentik-uid
+          nginx.ingress.kubernetes.io/auth-snippet: |
+            proxy_set_header X-Forwarded-Host $http_host;
+        className: internal
+        hosts:
+          - host: &host hass-code.${SECRET_DOMAIN}
+            paths:
+              - path: /
+                service:
+                  identifier: main
+                  port: http
+        tls:
+          - hosts:
+              - *host
+    persistence:
+      config:
+        enabled: true
+        existingClaim: home-assistant
+      deploy-key:
+        type: secret
+        name: hass-secrets-gh
+        defaultMode: 256
+        globalMounts:
+          - path: /root/.ssh/id_rsa
+            subPath: GITHUB_DEPLOY_KEY
+      known-hosts:
+        type: secret
+        name: hass-secrets-gh
+        defaultMode: 256
+        globalMounts:
+          - path: /root/.ssh/known_hosts
+            subPath: GITHUB_KNOWN_HOSTS

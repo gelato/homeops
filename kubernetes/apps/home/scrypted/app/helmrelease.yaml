@@ -1,0 +1,108 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2beta2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: scrypted
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.6.1
+      interval: 30m
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+    timeout: 30m
+  uninstall:
+    keepHistory: false
+  dependsOn:
+    - name: longhorn
+      namespace: storage
+  values:
+    defaultPodOptions:
+        hostNetwork: true
+    controllers:
+      scrypted:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        pod:
+          securityContext:
+            supplementalGroups:
+              - 65542
+        containers:
+          app:
+            image:
+              repository: ghcr.io/koush/scrypted
+              tag: v0.123.58-jammy-full
+            env:
+              TZ: ${TIMEZONE}
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+              startup:
+                enabled: true
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 5
+            resources:
+              requests:
+                cpu: 475m
+                memory: 2823M
+              limits:
+                memory: 3024M
+                gpu.intel.com/i915: 1
+            securityContext:
+              privileged: true
+    service:
+      app:
+        controller: scrypted
+        ports:
+          http:
+            port: 11080
+            primary: true
+          rebroadcast:
+            port: 34135
+    ingress:
+      app:
+        className: "internal"
+        hosts:
+          - host: &hostName scrypted.${SECRET_DOMAIN}
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+        tls:
+          - hosts:
+              - *hostName
+    persistence:
+      config:
+        existingClaim: scrypted-config
+        advancedMounts:
+          scrypted:
+            app:
+              - path: /server/volume
+      cache:
+        type: emptyDir
+        globalMounts:
+          - path: /.cache
+      cache-npm:
+        type: emptyDir
+        globalMounts:
+          - path: /.npm
+      recs:
+        existingClaim: scrypted-storage
+        globalMounts:
+          - path: /media

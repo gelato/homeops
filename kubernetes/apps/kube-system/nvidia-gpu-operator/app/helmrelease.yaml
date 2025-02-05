@@ -36,12 +36,6 @@ spec:
       enabled: true
     toolkit:
       enabled: false
-      version: v1.16.2-ubuntu20.04
-      env:
-        - name: CONTAINERD_RUNTIME_CLASS
-          value: nvidia
-        - name: CONTAINERD_SET_AS_DEFAULT
-          value: "true"
     devicePlugin:
       config:
         create: true

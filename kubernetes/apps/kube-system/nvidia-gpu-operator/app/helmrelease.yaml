@@ -18,11 +18,16 @@ spec:
         namespace: flux-system
   maxHistory: 2
   install:
+    crds: CreateReplace
+    disableOpenAPIValidation: true
     remediation:
       retries: 3
   upgrade:
     cleanupOnFail: true
+    crds: CreateReplace
+    disableOpenAPIValidation: true
     remediation:
+      strategy: rollback
       retries: 3
   uninstall:
     keepHistory: false
@@ -30,30 +35,79 @@ spec:
   values:
     nfd:
       enabled: false
+    cdi:
+      enabled: true
+      default: true
+    operator:
+      repository: ghcr.io/jfroy
+      version: v24.9.1
+      defaultRuntime: containerd
     driver:
       enabled: false
     toolkit:
-      enabled: false
-      version: v1.16.2-ubuntu20.04
+      repository: ghcr.io/jfroy
+      version: 1.17.4-ubuntu20.04
       env:
-        - name: CONTAINERD_RUNTIME_CLASS
-          value: nvidia
-        - name: CONTAINERD_SET_AS_DEFAULT
-          value: "true"
+        - name: CONTAINERD_CONFIG
+          value: /var/nvidia/etc/containerd.toml
+        # talos does not recover if containerd is restarted with SIGHUP
+        # https://github.com/siderolabs/talos/issues/9271
+        - name: CONTAINERD_RESTART_MODE
+          value: none
+      installDir: "/var/nvidia"
+    dcgmExporter:
+      serviceMonitor:
+        enabled: true
+        honorLabels: true
+        relabelings:
+          - sourceLabels: ["__meta_kubernetes_pod_node_name"]
+            regex: (.*)
+            targetLabel: instance
+            replacement: $1
+            action: replace
+    migManager:
+      enabled: false
+    vgpuDeviceManager:
+      enabled: false
+    vfioManager:
+      enabled: false
+    sandboxDevicePlugin:
+      enabled: false
     devicePlugin:
       config:
-        create: true
-        name: time-slicing-config
+        name: time-slicing-config-all
         default: any
-        data:
-          any: |-
-            version: v1
-            flags:
-              migStrategy: none
-            sharing:
-              timeSlicing:
-                renameByDefault: false
-                failRequestsGreaterThanOne: false
-                resources:
-                  - name: nvidia.com/gpu
-                    replicas: 6
+  postRenderers:
+    - kustomize:
+        patches:
+          - patch: |-
+              apiVersion: apps/v1
+              kind: Deployment
+              metadata:
+                name: gpu-operator
+                labels:
+                  app.kubernetes.io/component: "gpu-operator"
+              spec:
+                template:
+                  spec:
+                    containers:
+                      - name: gpu-operator
+                        securityContext:
+                          allowPrivilegeEscalation: false
+                          capabilities: { drop: ["ALL"] }
+                          readOnlyRootFilesystem: true
+                          runAsNonRoot: true
+                          runAsUser: 1000
+                          runAsGroup: 1000
+                          seccompProfile: { type: RuntimeDefault }
+                    securityContext:
+                      fsGroup: 1000
+                      fsGroupChangePolicy: OnRootMismatch
+          - patch: |-
+              apiVersion: nvidia.com/v1
+              kind: ClusterPolicy
+              metadata:
+                name: cluster-policy
+              spec:
+                operator:
+                  useDevicePluginCDIDevicesFeature: true

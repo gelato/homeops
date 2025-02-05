@@ -27,5 +27,6 @@ resources:
   - ./repos/grafana.yaml
   - ./repos/hajimari.yaml
   - ./repos/nvidia.yaml
+  - ./repos/nvidia-charts.yaml
   - ./repos/ollama.yaml
   - ./repos/victoriametrics.yaml

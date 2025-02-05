@@ -18,24 +18,63 @@ spec:
         namespace: flux-system
   maxHistory: 2
   install:
-    crds: CreateReplace
-    disableOpenAPIValidation: true
+    createNamespace: true
     remediation:
       retries: 3
   upgrade:
-    cleanupOnFail: true
+    disableOpenAPIValidation: true
     remediation:
       retries: 3
-  uninstall:
-    keepHistory: false
-  # https://github.com/NVIDIA/gpu-operator/blob/master/deployments/gpu-operator/values.yaml
   values:
+    operator:
+      defaultRuntime: "containerd"
+      upgradeCRD: true
+      cleanupCRD: true
+      resources:
+        requests:
+          cpu: 25m
+          memory: 100M
+        limits:
+          memory: 350M
+    dcgmExporter:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+    driver:
+      enabled: false
+      #TODO: issue https://github.com/NVIDIA/gpu-operator/issues/564 still not fixed
+      # usePrecompiled: true
+      # repository: ghcr.io/nea0d
+      # image: nvidia-driver
+      # version: "550.54.14"
+    manager:
+      env:
+        - name: ENABLE_AUTO_DRAIN
+          value: "false"
+        - name: DRAIN_USE_FORCE
+          value: "false"
+        - name: DRAIN_POD_SELECTOR_LABEL
+          value: "gpu=drain"
+        - name: DRAIN_TIMEOUT_SECONDS
+          value: "0s"
+        - name: DRAIN_DELETE_EMPTYDIR_DATA
+          value: "false"
     nfd:
       enabled: false
-    driver:
-      enabled: true
+    psp:
+      enabled: false
     toolkit:
       enabled: false
+      toolkit:
+      env:
+        # - name: CONTAINERD_CONFIG
+        #   value: /var/lib/rancher/k3s/agent/etc/containerd/config.toml
+        # - name: CONTAINERD_SOCKET
+        #   value: /run/k3s/containerd/containerd.sock
+        - name: CONTAINERD_RUNTIME_CLASS
+          value: nvidia
+        - name: CONTAINERD_SET_AS_DEFAULT
+          value: "true"
     devicePlugin:
       config:
         create: true
@@ -53,3 +92,8 @@ spec:
                 resources:
                   - name: nvidia.com/gpu
                     replicas: 6
+    # validator:
+    #   plugin:
+    #     env:
+    #       - name: WITH_WORKLOAD
+    #         value: "false"

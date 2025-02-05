@@ -25,7 +25,7 @@ spec:
   values:
     runtimeClassName: nvidia
     nodeSelector:
-      nvidia.feature.node.kubernetes.io/gpu: "true"
+      nvidia.com/gpu.present: "true"
     securityContext:
       privileged: true
     affinity:
@@ -33,7 +33,7 @@ spec:
         requiredDuringSchedulingIgnoredDuringExecution:
           nodeSelectorTerms:
             - matchExpressions:
-                - key: nvidia.feature.node.kubernetes.io/gpu
+                - key: nvidia.com/gpu.present
                   operator: In
                   values:
                     - "true"

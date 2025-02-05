@@ -155,6 +155,7 @@ patches:
   - "@./patches/global/machine-sysctls.yaml"
   - "@./patches/global/machine-time.yaml"
   - "@./patches/global/nfs.yaml"
+  - "@./patches/global/machine-registries.yaml"
 
 # Controller patches
 controlPlane:

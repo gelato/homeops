@@ -41,12 +41,12 @@ spec:
       serviceMonitor:
         enabled: true
     driver:
-      enabled: false
+      enabled: true
       #TODO: issue https://github.com/NVIDIA/gpu-operator/issues/564 still not fixed
-      # usePrecompiled: true
-      # repository: ghcr.io/nea0d
-      # image: nvidia-driver
-      # version: "550.54.14"
+      usePrecompiled: true
+      repository: ghcr.io/nea0d
+      image: nvidia-driver
+      version: "550.54.14"
     manager:
       env:
         - name: ENABLE_AUTO_DRAIN

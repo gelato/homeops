@@ -1,0 +1,46 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2beta2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: cloudnative-pg
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: cloudnative-pg
+      version: 0.23.0
+      sourceRef:
+        kind: HelmRepository
+        name: cloudnative-pg
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  dependsOn:
+    - name: longhorn
+      namespace: storage
+  values:
+    crds:
+      create: true
+    monitoring:
+      # -- Specifies whether the monitoring should be enabled. Requires Prometheus Operator CRDs.
+      grafanaDashboard:
+        create: true
+        # -- Allows overriding the namespace where the ConfigMap will be created, defaulting to the same one as the Release.
+        namespace: "observability"
+        # -- The name of the ConfigMap containing the dashboard.
+        configMapName: "cnpg-grafana-dashboard"
+        # -- Label that ConfigMaps should have to be loaded as dashboards.
+        sidecarLabel: "grafana_dashboard"
+        # -- Label value that ConfigMaps should have to be loaded as dashboards.
+        sidecarLabelValue: ""
+    config:
+      data:
+        INHERITED_ANNOTATIONS: kyverno.io/ignore

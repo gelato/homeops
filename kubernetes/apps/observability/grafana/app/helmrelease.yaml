@@ -1,0 +1,436 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: grafana
+  namespace: observability
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: grafana
+      version: 8.8.6
+      sourceRef:
+        kind: HelmRepository
+        name: grafana
+        namespace: flux-system
+      interval: 15m
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    timeout: 15m
+    remediation:
+      retries: 3
+      strategy: rollback
+  driftDetection:
+    mode: enabled
+  values:
+    replicas: 1
+    automountServiceAccountToken: true
+    deploymentStrategy:
+      type: RollingUpdate
+    readinessProbe:
+      httpGet:
+        path: /api/health
+        port: 3000
+    livenessProbe:
+      httpGet:
+        path: /api/health
+        port: 3000
+      initialDelaySeconds: 60
+      timeoutSeconds: 30
+      failureThreshold: 10
+    dashboardProviders:
+      dashboardproviders.yaml:
+        apiVersion: 1
+        providers:
+          - name: default
+            disableDeletion: false
+            editable: true
+            folder: ""
+            options:
+              path: /var/lib/grafana/dashboards/default
+            orgId: 1
+            type: file
+          - name: "flux"
+            orgId: 1
+            folder: "Flux"
+            type: file
+            disableDeletion: false
+            editable: true
+            options:
+              path: /var/lib/grafana/dashboards/flux
+          - name: "kubernetes"
+            orgId: 1
+            folder: "Kubernetes"
+            type: file
+            disableDeletion: false
+            editable: true
+            options:
+              path: /var/lib/grafana/dashboards/kubernetes
+          - name: "networking"
+            org_id: 1
+            folder: "Networking"
+            type: file
+            disableDeletion: false
+            editable: true
+            options:
+              path: /var/lib/grafana/dashboards/networking
+          - name: "system"
+            orgId: 1
+            folder: "System"
+            type: file
+            disableDeletion: false
+            editable: true
+            allowUiUpdates: true
+            options:
+              path: /var/lib/grafana/dashboards/system
+          - name: "victoria-metrics"
+            orgId: 1
+            folder: "VicoriaMetrics"
+            type: file
+            disableDeletion: false
+            editable: true
+            allowUiUpdates: true
+            options:
+              path: /var/lib/grafana/dashboards/vm
+          - name: "nginx"
+            orgId: 1
+            folder: "Nginx"
+            type: file
+            disableDeletion: false
+            editable: true
+            allowUiUpdates: true
+            options:
+              path: /var/lib/grafana/dashboards/nginx
+          - name: "storage"
+            orgId: 1
+            folder: "Storage"
+            type: file
+            disableDeletion: false
+            editable: true
+            allowUiUpdates: true
+            options:
+              path: /var/lib/grafana/dashboards/storage
+          - name: 'grafana-dashboards-kubernetes'
+            orgId: 1
+            folder: 'Kubernetes-ng'
+            type: file
+            disableDeletion: true
+            editable: true
+            options:
+              path: /var/lib/grafana/dashboards/grafana-dashboards-kubernetes
+    dashboards:
+      grafana-dashboards-kubernetes:
+        k8s-system-api-server:
+          url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-system-api-server.json
+          token: ''
+        k8s-system-coredns:
+          url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-system-coredns.json
+          token: ''
+        k8s-views-global:
+          url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-global.json
+          token: ''
+        k8s-views-namespaces:
+          url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-namespaces.json
+          token: ''
+        k8s-views-nodes:
+          url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-nodes.json
+          token: ''
+        k8s-views-pods:
+          url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-pods.json
+          token: ''
+      default:
+        k3s:
+          # renovate: depName="K3S Dashboard"
+          gnetId: 16450
+          revision: 3
+          datasource:
+            - { name: DS_PROMETHEUS, value: Prometheus }
+        k3s2:
+          # renovate: depName="K3S Second Dashboard"
+          gnetId: 19972
+          revision: 3
+          datasource:
+            - { name: DS_PROMETHEUS, value: Prometheus }
+      storage:
+        minio:
+          # renovate: depName="MinIO Dashboard"
+          gnetId: 13502
+          revision: 26
+          datasource:
+            - { name: DS_PROMETHEUS, value: Prometheus }
+        redis:
+          # renovate: depName="Redis"
+          gnetId: 12776
+          revision: 2
+          datasource: Prometheus
+        smartmon:
+          gnetId: 10530
+          revision: 1
+          datasource:
+            - { name: DS_PROMETHEUS, value: Prometheus }
+        cnpg:
+          gnetId: 20417
+          revision: 2
+          datasource:
+            - { name: DS_PROMETHEUS-LONGHORN, value: Prometheus }
+        longhorn:
+          gnetId: 17626
+          revision: 1
+          datasource:
+            - { name: DS_PROMETHEUS, value: Prometheus }
+      system:
+        node-exporter-full:
+          gnetId: 1860
+          revision: 31
+          datasource:
+            - { name: DS_PROMETHEUS, value: Prometheus }
+        cert-manager:
+          url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/cert-manager/dashboards/cert-manager.json
+          datasource:
+            - { name: DS_PROMETHEUS, value: Prometheus }
+        spegel:
+          # renovate: depName="Spegel"
+          gnetId: 18089
+          revision: 1
+          datasource:
+            - { name: DS_PROMETHEUS, value: Prometheus }
+      victoria-metrics:
+        cluster:
+          gnetId: 11176
+          revision: 34
+          datasource:
+            - { name: ds, value: Prometheus }
+        vmagent:
+          gnetId: 12683
+          revision: 14
+          datasource:
+            - { name: ds, value: Prometheus }
+      flux:
+        # TODO: fix
+        flux-cluster:
+          url: https://raw.githubusercontent.com/fluxcd/flux2-monitoring-example/main/monitoring/configs/dashboards/cluster.json
+          datasource:
+            - { name: DS_PROMETHEUS, value: Prometheus }
+        flux-control-plane:
+          url: https://raw.githubusercontent.com/fluxcd/flux2-monitoring-example/main/monitoring/configs/dashboards/control-plane.json
+          datasource:
+            - { name: DS_PROMETHEUS, value: Prometheus }
+            # flux-logs:
+            #   url: https://raw.githubusercontent.com/fluxcd/flux2-monitoring-example/main/monitoring/configs/dashboards/logs.json
+            #   datasource:
+            - { name: DS_PROMETHEUS, value: Prometheus }
+      nginx:
+        nginx:
+          url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/grafana/dashboards/nginx.json
+          datasource:
+            - { name: DS_PROMETHEUS, value: Prometheus }
+        nginx-request-handling-performance:
+          url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/grafana/dashboards/request-handling-performance.json
+          datasource:
+            - { name: DS_PROMETHEUS, value: Prometheus }
+        ingress-nginx-external:
+          gnetId: 14314
+          revision: 2
+          datasource:
+            - { name: DS_PROMETHEUS, value: Prometheus }
+        ingress-nginx-request-handling-performance:
+          url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/grafana/dashboards/request-handling-performance.json
+          datasource:
+            - { name: DS_PROMETHEUS, value: Prometheus }
+        ingress-nginx:
+          url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/grafana/dashboards/nginx.json
+          datasource:
+            - { name: DS_PROMETHEUS, value: Prometheus }
+      networking:
+        cilium-agent:
+          gnetId: 16611
+          revision: 1
+          datasource:
+            - { name: DS_PROMETHEUS, value: Prometheus }
+        cilium-operator:
+          gnetId: 16612
+          revision: 1
+          datasource:
+            - { name: DS_PROMETHEUS, value: Prometheus }
+        hubble:
+          gnetId: 16613
+          revision: 1
+          datasource:
+            - { name: DS_PROMETHEUS, value: Prometheus }
+        hubble-dns:
+          gnetId: 16612
+          revision: 37
+          datasource:
+            - { name: DS_PROMETHEUS, value: Prometheus }
+        hubble-overview:
+          gnetId: 16612
+          revision: 39
+          datasource:
+            - { name: DS_PROMETHEUS, value: Prometheus }
+        cloudflared:
+          # renovate: depName="Cloudflare Tunnels (cloudflared)"
+          gnetId: 17457
+          revision: 6
+          datasource:
+            - { name: DS_PROMETHEUS, value: Prometheus }
+      kubernetes:
+        kubernetes-api-server:
+          # renovate: depName="Kubernetes / System / API Server"
+          gnetId: 15761
+          revision: 16
+          datasource: Prometheus
+        kubernetes-coredns:
+          # renovate: depName="Kubernetes / System / CoreDNS"
+          gnetId: 15762
+          revision: 17
+          datasource: Prometheus
+        kubernetes-global:
+          # renovate: depName="Kubernetes / Views / Global"
+          gnetId: 15757
+          revision: 37
+          datasource: Prometheus
+        kubernetes-namespaces:
+          # renovate: depName="Kubernetes / Views / Namespaces"
+          gnetId: 15758
+          revision: 34
+          datasource: Prometheus
+        kubernetes-nodes:
+          # renovate: depName="Kubernetes / Views / Nodes"
+          gnetId: 15759
+          revision: 29
+          datasource: Prometheus
+        kubernetes-pods:
+          # renovate: depName="Kubernetes / Views / Pods"
+          gNetId: 15760
+          revision: 21
+          datasource: Prometheus
+        kubernetes-volumes:
+          # renovate: depName="K8s / Storage / Volumes / Cluster"
+          gnetId: 11454
+          revision: 14
+          datasource: Prometheus
+    datasources:
+      datasources.yaml:
+        apiVersion: 1
+        datasources:
+          - access: proxy
+            name: Prometheus
+            type: prometheus
+            url: http://vmselect-victoria-metrics.observability.svc:8481/select/0/prometheus
+            isDefault: true
+            jsonData:
+              prometheusType: Prometheus
+          # - access: proxy
+          #   name: Loki
+          #   type: loki
+          #   url: http://loki-headless.observability.svc.cluster.local:3100
+          - name: Alertmanager
+            type: alertmanager
+            access: proxy
+            url: http://alertmanager.observability.svc.cluster.local:9093
+            jsonData:
+              implementation: prometheus
+
+        deleteDatasources:
+          - name: Alertmanager
+            orgId: 1
+          - name: Prometheus
+            orgId: 1
+          - name: Loki
+            orgId: 1
+    env:
+      GF_DATE_FORMATS_USE_BROWSER_LOCALE: true
+      GF_EXPLORE_ENABLED: true
+      GF_FEATURE_TOGGLES_ENABLE: publicDashboards
+      GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS: natel-discrete-panel,pr0ps-trackmap-panel,panodata-map-panel
+      GF_SECURITY_ANGULAR_SUPPORT_ENABLED: true
+      GF_SECURITY_COOKIE_SAMESITE: grafana
+    envFromSecrets:
+      - name: grafana-env
+    grafana.ini:
+      analytics:
+        check_for_updates: false
+        check_for_plugin_updates: false
+        reporting_enabled: false
+      server:
+        root_url: https://grafana.${SECRET_DOMAIN}
+      auth:
+        signout_redirect_url: "https://authentik.company/application/o/grafana/end-session/"
+        oauth_auto_login: true
+      auth.basic:
+        disable_login_form: false
+      auth.generic_oauth:
+        enabled: true
+        name: authentik
+        # client_id: abcd # Set by env vars
+        # client_secret: abcd # Set by env vars
+        scopes: "openid profile email"
+        empty_scopes: false
+        auth_url: https://${SSO_DOMAIN_PREFIX}.${SECRET_DOMAIN}/application/o/authorize/
+        token_url: https://${SSO_DOMAIN_PREFIX}.${SECRET_DOMAIN}/application/o/token/
+        api_url: https://${SSO_DOMAIN_PREFIX}.${SECRET_DOMAIN}/application/o/userinfo/
+        login_attribute_path: preferred_username
+        groups_attribute_path: groups
+        name_attribute_path: name
+        role_attribute_path: contains(groups, 'Grafana Admins') && 'Admin' || contains(groups, 'Grafana Editors') && 'Editor' || 'Viewer'
+      auth.anonymous:
+        enabled: false
+      news:
+        news_feed_enabled: false
+      plugins:
+        # Why VictoriaMetrics datasource is unsigned: https://github.com/VictoriaMetrics/grafana-datasource/blob/main/README.md#why-victoriametrics-datasource-is-unsigned
+        allow_loading_unsigned_plugins: victoriametrics-datasource
+    sidecar:
+      dashboards:
+        enabled: true
+        searchNamespace: ALL
+        labelValue: ""
+        label: grafana_dashboard
+        folderAnnotation: grafana_folder
+        provider:
+          disableDelete: true
+          foldersFromFilesStructure: true
+      datasources:
+        enabled: true
+        initDatasources: true
+        searchNamespace: ALL
+        labelValue: ""
+    # plugins:
+    #   - grafana-clock-panel
+    #   - grafana-piechart-panel
+    extraInitContainers:
+      - name: "load-vm-ds-plugin"
+        image: "curlimages/curl:8.11.1"
+        command: [ "/bin/sh" ]
+        workingDir: "/var/lib/grafana"
+        securityContext:
+          runAsUser: 472
+          runAsNonRoot: true
+          runAsGroup: 472
+        args:
+        - "-c"
+        - |
+          set -ex
+          mkdir -p /var/lib/grafana/plugins/
+          ver=$(curl -s -L https://api.github.com/repos/VictoriaMetrics/victoriametrics-datasource/releases/latest | grep -oE 'v[0-9]+\.[0-9]+\.[0-9]+' | head -1)
+          curl -L https://github.com/VictoriaMetrics/victoriametrics-datasource/releases/download/$ver/victoriametrics-metrics-datasource-$ver.tar.gz -o /var/lib/grafana/plugins/vm-plugin.tar.gz
+          tar -xf /var/lib/grafana/plugins/vm-plugin.tar.gz -C /var/lib/grafana/plugins/
+          rm /var/lib/grafana/plugins/vm-plugin.tar.gz
+        volumeMounts:
+          # For grafana-operator users, change `name: storage` to `name: grafana-data`
+          - name: storage
+            mountPath: /var/lib/grafana
+    serviceMonitor:
+      enabled: true
+    ingress:
+      enabled: true
+      ingressClassName: "internal"
+      hosts:
+        - &host grafana.${SECRET_DOMAIN}
+      tls:
+        - hosts:
+            - *host

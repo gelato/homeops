@@ -1,0 +1,174 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2beta2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: qbtools
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.6.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  dependsOn:
+    - name: qbittorrent
+      namespace: media
+  values:
+    controllers:
+      main:
+        enabled: false
+      tagging:
+        type: cronjob
+        cronjob: &cronJobSpec
+          schedule: "@hourly"
+          timeZone: &timeZone ${TIMEZONE}
+          concurrencyPolicy: Forbid
+          successfulJobsHistory: 1
+          failedJobsHistory: 1
+        initContainers:
+          tagging:
+            image: &image
+              repository: ghcr.io/buroa/qbtools
+              tag: v0.19.14@sha256:905617dfc1a8aa1510381d8e177cc5581a49bfa9d56f3f05e0574f6c83987d3c
+            env: &env
+              TZ: *timeZone
+            args:
+              - tagging
+              - --added-on
+              - --expired
+              - --last-activity
+              - --not-working
+              - --sites
+              - --unregistered
+              - --server
+              - qbittorrent.media.svc.cluster.local
+              - --port
+              - "8049"
+              - --config
+              - /config/config.yaml
+            resources: &resources
+              requests:
+                cpu: 15m
+                memory: 105M
+              limits:
+                memory: 105M
+        containers:
+          unregistered:
+            image: *image
+            env: *env
+            args: [
+              "prune",
+              "--exclude-category", "manual",
+              "--include-tag", "added:7d",
+              "--include-tag", "unregistered",
+              "--with-data",
+              # "--dry-run",
+              "--server", "qbittorrent.media.svc.cluster.local",
+              "--port", "8049"
+            ]
+            resources: *resources
+          expired:
+            image: *image
+            env: *env
+            args: [
+              "prune",
+              "--exclude-category", "manual",
+              "--exclude-category", "overload",
+              # "--include-tag", "expired", # defined in config.yaml
+              # "--exclude-tag", "activity:24h",
+              "--include-tag", "added:30d",
+              "--exclude-tag", "added:24h",
+              "--exclude-tag", "added:7d",
+              "--with-data",
+              # "--dry-run",
+              "--server", "qbittorrent.media.svc.cluster.local",
+              "--port", "8049"
+            ]
+            resources: *resources
+        pod:
+          restartPolicy: OnFailure
+          securityContext: &securityContext
+            runAsUser: 568
+            runAsGroup: 568
+            runAsNonRoot: true
+      orphaned:
+        type: cronjob
+        cronjob:
+          <<: *cronJobSpec
+          schedule: "0 */2 * * *"
+        containers:
+          main:
+            image: *image
+            env: *env
+            args: [
+              "orphaned",
+              "--exclude-pattern", "*/manual/*",
+              "--exclude-pattern", "*/music.import/*",
+              # "--dry-run",
+              "--server", "qbittorrent.media.svc.cluster.local",
+              "--port", "8049"
+            ]
+            resources: *resources
+        pod:
+          restartPolicy: OnFailure
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 568
+            runAsNonRoot: true
+          affinity:
+            podAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+              - labelSelector:
+                  matchExpressions:
+                    - key: "app.kubernetes.io/name"
+                      operator: In
+                      values:
+                        - jellyfin
+                topologyKey: "kubernetes.io/hostname"
+      reannounce:
+        containers:
+          main:
+            image: *image
+            env: *env
+            args: [
+              "reannounce",
+              "--process-seeding",
+              "--server", "qbittorrent.media.svc.cluster.local",
+              "--port", "8049"
+            ]
+            resources: *resources
+        pod:
+          securityContext: *securityContext
+    service:
+      main:
+        controller: main
+        enabled: false
+    persistence:
+      config-file:
+        type: configMap
+        name: qbtools-configmap
+        advancedMounts:
+          tagging:
+            tagging:
+              - path: /config/config.yaml
+                subPath: config.yaml
+                readOnly: true
+      buffer:
+        existingClaim: buffer
+        advancedMounts:
+          orphaned:
+            main:
+              - path: /buffer

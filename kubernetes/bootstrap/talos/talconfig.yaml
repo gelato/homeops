@@ -31,7 +31,7 @@ nodes:
     installDisk: "/dev/sda"
     machineSpec:
       secureboot: false
-    talosImageURL: factory.talos.dev/installer/087db5426ee9c854188772aa5117d5458bd62b693c873bc6aaf6f73a7ce5602f
+    talosImageURL: factory.talos.dev/installer/a61864c3da5b3957fdda35246e568cbc79fe2ca51f86db4f4a9741596188bee2
     controlPlane: true
     networkInterfaces:
       - deviceSelector:
@@ -51,7 +51,7 @@ nodes:
       serial: "NJR368R007597P70GX"
     machineSpec:
       secureboot: false
-    talosImageURL: factory.talos.dev/installer/087db5426ee9c854188772aa5117d5458bd62b693c873bc6aaf6f73a7ce5602f
+    talosImageURL: factory.talos.dev/installer/a61864c3da5b3957fdda35246e568cbc79fe2ca51f86db4f4a9741596188bee2
     controlPlane: true
     networkInterfaces:
       - deviceSelector:
@@ -71,7 +71,7 @@ nodes:
       serial: "NJR368R008680P70GX"
     machineSpec:
       secureboot: false
-    talosImageURL: factory.talos.dev/installer/087db5426ee9c854188772aa5117d5458bd62b693c873bc6aaf6f73a7ce5602f
+    talosImageURL: factory.talos.dev/installer/a61864c3da5b3957fdda35246e568cbc79fe2ca51f86db4f4a9741596188bee2
     controlPlane: true
     networkInterfaces:
       - deviceSelector:
@@ -91,7 +91,7 @@ nodes:
       serial: "HBSE53370100368"
     machineSpec:
       secureboot: false
-    talosImageURL: factory.talos.dev/installer/087db5426ee9c854188772aa5117d5458bd62b693c873bc6aaf6f73a7ce5602f
+    talosImageURL: factory.talos.dev/installer/6c8128d7698e5d77201e22fdec7c12e0a63d9934bb282872fb8b69b36cb031e9
     controlPlane: false
     networkInterfaces:
       - deviceSelector:
@@ -103,13 +103,16 @@ nodes:
           - network: "0.0.0.0/0"
             gateway: "192.168.108.1"
         mtu: 1500
+    patches:
+      - "@./patches/tau/disk-mount.yaml"
+      - "@./patches/tau/gpu-worker-patch.yaml"
   - hostname: "weilai"
     ipAddress: "192.168.108.212"
     installDiskSelector:
       serial: "CP031BM0608383"
     machineSpec:
       secureboot: false
-    talosImageURL: factory.talos.dev/installer/087db5426ee9c854188772aa5117d5458bd62b693c873bc6aaf6f73a7ce5602f
+    talosImageURL: factory.talos.dev/installer/a61864c3da5b3957fdda35246e568cbc79fe2ca51f86db4f4a9741596188bee2
     controlPlane: false
     networkInterfaces:
       - deviceSelector:
@@ -121,13 +124,15 @@ nodes:
           - network: "0.0.0.0/0"
             gateway: "192.168.108.1"
         mtu: 1500
+    patches:
+      - "@./patches/weilai/disk-mount.yaml"
   - hostname: "ritmhouse"
     ipAddress: "192.168.108.115"
     installDiskSelector:
       serial: "50026B76860F774C"
     machineSpec:
       secureboot: false
-    talosImageURL: factory.talos.dev/installer/087db5426ee9c854188772aa5117d5458bd62b693c873bc6aaf6f73a7ce5602f
+    talosImageURL: factory.talos.dev/installer/a61864c3da5b3957fdda35246e568cbc79fe2ca51f86db4f4a9741596188bee2
     controlPlane: false
     networkInterfaces:
       - deviceSelector:
@@ -139,6 +144,8 @@ nodes:
           - network: "0.0.0.0/0"
             gateway: "192.168.108.1"
         mtu: 1500
+    patches:
+      - "@./patches/ritmhouse/disk-mount.yaml"
 
 # Global patches
 patches:
@@ -147,10 +154,10 @@ patches:
   - "@./patches/global/machine-network.yaml"
   - "@./patches/global/machine-sysctls.yaml"
   - "@./patches/global/machine-time.yaml"
+  - "@./patches/global/nfs.yaml"
 
 # Controller patches
 controlPlane:
   patches:
     - "@./patches/controller/admission-controller-patch.yaml"
     - "@./patches/controller/cluster.yaml"
-

@@ -169,14 +169,17 @@ spec:
         hostPathType: Directory
         globalMounts:
           - path: /dev/bus/usb
-      # dri:
-      #   enabled: true
-      #   type: hostPath
-      #   hostPath: /dev/dri
-      #   hostPathType: Directory
-      #   globalMounts:
-      #     - path: /dev/dri
-      suv:
-        existingClaim: suv-storage
+      dri:
+        enabled: true
+        type: hostPath
+        hostPath: /dev/dri
+        hostPathType: Directory
+        globalMounts:
+          - path: /dev/dri
+      nfs-cctv:
+        type: nfs
+        server: tower.local
+        path: /mnt/user/cctv
         globalMounts:
           - path: /media
+            readOnly: false

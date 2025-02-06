@@ -28,8 +28,6 @@ spec:
       namespace: media
   values:
     controllers:
-      main:
-        enabled: false
       tagging:
         type: cronjob
         cronjob: &cronJobSpec
@@ -39,12 +37,14 @@ spec:
           successfulJobsHistory: 1
           failedJobsHistory: 1
         initContainers:
-          tagging:
-            image: &image
+          tagging: &container
+            image:
               repository: ghcr.io/buroa/qbtools
               tag: v0.19.14@sha256:905617dfc1a8aa1510381d8e177cc5581a49bfa9d56f3f05e0574f6c83987d3c
-            env: &env
+            env:
               TZ: *timeZone
+              QBITTORRENT_HOST: qbittorrent.media.svc.cluster.local
+              QBITTORRENT_PORT: 8049
             args:
               - tagging
               - --added-on
@@ -53,12 +53,10 @@ spec:
               - --not-working
               - --sites
               - --unregistered
-              - --server
-              - qbittorrent.media.svc.cluster.local
-              - --port
-              - "8049"
-              - --config
-              - /config/config.yaml
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
             resources: &resources
               requests:
                 cpu: 15m
@@ -67,22 +65,18 @@ spec:
                 memory: 105M
         containers:
           unregistered:
-            image: *image
-            env: *env
+            <<: *container
             args: [
               "prune",
               "--exclude-category", "manual",
               "--include-tag", "added:7d",
               "--include-tag", "unregistered",
-              "--with-data",
-              # "--dry-run",
-              "--server", "qbittorrent.media.svc.cluster.local",
-              "--port", "8049"
+              "--with-data"
+              # "--dry-run"
             ]
             resources: *resources
           expired:
-            image: *image
-            env: *env
+            <<: *container
             args: [
               "prune",
               "--exclude-category", "manual",
@@ -92,16 +86,14 @@ spec:
               "--include-tag", "added:30d",
               "--exclude-tag", "added:24h",
               "--exclude-tag", "added:7d",
-              "--with-data",
-              # "--dry-run",
-              "--server", "qbittorrent.media.svc.cluster.local",
-              "--port", "8049"
+              "--with-data"
+              # "--dry-run"
             ]
             resources: *resources
         pod:
-          restartPolicy: OnFailure
+          restartPolicy: Never
           securityContext: &securityContext
-            runAsUser: 568
+            runAsUser: 1000
             runAsGroup: 568
             runAsNonRoot: true
       orphaned:
@@ -111,23 +103,17 @@ spec:
           schedule: "0 */2 * * *"
         containers:
           main:
-            image: *image
-            env: *env
+            <<: *container
             args: [
               "orphaned",
               "--exclude-pattern", "*/manual/*",
-              "--exclude-pattern", "*/music.import/*",
-              # "--dry-run",
-              "--server", "qbittorrent.media.svc.cluster.local",
-              "--port", "8049"
+              "--exclude-pattern", "*/music.import/*"
+              # "--dry-run"
             ]
             resources: *resources
         pod:
-          restartPolicy: OnFailure
-          securityContext:
-            runAsUser: 1000
-            runAsGroup: 568
-            runAsNonRoot: true
+          restartPolicy: Never
+          securityContext: *securityContext
           affinity:
             podAffinity:
               requiredDuringSchedulingIgnoredDuringExecution:
@@ -141,31 +127,36 @@ spec:
       reannounce:
         containers:
           main:
-            image: *image
-            env: *env
+            <<: *container
             args: [
               "reannounce",
-              "--process-seeding",
-              "--server", "qbittorrent.media.svc.cluster.local",
-              "--port", "8049"
+              "--process-seeding"
             ]
             resources: *resources
         pod:
           securityContext: *securityContext
+      limiter:
+        containers:
+          app:
+            <<: *container
+            args: [
+              "limiter",
+              "--max-line-speed-mbps", "300",
+              "--max-percent", "0.8",
+              "--limit-percent", "0.4",
+              "--interval", "5"
+            ]
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 568
+        seccompProfile: { type: RuntimeDefault }
     service:
       main:
         controller: main
         enabled: false
     persistence:
-      config-file:
-        type: configMap
-        name: qbtools-configmap
-        advancedMounts:
-          tagging:
-            tagging:
-              - path: /config/config.yaml
-                subPath: config.yaml
-                readOnly: true
       buffer:
         existingClaim: buffer
         advancedMounts:

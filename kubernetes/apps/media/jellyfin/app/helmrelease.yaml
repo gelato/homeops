@@ -53,7 +53,7 @@ spec:
                 cpu: 15m
                 memory: 1837M
               limits:
-                memory: 3251M
+                memory: 5251M
                 nvidia.com/gpu: 1
     service:
       main:

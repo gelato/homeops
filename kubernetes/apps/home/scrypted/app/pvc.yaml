@@ -18,5 +18,5 @@ spec:
   accessModes: ["ReadWriteOnce"]
   resources:
     requests:
-      storage: 50Gi
-  storageClassName: longhorn-iceberg
+      storage: 5Gi
+  storageClassName: longhorn-ssd

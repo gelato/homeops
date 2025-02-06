@@ -3,16 +3,16 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ./namespace.yaml
-  # - ./flaresolverr/ks.yaml
+  - ./flaresolverr/ks.yaml
   - ./media-storage/ks.yaml
-  # - ./prowlarr/ks.yaml
-  # - ./qbittorrent/ks.yaml
-  # - ./radarr/ks.yaml
-  # - ./sonarr/ks.yaml
-  # - ./lidarr/ks.yaml
+  - ./prowlarr/ks.yaml
+  - ./qbittorrent/ks.yaml
+  - ./radarr/ks.yaml
+  - ./sonarr/ks.yaml
+  - ./lidarr/ks.yaml
   - ./jellyfin/ks.yaml
-  # - ./recyclarr/ks.yaml
-  # - ./jellyseerr/ks.yaml
+  - ./recyclarr/ks.yaml
+  - ./jellyseerr/ks.yaml
   # - ./immich/ks.yaml
   # - ./jackett/ks.yaml
   # - ./games/ks.yaml

@@ -14,4 +14,5 @@ spec:
   resources:
     requests:
       storage: 100Mi
-  storageClassName: longhorn-ssd
+  storageClassName: longhorn-fast
+  volumeName: pvc-158bd2cb-7419-44ca-9340-5ef8da7a29e0

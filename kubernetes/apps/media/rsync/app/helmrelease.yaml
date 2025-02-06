@@ -40,7 +40,6 @@ spec:
             securityContext:
               allowPrivilegeEscalation: true
               readOnlyRootFilesystem: false
-              capabilities: { drop: ["ALL"] }
             resources:
               requests:
                 cpu: 10m
@@ -48,7 +47,7 @@ spec:
                 memory: 512Mi
         pod:
           securityContext:
-            runAsUser: 1000
+            runAsUser: 0
             runAsGroup: 568
             runAsNonRoot: false
           affinity:

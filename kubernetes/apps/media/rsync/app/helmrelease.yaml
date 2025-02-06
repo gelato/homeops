@@ -35,6 +35,8 @@ spec:
             image:
               repository: hub.docker.com/eeacms/rsync
               tag: 2.6@sha256:07244cc157ee915ee4095734cd6b68b33bbb807fe59c19a9cd78aa3a1fa3d972
+            command: ["/bin/sh", "-c"]
+            args: ["sleep 100000"]
             env:
               TZ: ${TIMEZONE}
             securityContext:

@@ -12,6 +12,7 @@ resources:
   # - ./grafana/ks.yaml
   # - ./ntfy/ks.yaml
   # - ./goldilocks/ks.yaml
+  - ./apprise/ks.yaml
 components:
   - ../../flux/components/namespace
 patches:

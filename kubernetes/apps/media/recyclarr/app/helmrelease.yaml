@@ -22,49 +22,39 @@ spec:
       retries: 3
   values:
     controllers:
-      main:
-        type: cronjob
-        cronjob:
-          schedule: "@daily"
-          timeZone: &timeZone ${TIMEZONE}
-          concurrencyPolicy: Forbid
-          successfulJobsHistory: 1
-          failedJobsHistory: 1
+      recyclarr:
+        annotations:
+          reloader.stakater.com/auto: "true"
         containers:
-          main:
+          app:
             image:
               repository: ghcr.io/recyclarr/recyclarr
               tag: 7.4.0@sha256:619c3b8920a179f2c578acd0f54e9a068f57c049aff840469eed66e93a4be2cf
-            args:
-              - sync
             env:
-              COMPlus_EnableDiagnostics: 0
-              TZ: *timeZone
+              TZ: ${TIMEZONE}
             envFrom:
               - secretRef:
                   name: recyclarr-secret
             resources:
               requests:
                 cpu: 10m
+                memory: 64M
               limits:
-                memory: 128Mi
-            securityContext:
-              allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
-              capabilities:
-                drop:
-                  - ALL
+                memory: 128M
         pod:
           securityContext:
             runAsUser: 568
             runAsGroup: 568
-            runAsNonRoot: true
             fsGroup: 568
             fsGroupChangePolicy: OnRootMismatch
+    service:
+      app:
+        controller: *app
+        enabled: false
     persistence:
       config:
         enabled: true
-        existingClaim: *app
+        existingClaim: recyclarr
       config-file:
         type: configMap
         name: recyclarr-configmap
@@ -72,7 +62,6 @@ spec:
           - path: /config/recyclarr.yml
             subPath: recyclarr.yml
             readOnly: true
-    service:
-      main:
-        controller: main
-        enabled: false
+          - path: /config/settings.yml
+            subPath: settings.yml
+            readOnly: true

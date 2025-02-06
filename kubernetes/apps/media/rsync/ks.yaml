@@ -10,7 +10,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./kubernetes/apps/service/rsync/app
+  path: ./kubernetes/apps/media/rsync/app
   prune: true
   sourceRef:
     kind: GitRepository

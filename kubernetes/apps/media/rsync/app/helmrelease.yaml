@@ -50,7 +50,7 @@ spec:
           securityContext:
             runAsUser: 1000
             runAsGroup: 568
-            runAsNonRoot: true
+            runAsNonRoot: false
           affinity:
             podAffinity:
               requiredDuringSchedulingIgnoredDuringExecution:

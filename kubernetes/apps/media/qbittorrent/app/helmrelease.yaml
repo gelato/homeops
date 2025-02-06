@@ -51,33 +51,23 @@ spec:
               tag: 5.0.3@sha256:4b9de3356475bd97fda3fb4d98f213e8d139aef15e7bd20dab72973e661901dd
             env:
               TZ: ${TIMEZONE}
-              QBITTORRENT__PORT: &port 8049
-              QBITTORRENT__BT_PORT: &bittorrentPort 50413
-              QBT_Application__MemoryWorkingSetLimit: 10000
+              QBT_WEBUI_PORT: &port 8049
+              QBT_TORRENTING_PORT: &bittorrentPort 50413
               QBT_Preferences__WebUI__AlternativeUIEnabled: false
               QBT_Preferences__WebUI__AuthSubnetWhitelistEnabled: true
               QBT_Preferences__WebUI__AuthSubnetWhitelist: |-
                 10.111.0.0/16, 10.222.0.0/16, 192.168.0.0/16
               QBT_Preferences__WebUI__LocalHostAuth: false
-              QBT_BitTorrent__Session__Interface: eth0
-              QBT_BitTorrent__Session__InterfaceAddress:
-                valueFrom:
-                  fieldRef:
-                    fieldPath: status.podIP
-              QBT_BitTorrent__Session__InterfaceName: eth0
             probes:
-              liveness: &probes
+              liveness:
                 enabled: true
-                custom: true
+              readiness:
+                enabled: true
+              startup:
+                enabled: true
                 spec:
-                  httpGet:
-                    path: /api/v2/app/version
-                    port: *port
-                  initialDelaySeconds: 0
+                  failureThreshold: 30
                   periodSeconds: 10
-                  timeoutSeconds: 1
-                  failureThreshold: 3
-              readiness: *probes
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true

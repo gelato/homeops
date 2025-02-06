@@ -51,6 +51,16 @@ spec:
             runAsUser: 1000
             runAsGroup: 568
             runAsNonRoot: true
+          affinity:
+            podAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+              - labelSelector:
+                  matchExpressions:
+                    - key: "app.kubernetes.io/name"
+                      operator: In
+                      values:
+                        - jellyfin
+                topologyKey: "kubernetes.io/hostname"
     persistence:
       media:
         existingClaim: media-storage

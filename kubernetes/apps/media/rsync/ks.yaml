@@ -6,7 +6,7 @@ metadata:
   name: &app rsync
   namespace: flux-system
 spec:
-  targetNamespace: service
+  targetNamespace: media
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app

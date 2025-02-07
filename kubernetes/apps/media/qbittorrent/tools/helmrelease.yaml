@@ -135,17 +135,6 @@ spec:
             resources: *resources
         pod:
           securityContext: *securityContext
-      limiter:
-        containers:
-          app:
-            <<: *container
-            args: [
-              "limiter",
-              "--max-line-speed-mbps", "300",
-              "--max-percent", "0.8",
-              "--limit-percent", "0.4",
-              "--interval", "5"
-            ]
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true

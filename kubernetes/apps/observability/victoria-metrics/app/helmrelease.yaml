@@ -230,12 +230,27 @@ spec:
 
     kubeControllerManager:
       enabled: true
+      vmScrape:
+        spec:
+          selector:
+            matchLabels:
+              k8s-app: kube-controller-manager
     kubeProxy:
       enabled: true
     kubeScheduler:
       enabled: true
+      vmScrape:
+        spec:
+          selector:
+            matchLabels:
+              k8s-app: kube-scheduler
     kubeEtcd:
       enabled: true
+      vmScrape:
+        spec:
+          selector:
+            matchLabels:
+              k8s-app: kube-controller-manager
 
     # Enable deployment of kube-state-metrics
     kube-state-metrics:

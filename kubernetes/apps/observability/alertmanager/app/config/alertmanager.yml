@@ -6,7 +6,7 @@ metadata:
   namespace: observability
 type: Opaque
 stringData:
-  alertmanager.yaml: |
+  alertmanager.yml: |
     receivers:
       - name: "null"
       - name: "pushover"

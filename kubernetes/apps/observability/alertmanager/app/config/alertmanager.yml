@@ -4,8 +4,8 @@ receivers:
   - name: "pushover"
     pushover_configs:
       - html: true
-        token: /etc/secrets/alertmanager_api_token
-        user_key: /etc/secrets/pushover_user_key
+        token: /etc/secrets/ALERTMANAGER_API_TOKEN
+        user_key: /etc/secrets/PUSHOVER_USER_KEY
         send_resolved: true
         priority: |-
           {{ if eq .Status "firing" }}1{{ else }}0{{ end }}

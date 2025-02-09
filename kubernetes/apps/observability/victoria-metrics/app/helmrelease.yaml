@@ -221,6 +221,13 @@ spec:
             replacement: "kubelet"
     kubeApiServer:
       enabled: true
+      # -- Spec for VMServiceScrape CRD is [here](https://docs.victoriametrics.com/operator/api.html#vmservicescrapespec)
+      vmScrape:
+        spec:
+          selector:
+            matchLabels:
+              k8s-app: kube-apiserver
+
     kubeControllerManager:
       enabled: true
     kubeProxy:

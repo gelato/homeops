@@ -4,8 +4,8 @@ receivers:
   - name: "pushover"
     pushover_configs:
       - html: true
-        token: ${ALERTMANAGER_API_TOKEN}
-        user_key: ${PUSHOVER_USER_KEY}
+        token: ${{ALERTMANAGER_API_TOKEN}}
+        user_key: ${{PUSHOVER_USER_KEY}}
         send_resolved: true
         priority: |-
           {{ if eq .Status "firing" }}1{{ else }}0{{ end }}

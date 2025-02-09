@@ -38,9 +38,7 @@ spec:
             env:
               TZ: ${TIMEZONE}
               LOG_LEVEL: info
-              PORT: &port 80
-              PROMETHEUS_ENABLED: true
-              PROMETHEUS_PORT: &metricsPort 8080
+              PORT: &port 8080
             probes:
               liveness: &probes
                 enabled: true

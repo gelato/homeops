@@ -40,18 +40,10 @@ spec:
               LOG_LEVEL: info
               PORT: &port 8080
             probes:
-              liveness: &probes
+              liveness:
                 enabled: true
-                custom: true
-                spec:
-                  httpGet:
-                    path: /v1
-                    port: *port
-                  initialDelaySeconds: 0
-                  periodSeconds: 10
-                  timeoutSeconds: 1
-                  failureThreshold: 3
-              readiness: *probes
+              readiness:
+                enabled: true
               startup:
                 enabled: false
             resources:

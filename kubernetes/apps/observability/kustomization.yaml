@@ -13,6 +13,7 @@ resources:
   # - ./ntfy/ks.yaml
   # - ./goldilocks/ks.yaml
   - ./apprise/ks.yaml
+  - ./kube-state-metrics/ks.yaml
 components:
   - ../../flux/components/namespace
 patches:

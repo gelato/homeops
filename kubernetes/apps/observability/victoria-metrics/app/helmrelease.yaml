@@ -219,14 +219,10 @@ spec:
             targetLabel: metrics_path
           - targetLabel: "job"
             replacement: "kubelet"
+
     kubeApiServer:
       enabled: true
       # -- Spec for VMServiceScrape CRD is [here](https://docs.victoriametrics.com/operator/api.html#vmservicescrapespec)
-      vmScrape:
-        spec:
-          selector:
-            matchLabels:
-              k8s-app: kube-apiserver
 
     kubeControllerManager:
       enabled: true
@@ -245,28 +241,43 @@ spec:
               - kube-system
           endpoints:
             - bearerTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
-              port: https-metrics
+              port: http-metrics
               scheme: https
               tlsConfig:
                 insecureSkipVerify: true
                 caFile: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
                 serverName: kubernetes
+
     kubeProxy:
       enabled: true
+
     kubeScheduler:
       enabled: true
+      endpoints: []
+      service:
+        enabled: true
+        port: 10259
+        targetPort: 10259
+        selector:
+          component: kube-scheduler
       vmScrape:
         spec:
-          selector:
-            matchLabels:
-              k8s-app: kube-scheduler
+          jobLabel: jobLabel
+          namespaceSelector:
+            matchNames: [kube-system]
+          endpoints:
+            - bearerTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
+              port: http-metrics
+              scheme: https
+              tlsConfig:
+                insecureSkipVerify: true
+                caFile: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
     kubeEtcd:
       enabled: true
-      vmScrape:
-        spec:
-          selector:
-            matchLabels:
-              k8s-app: kube-controller-manager
+      service:
+        enabled: true
+        selector:
+          component: kube-controller-manager
 
     # Enable deployment of kube-state-metrics
     kube-state-metrics:

@@ -230,11 +230,10 @@ spec:
 
     kubeControllerManager:
       enabled: true
-      vmScrape:
-        spec:
-          selector:
-            matchLabels:
-              k8s-app: kube-controller-manager
+      service:
+        enabled: true
+        selector:
+          component: kube-controller-manager
     kubeProxy:
       enabled: true
     kubeScheduler:

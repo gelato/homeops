@@ -234,6 +234,11 @@ spec:
         enabled: true
         selector:
           component: kube-controller-manager
+      vmScrape:
+        spec:
+          endpoints:
+            - tlsConfig:
+                insecureSkipVerify: true
     kubeProxy:
       enabled: true
     kubeScheduler:

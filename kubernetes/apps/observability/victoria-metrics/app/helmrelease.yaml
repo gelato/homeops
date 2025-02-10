@@ -275,19 +275,19 @@ spec:
 
     kubeEtcd:
       enabled: true
-      service:
-        enabled: true
-        selector:
-          component: kube-controller-manager
-      vmScrape:
-        spec:
-          endpoints:
-            - bearerTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
-              port: http-metrics
-              scheme: https
-              tlsConfig:
-                insecureSkipVerify: true
-                caFile: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+      # service:
+      #   enabled: true
+      #   selector:
+      #     component: kube-controller-manager
+      # vmScrape:
+      #   spec:
+      #     endpoints:
+      #       - bearerTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
+      #         port: http-metrics
+      #         scheme: https
+      #         tlsConfig:
+      #           insecureSkipVerify: true
+      #           caFile: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
 
     # Enable deployment of kube-state-metrics
     kube-state-metrics:

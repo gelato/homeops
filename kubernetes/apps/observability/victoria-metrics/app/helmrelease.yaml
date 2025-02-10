@@ -245,7 +245,7 @@ spec:
               - kube-system
           endpoints:
             - bearerTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
-              port: http-metrics
+              port: https-metrics
               scheme: https
               tlsConfig:
                 insecureSkipVerify: true

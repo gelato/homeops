@@ -272,12 +272,20 @@ spec:
               tlsConfig:
                 insecureSkipVerify: true
                 caFile: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+
     kubeEtcd:
       enabled: true
       service:
         enabled: true
         selector:
           component: kube-controller-manager
+      vmScrape:
+        spec:
+          endpoints:
+            - port: http-metrics
+              scheme: https
+              tlsConfig:
+                insecureSkipVerify: true
 
     # Enable deployment of kube-state-metrics
     kube-state-metrics:

@@ -282,10 +282,12 @@ spec:
       vmScrape:
         spec:
           endpoints:
-            - port: http-metrics
+            - bearerTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
+              port: http-metrics
               scheme: https
               tlsConfig:
                 insecureSkipVerify: true
+                caFile: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
 
     # Enable deployment of kube-state-metrics
     kube-state-metrics:

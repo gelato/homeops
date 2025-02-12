@@ -16,4 +16,4 @@ resources:
   # - ./immich/ks.yaml
   - ./jackett/ks.yaml
   # - ./games/ks.yaml
-  - ./rsync/ks.yaml
+  # - ./rsync/ks.yaml

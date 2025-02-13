@@ -18,7 +18,7 @@ releases:
   - name: prometheus-operator-crds
     namespace: observability
     chart: oci://ghcr.io/prometheus-community/charts/prometheus-operator-crds
-    version: 17.0.2
+    version: 18.0.0
 
   - name: cilium
     namespace: kube-system
@@ -41,7 +41,7 @@ releases:
   - name: cert-manager
     namespace: cert-manager
     chart: jetstack/cert-manager
-    version: v1.16.3
+    version: v1.17.0
     values:
       - ../apps/cert-manager/cert-manager/app/helm-values.yaml
     needs:

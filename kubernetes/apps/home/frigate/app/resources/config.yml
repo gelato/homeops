@@ -87,13 +87,13 @@ record:
     pre_capture: 5
     post_capture: 5
     retain:
-      default: 14
+      days: 14
       mode: active_objects
   detections:
     pre_capture: 5
     post_capture: 5
     retain:
-      default: 14
+      days: 14
       mode: active_objects
 
 snapshots:

@@ -12,6 +12,11 @@ creation_rules:
     key_groups:
       - age:
           - "age1w77q45vfakc48tq3zp35hhdcwxa3zks5vrzwxm9k6ge578zx7gmqkyazy0"
+  - path_regex: kubernetes\\.*\.sops\.ya?ml
+    encrypted_regex: ^(data|stringData)$
+    key_groups:
+      - age:
+          - "age1w77q45vfakc48tq3zp35hhdcwxa3zks5vrzwxm9k6ge578zx7gmqkyazy0"
 stores:
   yaml:
     indent: 2

@@ -3,7 +3,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ./namespace.yaml
-  - ./flaresolverr/ks.yaml
+  - ./flare-bypasser/ks.yaml
   - ./media-storage/ks.yaml
   - ./prowlarr/ks.yaml
   - ./qbittorrent/ks.yaml
@@ -14,6 +14,6 @@ resources:
   - ./recyclarr/ks.yaml
   - ./jellyseerr/ks.yaml
   # - ./immich/ks.yaml
-  # - ./jackett/ks.yaml
+  - ./jackett/ks.yaml
   # - ./games/ks.yaml
-  - ./rsync/ks.yaml
+  # - ./rsync/ks.yaml

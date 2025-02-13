@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 3.6.1
+      version: 3.7.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -80,8 +80,8 @@ spec:
               requests:
                 cpu: 15m
                 memory: 273M
-              limits:
-                memory: 1797M
+              # limits:
+              #   memory: 1797M
         pod:
           securityContext:
             runAsUser: 1000

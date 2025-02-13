@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 3.6.1
+      version: 3.7.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -45,7 +45,7 @@ spec:
           main:
             image:
               repository: ghcr.io/onedr0p/radarr-develop
-              tag: 5.18.1.9612@sha256:f19b5e8f22e1b807a563d50ebef0b47aca1a2d61cea63599c2c4ca85425a2320
+              tag: 5.19.0.9697@sha256:7b92d611e751c47b6f110d5945f771761e999511b8731c6e7c565943235d1fcf
             env:
               RADARR__APP__INSTANCENAME: Radarr
               RADARR__APP__THEME: dark
@@ -80,8 +80,8 @@ spec:
               requests:
                 cpu: 15m
                 memory: 249M
-              limits:
-                memory: 2238M
+              # limits:
+              #   memory: 2238M
         pod:
           securityContext:
             runAsUser: 1000

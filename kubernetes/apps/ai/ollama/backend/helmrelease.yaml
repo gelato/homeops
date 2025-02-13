@@ -1,0 +1,140 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app ollama
+  namespace: ai
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: ollama
+      version: 1.4.0
+      sourceRef:
+        kind: HelmRepository
+        name: ollama
+        namespace: flux-system
+
+  timeout: 5m
+
+  maxHistory: 2
+
+  install:
+    remediation:
+      retries: 3
+
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+
+  uninstall:
+    keepHistory: false
+
+  values:
+    updateStrategy:
+      type: "Recreate"
+
+    replicaCount: 1
+
+    ollama:
+      models:
+        pull:
+          - llama3.1:8b
+          # - qwen2.5-coder:7b
+          # - llava-llama3:8b
+          - gemma2:9b
+          #- hf.co/ai-sage/GigaChat-20B-A3B-instruct-GGUF:Q8_0
+          - gaplo917/gemma2-tools:9b
+          - llama3-groq-tool-use:8b
+          - hf.co/t-tech/T-lite-it-1.0-Q8_0-GGUF
+
+        run:
+          - llama3.1:8b               # ??       - K8SGPT / OTerm / General
+          # - qwen2.5-coder:7b      # 8BG      - Code
+          # - llava-llama3:8b           # ??       - Frigate
+          #- hf.co/ai-sage/GigaChat-20B-A3B-instruct-GGUF:Q8_0 # Gigachat-lite
+          - gaplo917/gemma2-tools:9b
+          - hf.co/t-tech/T-lite-it-1.0-Q8_0-GGUF
+
+      gpu:
+        # Enable GPU integration
+        enabled: true
+        # Specify the number of GPU
+        number: 1
+        # Default model to serve, if not set, no model will be served at container startup
+        type: 'nvidia'
+
+      defaultModel: "cow/gemma2_tools"
+
+      serviceAccount:
+        # Specifies whether a service account should be created
+        create: true
+        # Automatically mount a ServiceAccount's API credentials?
+        automount: true
+        # The name of the service account to use.
+        # If not set and create is true, a name is generated using the fullname template
+        name: ""
+
+    runtimeClassName: nvidia
+
+    securityContext:
+      privileged: true
+
+    service:
+      main:
+        ports:
+          http:
+            port: 11434
+
+    ingress:
+      enabled: true
+      className: internal
+      hosts:
+        - host: &host ollama.${SECRET_DOMAIN}
+          paths:
+            - path: /
+              pathType: Prefix
+
+    resources:
+      requests:
+        memory: 8G
+        cpu: 200m
+        nvidia.com/gpu: 1
+      limits:
+        nvidia.com/gpu: 1
+
+    livenessProbe:
+      enabled: true
+      path: /
+      initialDelaySeconds: 600
+      periodSeconds: 10
+      timeoutSeconds: 5
+      failureThreshold: 6
+      successThreshold: 1
+
+    readinessProbe:
+      enabled: true
+      path: /
+      initialDelaySeconds: 30
+      periodSeconds: 5
+      timeoutSeconds: 3
+      failureThreshold: 6
+      successThreshold: 1
+
+    persistentVolume:
+      enabled: true
+      existingClaim: ollama-data-pvc
+
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: nvidia.com/gpu.present
+                  operator: In
+                  values:
+                    - "true"
+
+    nodeSelector:
+      nvidia.com/gpu.present: "true"

@@ -13,7 +13,6 @@ resources:
   - ./repos/k8s-gateway.yaml
   - ./repos/metrics-server.yaml
   - ./repos/openebs.yaml
-  - ./repos/prometheus-community.yaml
   - ./repos/spegel.yaml
   - ./repos/stakater.yaml
   - ./repos/intel.yaml

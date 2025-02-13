@@ -3,13 +3,13 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: flaresolverr
+  name: flare-bypasser
 spec:
   interval: 30m
   chart:
     spec:
       chart: app-template
-      version: 3.6.1
+      version: 3.7.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -19,7 +19,7 @@ spec:
       retries: 3
   upgrade:
     cleanupOnFail: true
-    timeout: 30m
+    timeout: 5m
     remediation:
       retries: 3
   uninstall:
@@ -33,27 +33,17 @@ spec:
         containers:
           main:
             image:
-              repository: ghcr.io/flaresolverr/flaresolverr
-              tag: v3.3.21@sha256:f104ee51e5124d83cf3be9b37480649355d223f7d8f9e453d0d5ef06c6e3b31b
+              repository: ghcr.io/yoori/flare-bypasser
+              tag: v0.1.53@sha256:95f3e89512a9727da5a4e580ac8ec5c325f65c00c04e3e1b0e975c59ad33f0cd
             env:
               TZ: ${TIMEZONE}
               LOG_LEVEL: info
-              PORT: &port 80
-              PROMETHEUS_ENABLED: true
-              PROMETHEUS_PORT: &metricsPort 8080
+              PORT: &port 8080
             probes:
-              liveness: &probes
+              liveness:
                 enabled: true
-                custom: true
-                spec:
-                  httpGet:
-                    path: /health
-                    port: *port
-                  initialDelaySeconds: 0
-                  periodSeconds: 10
-                  timeoutSeconds: 1
-                  failureThreshold: 3
-              readiness: *probes
+              readiness:
+                enabled: true
               startup:
                 enabled: false
             resources:
@@ -61,22 +51,10 @@ spec:
                 cpu: 15m
                 memory: 477M
               limits:
-                memory: 2G
+                memory: 3G
     service:
       main:
         controller: main
         ports:
           http:
             port: *port
-          metrics:
-            port: *metricsPort
-    serviceMonitor:
-      main:
-        serviceName: main
-        enabled: true
-        endpoints:
-          - port: metrics
-            scheme: http
-            path: /metrics
-            interval: 1m
-            scrapeTimeout: 10s

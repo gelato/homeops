@@ -13,7 +13,7 @@ resources:
   - ./jellyfin/ks.yaml
   - ./recyclarr/ks.yaml
   - ./jellyseerr/ks.yaml
-  # - ./immich/ks.yaml
+  - ./immich/ks.yaml
   - ./jackett/ks.yaml
   # - ./games/ks.yaml
   # - ./rsync/ks.yaml

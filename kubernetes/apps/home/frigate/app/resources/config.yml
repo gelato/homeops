@@ -83,7 +83,13 @@ record:
     mode: all
   preview:
     quality: very_high
-  events:
+  alerts:
+    pre_capture: 5
+    post_capture: 5
+    retain:
+      default: 14
+      mode: active_objects
+  detections:
     pre_capture: 5
     post_capture: 5
     retain:

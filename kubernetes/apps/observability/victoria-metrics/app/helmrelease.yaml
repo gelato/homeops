@@ -163,7 +163,7 @@ spec:
             cpu: 50m
             memory: 256Mi
           limits:
-            cpu: 400m
+            cpu: 800m
             memory: 512Mi
         topologySpreadConstraints:
           - maxSkew: 1

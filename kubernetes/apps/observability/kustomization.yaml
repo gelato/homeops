@@ -8,13 +8,15 @@ resources:
   # - ./smartctl-exporter/ks.yaml
   # - ./unpoller/ks.yaml
   - ./victoria-metrics/ks.yaml
-  # - ./victoria-logs/ks.yaml
+  - ./victoria-logs/ks.yaml
   # - ./grafana/ks.yaml
   # - ./ntfy/ks.yaml
   - ./goldilocks/ks.yaml
   - ./apprise/ks.yaml
   - ./kube-state-metrics/ks.yaml
   - ./alertmanager/ks.yaml
+  # Exporters
+  - ./exporters
 components:
   - ../../flux/components/namespace
 patches:

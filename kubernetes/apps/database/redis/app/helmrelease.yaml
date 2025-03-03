@@ -25,7 +25,6 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    # architecture: replication
     fullnameOverride: "redis-sentinel"
     commonConfiguration: |-
       # Enable AOF https://redis.io/topics/persistence#append-only-file
@@ -50,36 +49,12 @@ spec:
     master:
       persistence:
         enabled: false
-    rbac:
-      create: true
     replica:
       persistence:
         enabled: false
-      resources:
-        requests:
-          cpu: 10m
-          memory: 2Gi
-        limits:
-          memory: 10Gi
-      automountServiceAccountToken: true
-      affinity:
-        podAntiAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-            - weight: 100
-              podAffinityTerm:
-                labelSelector:
-                  matchLabels:
-                    component: redis
-                topologyKey: kubernetes.io/hostname
-            - weight: 90
-              podAffinityTerm:
-                labelSelector:
-                  matchLabels:
-                    component: redis
-                topologyKey: "topology.kubernetes.io/zone"
     sentinel:
       enabled: true
-      masterSet: redis-sentinel
+      masterSet: redis-master
       getMasterTimeout: 10
       startupProbe:
         failureThreshold: 2

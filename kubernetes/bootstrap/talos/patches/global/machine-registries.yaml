@@ -2,31 +2,30 @@ machine:
   registries:
     config:
       harbor.casa:
-        # The TLS configuration for the registry.
         tls:
           insecureSkipVerify: true
-    # mirrors:
-    #   docker.io:
-    #     endpoints:
-    #       - http://harbor.casa/v2/local-dreg
-    #     overridePath: true
-    #   ghcr.io:
-    #     endpoints:
-    #       - http://harbor.casa/v2/local-github
-    #     overridePath: true
-    #   gcr.io:
-    #     endpoints:
-    #       - http://harbor.casa/v2/local-gcr
-    #     overridePath: true
-    #   registry.k8s.io:
-    #     endpoints:
-    #       - http://harbor.casa/v2/local-k8s
-    #     overridePath: true
-    #   quay.io:
-    #     endpoints:
-    #       - http://harbor.casa/v2/local-quay
-    #     overridePath: true
-    #   hub.docker.com:
-    #     endpoints:
-    #       - http://harbor.casa/v2/local-dhub
-    #     overridePath: true
+    mirrors:
+      docker.io:
+        endpoints:
+          - https://harbor.casa/v2/local-dreg
+        overridePath: true
+      ghcr.io:
+        endpoints:
+          - https://harbor.casa/v2/local-github
+        overridePath: true
+      gcr.io:
+        endpoints:
+          - https://harbor.casa/v2/local-gcr
+        overridePath: true
+      registry.k8s.io:
+        endpoints:
+          - https://harbor.casa/v2/local-k8s
+        overridePath: true
+      quay.io:
+        endpoints:
+          - https://harbor.casa/v2/local-quay
+        overridePath: true
+      hub.docker.com:
+        endpoints:
+          - https://harbor.casa/v2/local-dhub
+        overridePath: true

@@ -1,4 +1,5 @@
 ---
+---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2beta2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
@@ -25,6 +26,7 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    architecture: replication
     fullnameOverride: "redis-sentinel"
     commonConfiguration: |-
       # Enable AOF https://redis.io/topics/persistence#append-only-file
@@ -46,22 +48,49 @@ spec:
       enabled: false
       sentinel: false
       usePasswordFiles: false
-    master:
-      persistence:
-        enabled: false
+    rbac:
+      create: true
     replica:
-      persistence:
+      replicaCount: 2
+      updateStrategy:
+        type: RollingUpdate
+      persistentVolume:
         enabled: false
+      resources:
+        requests:
+          cpu: 10m
+          memory: 2Gi
+        limits:
+          memory: 10Gi
+      automountServiceAccountToken: true
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    component: redis
+                topologyKey: kubernetes.io/hostname
+            - weight: 90
+              podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    component: redis
+                topologyKey: "topology.kubernetes.io/zone"
     sentinel:
       enabled: true
-      masterSet: redis-master
-      getMasterTimeout: 10
-      startupProbe:
-        failureThreshold: 2
-      persistence:
-        enabled: false
+      masterSet: redis-sentinel
+      masterService:
+        enabled: true
+    networkPolicy:
+      enabled: false
     metrics:
-      enabled: true
+      enabled: false
+      image:
+        repository: bitnami/redis-exporter
+        tag: 1.67.0-debian-12-r7
+        redisTargetHost: redis-sentinel
       serviceMonitor:
         enabled: true
-        interval: 1m
+        interval: 20s

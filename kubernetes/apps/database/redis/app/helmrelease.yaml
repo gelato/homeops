@@ -53,9 +53,6 @@ spec:
     rbac:
       create: true
     replica:
-      replicaCount: 2
-      updateStrategy:
-        type: RollingUpdate
       persistence:
         enabled: false
       resources:

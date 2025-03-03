@@ -2,6 +2,10 @@
 instance:
   cluster:
     networkPolicy: false
+    domain: "cluster.local"
+  storage:
+    class: "longhorn-fast"
+    size: "10Gi"
   components:
     - source-controller
     - kustomize-controller

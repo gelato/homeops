@@ -46,6 +46,7 @@ spec:
     auth:
       enabled: false
       sentinel: false
+      usePasswordFiles: false
     rbac:
       create: true
     replica:

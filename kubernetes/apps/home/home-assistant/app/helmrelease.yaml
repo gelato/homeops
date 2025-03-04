@@ -154,18 +154,18 @@ spec:
       config:
         enabled: true
         existingClaim: home-assistant
-      # bt:
-      #   enabled: true
-      #   type: hostPath
-      #   hostPath: /run/dbus
-      #   globalMounts:
-      #   - path: /run/dbus
-      snd:
+      bt:
         enabled: true
         type: hostPath
-        hostPath: /dev/snd
+        hostPath: /run/dbus
         globalMounts:
-        - path: /dev/snd
+        - path: /run/dbus
+      # snd:
+      #   enabled: true
+      #   type: hostPath
+      #   hostPath: /dev/snd
+      #   globalMounts:
+      #   - path: /dev/snd
       # usb:
       #   enabled: true
       #   type: hostPath

@@ -1,0 +1,112 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2beta1.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: synatainer
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.7.2
+      interval: 30m
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+
+  values:
+    controllers:
+      auto-compressor:
+        type: cronjob
+
+        cronjob:
+          schedule: "0 2 * * *" # Every day at 2am
+          successfulJobsHistory: 1
+          failedJobsHistory: 3
+
+        containers:
+          main:
+            image: &image
+              repository: registry.gitlab.com/mb-saces/synatainer
+              tag: 0.4.4
+
+            envFrom: &secrets
+              - secretRef:
+                  name: synatainer-secret
+              - secretRef:
+                  name: synatainer-db-secret
+
+            env:
+              SYNAPSE_HOST: http://synapse-matrix-synapse.matrix.svc.cluster.local:8008
+              STATE_AUTOCOMPRESSOR_CHUNKS_TO_COMPRESS: 100
+              STATE_AUTOCOMPRESSOR_CHUNK_SIZE: 500
+
+            command: ["autocompressor.sh"]
+
+            resources: &resources
+              requests:
+                cpu: 12m
+                memory: 64M
+              limits:
+                memory: 256M
+
+      purge-rooms:
+        type: cronjob
+
+        cronjob:
+          schedule: "0 3 * * *" # Every day at 3am
+          successfulJobsHistory: 1
+          failedJobsHistory: 1
+
+        containers:
+          main:
+            image: *image
+            envFrom: *secrets
+
+            env:
+              SYNAPSE_HOST: http://synapse-matrix-synapse.matrix.svc.cluster.local:8008
+
+            command: ["purge_rooms_no_local_members.sh"]
+
+            resources: *resources
+
+      purge-history:
+        type: cronjob
+
+        cronjob:
+          schedule: "0 5 * * 1" # Every monday at 5am
+          successfulJobsHistory: 1
+          failedJobsHistory: 1
+
+        containers:
+          main:
+            image: *image
+            envFrom: *secrets
+
+            env:
+              SYNAPSE_HOST: http://synapse-matrix-synapse.matrix.svc.cluster.local:8008
+              HISTORY_MAX_AGE: 180
+              HISTORY_ROOM_LIST: all
+
+            command: ["purge_history.sh"]
+
+            resources: *resources
+
+      vacuum:
+        type: cronjob
+
+        cronjob:
+          schedule: "0 4 1 * *" # First day of every month at 4:00 am
+          successfulJobsHistory: 1
+          failedJobsHistory: 1
+
+        containers:
+          main:
+            image: *image
+            envFrom: *secrets
+
+            command: ["stui", "vacuum-db", "--full"]
+
+            resources: *resources

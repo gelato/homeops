@@ -5,4 +5,3 @@ metadata:
   name: security
   labels:
     goldilocks.fairwinds.com/enabled: "true"
-  #   kustomize.toolkit.fluxcd.io/prune: disabled

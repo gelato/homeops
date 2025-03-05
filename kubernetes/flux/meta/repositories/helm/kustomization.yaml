@@ -29,4 +29,4 @@ resources:
   - ./repos/nvidia-charts.yaml
   - ./repos/ollama.yaml
   - ./repos/victoriametrics.yaml
-  - ./repos/ananace-matrix.yaml
+  - ./repos/matrix.yaml

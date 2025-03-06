@@ -7,5 +7,6 @@ metadata:
 spec:
   interval: 10m
   url: oci://harbor.casa/charts/matrix-synapse
+  insecure: true
   ref:
     semver: ">=3.11.4"

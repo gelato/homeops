@@ -1,6 +1,6 @@
 ---
 apiVersion: source.toolkit.fluxcd.io/v1beta2
-kind: matrix-synapse-chart
+kind: HelmRepository
 metadata:
   name: matrix-synapse-chart
   namespace: flux-system

@@ -6,6 +6,6 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m
-  url: helm pull oci://harbor.casa/charts/matrix-synapse
+  url: oci://harbor.casa/charts/matrix-synapse
   ref:
     semver: ">=3.11.4"

@@ -1,0 +1,11 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: matrix-synapse-chart
+metadata:
+  name: matrix-synapse-chart
+  namespace: flux-system
+spec:
+  interval: 10m
+  url: helm pull oci://harbor.casa/charts/matrix-synapse
+  ref:
+    semver: ">=3.11.4"

@@ -7,14 +7,11 @@ spec:
   interval: 5m
   chart:
     spec:
-      # renovate: registryUrl=https://ananace.gitlab.io/charts
-      chart: matrix-synapse
-      version: 3.11.4
-      sourceRef:
-        kind: HelmRepository
-        name: harbor-charts
-        namespace: flux-system
-      interval: 5m
+      releaseName: matrix-synapse
+      interval: 10m
+      chartRef:
+        kind: OCIRepository
+        name: matrix-synapse-chart
   values:
     serverName: "${SECRET_DOMAIN}"
     publicServerName: "matrix.${SECRET_DOMAIN}"

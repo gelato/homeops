@@ -105,16 +105,25 @@ spec:
         enabled: false
 
     config:
-      reportStats: true
+      reportStats: false
+      publicBaseurl: "https://matrix.${SECRET_DOMAIN}"
+      # turnUris: []
+      # turnSecret: ''
+      enableRegistration: true
+      macaroonSecretKey: ${MATRIX_MACAROON_SECRET_KEY}
+      # trustedKeyServers:
+      #   - server_name: matrix.org
 
     extraConfig:
+      use_presence: true
+      enable_search: true
+      dynamic_thumbnails: true
+
       email:
         smtp_host: smtp-relay.service.svc.cluster.local
         smtp_port: 25
         notif_from: "Skynerv Matrix <noreply@${SECRET_DOMAIN}>"
 
-      presence:
-        enabled: true
       enable_3pid_lookup: false
       # app_service_config_files:
       #   - "/mautrix-discord/registration.yaml"
@@ -171,12 +180,6 @@ spec:
     synapse:
       strategy:
         type: Recreate
-      resources:
-        requests:
-          cpu: 1000m
-          memory: 2500Mi
-        limits:
-          memory: 2500Mi
       annotations:
         prometheus.io/scrape: "true"
         prometheus.io/path: "/_synapse/metrics"
@@ -189,6 +192,27 @@ spec:
       #   - name: mautrix-discord-registration
       #     mountPath: /mautrix-discord
       #     readOnly: true
+      podSecurityContext:
+        fsGroup: 666
+        runAsGroup: 666
+        runAsUser: 666
+
+      securityContext:
+        capabilities:
+          drop:
+          - ALL
+        readOnlyRootFilesystem: true
+        runAsNonRoot: true
+        runAsUser: 666
+
+      resources:
+        limits:
+          cpu: 1000m
+          memory: 2500Mi
+        requests:
+          cpu: 100m
+          memory: 2500Mi
+
 
     signingkey:
       job:

@@ -8,7 +8,7 @@ spec:
   releaseName: matrix-synapse
   chart:
     spec:
-      chart: charts/matrix-synapse
+      chart: matrix-synapse
       version: 3.11.4
       sourceRef:
         kind: HelmRepository

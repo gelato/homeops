@@ -1,12 +1,10 @@
----
-apiVersion: source.toolkit.fluxcd.io/v1beta2
-kind: OCIRepository
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/source.toolkit.fluxcd.io/helmrepository_v1beta2.json
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
 metadata:
   name: matrix-synapse
   namespace: flux-system
 spec:
-  interval: 10m
+  type: oci
+  interval: 5m
   url: oci://harbor.casa/charts/matrix-synapse
-  insecure: true
-  ref:
-    semver: ">=3.11.4"

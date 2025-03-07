@@ -7,5 +7,5 @@ metadata:
 spec:
   type: oci
   interval: 5m
-  url: oci://harbor.casa/charts/matrix-synapse
+  url: oci://harbor.casa/charts
   insecure: true

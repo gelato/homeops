@@ -158,10 +158,10 @@ spec:
     externalPostgresql:
       host: "postgres16-rw.database.svc.cluster.local"
       port: 5432
-      username: "${POSTGRES_SYNAPSE_USERNAME}"
+      username: "${SECRET_POSTGRES_SYNAPSE_USERNAME}"
       existingSecret: "synapse-secret"
       existingSecretPasswordKey: POSTGRES_SYNAPSE_PASSWORD
-      database: "${POSTGRES_SYNAPSE_DBNAME}"
+      database: "${SECRET_POSTGRES_SYNAPSE_DBNAME}"
 
     externalRedis:
       host: redis-sentinel-master.database.svc.cluster.local

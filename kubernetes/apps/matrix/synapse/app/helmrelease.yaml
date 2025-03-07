@@ -192,7 +192,10 @@ spec:
 
     signingkey:
       job:
-        enabled: true
+        enabled: false
+      existingSecret: synapse-secret
+      existingSecretKey: signing.key
+
 
     persistence:
       enabled: true

@@ -19,26 +19,73 @@ spec:
     publicServerName: "matrix.${SECRET_DOMAIN}"
 
     wellknown:
-      enabled: true
-      image:
-        repository: ghcr.io/rtsp/docker-lighttpd
-        tag: 1.4.76
-      client:
-        m.homeserver:
-          base_url: "https://matrix.${SECRET_DOMAIN}"
+      enabled: false
 
     workers:
       default:
+        replicaCount: 2
+        strategy:
+          type: RollingUpdate
+        podSecurityContext:
+          fsGroup: 666
+          runAsGroup: 666
+          runAsUser: 666
+
+        securityContext:
+          capabilities:
+            drop:
+              - ALL
+          readOnlyRootFilesystem: true
+          runAsNonRoot: true
+          runAsUser: 666
+
         resources:
           limits:
-            memory: 1Gi
+            cpu: 100m
+            memory: 128Mi
           requests:
-            memory: 512Mi
+            cpu: 100m
+            memory: 128Mi
+
+      pusher:
+        enabled: true
+
+      appservice:
+        enabled: true
+        generic: true
+        name: appservices
+
 
       media_repository:
         enabled: false
-        strategy:
-          type: Recreate
+        listeners: [media]
+        csPaths:
+          - "/_matrix/media/.*"
+          - "/_matrix/client/v1/media/.*"
+          - "/_matrix/federation/v1/media/.*"
+          - "/_synapse/admin/v1/purge_media_cache$"
+          - "/_synapse/admin/v1/room/.*/media"
+          - "/_synapse/admin/v1/user/.*/media"
+          - "/_synapse/admin/v1/media/"
+          - "/_synapse/admin/v1/quarantine_media/"
+          - "/_synapse/admin/v1/users/.*/media$"
+        paths:
+          - "/_matrix/media/.*"
+          - "/_matrix/client/v1/media/.*"
+          - "/_matrix/federation/v1/media/.*"
+
+      user_dir:
+        enabled: false
+        name: userdir
+        listeners: [client]
+        csPaths:
+          - "/_matrix/client/(api/v1|r0|v3|unstable)/user_directory/search$"
+
+      frontend_proxy:
+        enabled: false
+        listeners: [client]
+        csPaths:
+          - "/_matrix/client/(api/v1|r0|v3|unstable)/keys/upload"
 
       federation_sender:
         enabled: false
@@ -90,6 +137,23 @@ spec:
 
           ## User directory search requests
           - "/_matrix/client/(r0|v3|unstable)/user_directory/search"
+
+          ## The typing event stream
+          - "/_matrix/client/(api/v1|r0|v3|unstable)/rooms/.*/typing"
+
+          ## The to_device event stream
+          - "/_matrix/client/(r0|v3|unstable)/sendToDevice/"
+
+          ## The account_data event stream
+          - "/_matrix/client/(r0|v3|unstable)/.*/tags"
+          - "/_matrix/client/(r0|v3|unstable)/.*/account_data"
+
+          ## The receipts event stream
+          - "/_matrix/client/(r0|v3|unstable)/rooms/.*/receipt"
+          - "/_matrix/client/(r0|v3|unstable)/rooms/.*/read_markers"
+
+          ## The presence event stream
+          - "/_matrix/client/(api/v1|r0|v3|unstable)/presence/"
 
       synchrotron:
         enabled: true
@@ -150,6 +214,11 @@ spec:
               localpart_template: "{{ user.preferred_username }}"
               display_name_template: "{{ user.name | capitalize }}"
 
+    service:
+      type: ClusterIP
+      port: 8008
+      targetPort: http
+
     ingress:
       enabled: true
       className: external
@@ -179,7 +248,7 @@ spec:
 
     synapse:
       strategy:
-        type: Recreate
+        type: RollingUpdate
       annotations:
         prometheus.io/scrape: "true"
         prometheus.io/path: "/_synapse/metrics"

@@ -4,8 +4,8 @@ kind: PersistentVolumeClaim
 metadata:
   name: synapse
 spec:
-  accessModes: ["ReadWriteOnce"]
+  accessModes: ["ReadWriteMany"]
   resources:
     requests:
-      storage: 1Gi
-  storageClassName: longhorn-fast
+      storage: 10Gi
+  storageClassName: longhorn-ssd

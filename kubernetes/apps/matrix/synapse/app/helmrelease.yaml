@@ -5,13 +5,10 @@ metadata:
   name: &app synapse
 spec:
   interval: 5m
-  chart:
-    spec:
-      releaseName: matrix-synapse
-      interval: 10m
-      chartRef:
-        kind: OCIRepository
-        name: matrix-synapse-chart
+  releaseName: matrix-synapse
+  chartRef:
+    kind: OCIRepository
+    name: matrix-synapse-chart
   values:
     serverName: "${SECRET_DOMAIN}"
     publicServerName: "matrix.${SECRET_DOMAIN}"

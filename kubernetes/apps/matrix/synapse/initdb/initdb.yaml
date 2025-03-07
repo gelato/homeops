@@ -31,9 +31,8 @@ spec:
   values:
     controllers:
       tagging:
-        type: cronjob
-        cronjob:
-          schedule: "@yearly"
+        type: job
+        job:
           timeZone: ${TIMEZONE}
           concurrencyPolicy: Forbid
           successfulJobsHistory: 1

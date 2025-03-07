@@ -23,7 +23,7 @@ spec:
 
     workers:
       default:
-        replicaCount: 2
+        replicaCount: 1
         strategy:
           type: RollingUpdate
         podSecurityContext:
@@ -89,12 +89,10 @@ spec:
 
       federation_sender:
         enabled: false
-        replicaCount: 2
 
       generic_worker:
         enabled: true
         generic: true
-        replicaCount: 2
         listeners: [client]
         csPaths:
           ## Client API requests

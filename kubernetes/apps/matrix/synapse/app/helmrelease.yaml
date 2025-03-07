@@ -170,7 +170,7 @@ spec:
       publicBaseurl: "https://matrix.${SECRET_DOMAIN}"
       # turnUris: []
       # turnSecret: ''
-      enableRegistration: true
+      enableRegistration: false
       macaroonSecretKey: ${MATRIX_MACAROON_SECRET_KEY}
       # trustedKeyServers:
       #   - server_name: matrix.org
@@ -179,6 +179,8 @@ spec:
       use_presence: true
       enable_search: true
       dynamic_thumbnails: true
+
+      enable_registration_without_verification: true
 
       email:
         smtp_host: smtp-relay.service.svc.cluster.local

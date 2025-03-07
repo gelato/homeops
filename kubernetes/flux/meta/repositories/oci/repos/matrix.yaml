@@ -2,11 +2,11 @@
 apiVersion: source.toolkit.fluxcd.io/v1beta2
 kind: OCIRepository
 metadata:
-  name: matrix-synapse-chart
+  name: matrix-synapse
   namespace: flux-system
 spec:
   interval: 10m
-  url: oci://harbor.casa/charts
+  url: oci://harbor.casa/charts/matrix-synapse
   insecure: true
   ref:
     tag: "3.11.4"

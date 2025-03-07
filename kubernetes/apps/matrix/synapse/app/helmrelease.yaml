@@ -8,7 +8,7 @@ spec:
   releaseName: matrix-synapse
   chartRef:
     kind: OCIRepository
-    name: matrix-synapse-chart
+    name: matrix-synapse
   values:
     serverName: "${SECRET_DOMAIN}"
     publicServerName: "matrix.${SECRET_DOMAIN}"

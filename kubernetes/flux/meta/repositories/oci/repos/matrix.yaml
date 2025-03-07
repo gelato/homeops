@@ -6,7 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m
-  url: oci://harbor.casa/charts/matrix-synapse
+  url: oci://harbor.casa/charts
   insecure: true
   ref:
     tag: "3.11.4"

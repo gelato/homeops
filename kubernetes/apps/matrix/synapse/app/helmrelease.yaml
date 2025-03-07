@@ -320,6 +320,26 @@ spec:
           cpu: 100m
           memory: 250Mi
 
+    volumePermissions:
+      enabled: true
+
+      uid: 666
+      gid: 666
+
+      image:
+        repository: alpine
+        tag: latest
+        pullPolicy: Always
+      resources:
+        resources:
+          requests:
+            memory: 128Mi
+            cpu: 100m
+          limits:
+            memory: 128Mi
+            cpu: 150m
+
+
 
     persistence:
       enabled: true

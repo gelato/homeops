@@ -231,6 +231,9 @@ spec:
 
     redis:
       enabled: false
+      auth:
+        enabled: false
+
 
     externalPostgresql:
       host: "postgres16-rw.database.svc.cluster.local"

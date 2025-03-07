@@ -194,28 +194,37 @@ spec:
       job:
         enabled: true
 
-      generateImage:
-        repository: matrixdotorg/synapse
-        # tag: latest
-        pullPolicy: IfNotPresent
+        generateImage:
+          repository: matrixdotorg/synapse
+          # tag: latest
+          pullPolicy: IfNotPresent
 
-      publishImage:
-        repository: bitnami/kubectl
-        # tag: latest
-        pullPolicy: IfNotPresent
+        publishImage:
+          repository: bitnami/kubectl
+          # tag: latest
+          pullPolicy: IfNotPresent
 
-      podSecurityContext:
-        fsGroup: 666
-        runAsGroup: 666
-        runAsUser: 666
+        podSecurityContext:
+          fsGroup: 666
+          runAsGroup: 666
+          runAsUser: 666
 
-      securityContext:
-        capabilities:
-          drop:
-          - ALL
-        readOnlyRootFilesystem: true
-        runAsNonRoot: true
-        runAsUser: 666
+        securityContext:
+          capabilities:
+            drop:
+            - ALL
+          readOnlyRootFilesystem: true
+          runAsNonRoot: true
+          runAsUser: 666
+
+      resources:
+        limits:
+          cpu: 100m
+          memory: 250Mi
+        requests:
+          cpu: 100m
+          memory: 250Mi
+
 
     persistence:
       enabled: true

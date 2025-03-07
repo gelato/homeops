@@ -43,7 +43,7 @@ spec:
               tag: 16
             envFrom:
               - secretRef:
-                  name: synapse-secret
+                  name: synapse-init-secret
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true

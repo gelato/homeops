@@ -9,4 +9,4 @@ spec:
   url: oci://harbor.casa/charts/matrix-synapse
   insecure: true
   ref:
-    tag: "3.11.4"
+    semver: ">=3.11.4"

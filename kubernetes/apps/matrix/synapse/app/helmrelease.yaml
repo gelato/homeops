@@ -127,7 +127,7 @@ spec:
         - idp_id: authentik
           idp_name: Skynerv SSO
           discover: true
-          issuer: "https://id.${SECRET_DOMAIN}/application/o/matrix/"
+          issuer: "https://id.${SECRET_DOMAIN}/application/o/synapse/"
           client_id: "${MATRIX_CLIENT_ID}"
           client_secret: "${MATRIX_CLIENT_SECRET}"
           scopes:
@@ -136,7 +136,7 @@ spec:
             - "email"
           user_mapping_provider:
             config:
-              localpart_template: "{{ user.nickname }}"
+              localpart_template: "{{ user.preferred_username }}"
               display_name_template: "{{ user.name | capitalize }}"
 
     ingress:

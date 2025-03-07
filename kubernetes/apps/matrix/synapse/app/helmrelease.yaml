@@ -192,10 +192,30 @@ spec:
 
     signingkey:
       job:
-        enabled: false
-      existingSecret: synapse-secret
-      existingSecretKey: signing.key
+        enabled: true
 
+      generateImage:
+        repository: matrixdotorg/synapse
+        # tag: latest
+        pullPolicy: IfNotPresent
+
+      publishImage:
+        repository: bitnami/kubectl
+        # tag: latest
+        pullPolicy: IfNotPresent
+
+      podSecurityContext:
+        fsGroup: 666
+        runAsGroup: 666
+        runAsUser: 666
+
+      securityContext:
+        capabilities:
+          drop:
+          - ALL
+        readOnlyRootFilesystem: true
+        runAsNonRoot: true
+        runAsUser: 666
 
     persistence:
       enabled: true

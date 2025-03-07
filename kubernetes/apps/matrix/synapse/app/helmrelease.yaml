@@ -35,7 +35,7 @@ spec:
           capabilities:
             drop:
               - ALL
-          readOnlyRootFilesystem: true
+          readOnlyRootFilesystem: false
           runAsNonRoot: true
           runAsUser: 666
 
@@ -170,7 +170,7 @@ spec:
       publicBaseurl: "https://matrix.${SECRET_DOMAIN}"
       # turnUris: []
       # turnSecret: ''
-      enableRegistration: false
+      enableRegistration: true
       macaroonSecretKey: ${MATRIX_MACAROON_SECRET_KEY}
       # trustedKeyServers:
       #   - server_name: matrix.org

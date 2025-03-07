@@ -75,7 +75,7 @@ spec:
           - "/_matrix/federation/v1/media/.*"
 
       user_dir:
-        enabled: true
+        enabled: false
         name: userdir
         listeners: [client]
         csPaths:

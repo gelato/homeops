@@ -170,7 +170,7 @@ spec:
       publicBaseurl: "https://matrix.${SECRET_DOMAIN}"
       # turnUris: []
       # turnSecret: ''
-      enableRegistration: true
+      enableRegistration: false
       macaroonSecretKey: ${MATRIX_MACAROON_SECRET_KEY}
       # trustedKeyServers:
       #   - server_name: matrix.org

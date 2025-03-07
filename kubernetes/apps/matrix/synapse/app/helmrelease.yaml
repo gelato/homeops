@@ -229,3 +229,6 @@ spec:
     persistence:
       enabled: true
       existingClaim: *app
+
+    serviceAccount:
+      create: true

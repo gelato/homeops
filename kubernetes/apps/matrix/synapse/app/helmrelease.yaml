@@ -230,7 +230,7 @@ spec:
     redis:
       enabled: true
       auth:
-        enabled: false
+        enabled: true
 
       architecture: standalone
       master:

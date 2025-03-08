@@ -26,6 +26,18 @@ spec:
         replicaCount: 1
         strategy:
           type: RollingUpdate
+        podSecurityContext:
+          fsGroup: 666
+          runAsGroup: 666
+          runAsUser: 666
+
+        securityContext:
+          capabilities:
+            drop:
+              - ALL
+          readOnlyRootFilesystem: false
+          runAsNonRoot: true
+          runAsUser: 666
 
         resources:
           limits:
@@ -128,7 +140,7 @@ spec:
           - "/_matrix/client/(api/v1|r0|v3|unstable)/rooms/.*/typing"
 
           ## The to_device event stream
-          - "/_matrix/client/(r0|v3|unstable)/sendToDevice/"
+          # - "/_matrix/client/(r0|v3|unstable)/sendToDevice/"
 
           ## The account_data event stream
           - "/_matrix/client/(r0|v3|unstable)/.*/tags"

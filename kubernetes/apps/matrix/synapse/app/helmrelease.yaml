@@ -20,6 +20,56 @@ spec:
 
     wellknown:
       enabled: false
+      replicaCount: 1
+
+      useIpv6: false
+
+      server:
+       m.server: matrix.skynerv.com:443
+
+      client:
+       m.homeserver:
+         base_url: https://matrix.skynerv.com
+
+      service:
+        type: ClusterIP
+        port: 80
+
+      extraData:
+        support:
+          admins:
+            - matrix_id: '@admin:skynerv.com'
+              email_address: 'admin@skynerv.com'
+              role: 'admin'
+          support_page: 'https://skynerv.com/support'
+
+      htdocsPath: /var/www/localhost/htdocs
+
+      image:
+        repository: ghcr.io/rtsp/docker-lighttpd
+        tag: latest
+        pullPolicy: Always
+
+      podSecurityContext:
+        fsGroup: 101
+        runAsGroup: 101
+        runAsUser: 100
+
+      securityContext:
+        capabilities:
+          drop:
+          - ALL
+        readOnlyRootFilesystem: true
+        runAsNonRoot: true
+        runAsUser: 100
+
+      resources:
+        limits:
+          cpu: 5m
+          memory: 15Mi
+        requests:
+          cpu: 5m
+          memory: 15Mi
 
     workers:
       default:
@@ -88,12 +138,12 @@ spec:
           - "/_matrix/client/(api/v1|r0|v3|unstable)/keys/upload"
 
       federation_sender:
-        enabled: false
+        enabled: true
 
       generic_worker:
         enabled: true
         generic: true
-        listeners: [client]
+        listeners: [client, federation]
         csPaths:
           ## Client API requests
           - "/_matrix/client/(api/v1|r0|v3|unstable)/createRoom$"
@@ -152,6 +202,28 @@ spec:
 
           ## The presence event stream
           - "/_matrix/client/(api/v1|r0|v3|unstable)/presence/"
+        paths:
+          ## Federation requests
+          - "/_matrix/federation/v1/event/"
+          - "/_matrix/federation/v1/state/"
+          - "/_matrix/federation/v1/state_ids/"
+          - "/_matrix/federation/v1/backfill/"
+          - "/_matrix/federation/v1/get_missing_events/"
+          - "/_matrix/federation/v1/publicRooms"
+          - "/_matrix/federation/v1/query/"
+          - "/_matrix/federation/v1/make_join/"
+          - "/_matrix/federation/v1/make_leave/"
+          - "/_matrix/federation/(v1|v2)/send_join/"
+          - "/_matrix/federation/(v1|v2)/send_leave/"
+          - "/_matrix/federation/(v1|v2)/invite/"
+          - "/_matrix/federation/v1/event_auth/"
+          - "/_matrix/federation/v1/exchange_third_party_invite/"
+          - "/_matrix/federation/v1/user/devices/"
+          - "/_matrix/key/v2/query"
+          - "/_matrix/federation/v1/hierarchy/"
+
+          ## Inbound federation transaction request
+          - "/_matrix/federation/v1/send/"
 
       synchrotron:
         enabled: true

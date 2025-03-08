@@ -228,10 +228,17 @@ spec:
       enabled: false
 
     redis:
-      enabled: false
+      enabled: true
       auth:
         enabled: false
 
+      architecture: standalone
+      master:
+        kind: Deployment
+        persistence:
+          enabled: false
+        service:
+          port: 6379
 
     externalPostgresql:
       host: "postgres16-rw.database.svc.cluster.local"
@@ -240,11 +247,6 @@ spec:
       existingSecret: "synapse-secret"
       existingSecretPasswordKey: POSTGRES_SYNAPSE_PASSWORD
       database: "${SECRET_POSTGRES_SYNAPSE_DBNAME}"
-
-    externalRedis:
-      host: redis-sentinel-master.database.svc.cluster.local
-      port: 6379
-      dbid: 36
 
     synapse:
       strategy:

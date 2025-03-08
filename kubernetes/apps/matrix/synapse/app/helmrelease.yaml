@@ -231,6 +231,7 @@ spec:
       enabled: true
       auth:
         enabled: true
+        existingSecret: synapse-secret
 
       architecture: standalone
       master:

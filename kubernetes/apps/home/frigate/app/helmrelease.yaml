@@ -32,7 +32,7 @@ spec:
   values:
     defaultPodOptions:
       hostNetwork: true
-      # runtimeClassName: nvidia
+      runtimeClassName: nvidia
     controllers:
       main:
         annotations:
@@ -79,13 +79,13 @@ spec:
                 memory: 6769M
               limits:
                 memory: 24G
-                gpu.intel.com/i915: 1
-                # nvidia.com/gpu: 1
+                # gpu.intel.com/i915: 1
+                nvidia.com/gpu: 1
         pod:
           nodeSelector:
             google.feature.node.kubernetes.io/coral: "true"
-            intel.feature.node.kubernetes.io/gpu: "true"
-            # nvidia.com/gpu.present: "true"
+            # intel.feature.node.kubernetes.io/gpu: "true"
+            nvidia.com/gpu.present: "true"
     service:
       main:
         controller: main

@@ -170,12 +170,12 @@ cameras:
     ffmpeg:
       inputs:
         - path: rtsp://localhost:8554/gates_hq
-          input_args: preset-rtsp-restream
+          input_args: preset-rtsp-restream-low-latency
           roles:
             - record
             - audio
         - path: rtsp://localhost:8554/gates_lq
-          input_args: preset-rtsp-restream
+          input_args: preset-rtsp-restream-low-latency
           roles:
             - detect
     detect:
@@ -249,12 +249,12 @@ cameras:
     ffmpeg:
       inputs:
         - path: rtsp://localhost:8554/door_hq
-          input_args: preset-rtsp-restream
+          input_args: preset-rtsp-restream-low-latency
           roles:
             - record
             - audio
         - path: rtsp://localhost:8554/door_lq
-          input_args: preset-rtsp-restream
+          input_args: preset-rtsp-restream-low-latency
           roles:
             - detect
     detect:
@@ -335,12 +335,12 @@ cameras:
     ffmpeg:
       inputs:
         - path: rtsp://localhost:8554/dvor_gates_hq
-          input_args: preset-rtsp-restream
+          input_args: preset-rtsp-restream-low-latency
           roles:
             - record
             - audio
         - path: rtsp://localhost:8554/dvor_gates_lq
-          input_args: preset-rtsp-restream
+          input_args: preset-rtsp-restream-low-latency
           roles:
             - detect
     detect:
@@ -424,12 +424,12 @@ cameras:
     ffmpeg:
       inputs:
         - path: rtsp://localhost:8554/dom2_hq
-          input_args: preset-rtsp-restream
+          input_args: preset-rtsp-restream-low-latency
           roles:
             - record
             - audio
         - path: rtsp://localhost:8554/dom2_lq
-          input_args: preset-rtsp-restream
+          input_args: preset-rtsp-restream-low-latency
           roles:
             - detect
     detect:
@@ -488,12 +488,12 @@ cameras:
     ffmpeg:
       inputs:
         - path: rtsp://localhost:8554/street_hq
-          input_args: preset-rtsp-restream
+          input_args: preset-rtsp-restream-low-latency
           roles:
             - record
             - audio
         - path: rtsp://localhost:8554/street_lq
-          input_args: preset-rtsp-restream
+          input_args: preset-rtsp-restream-low-latency
           roles:
             - detect
     live:
@@ -542,12 +542,12 @@ cameras:
     ffmpeg:
       inputs:
         - path: rtsp://localhost:8554/doorbell_hq
-          input_args: preset-rtsp-restream
+          input_args: preset-rtsp-restream-low-latency
           roles:
             - record
             - audio
         - path: rtsp://localhost:8554/doorbell_lq
-          input_args: preset-rtsp-restream
+          input_args: preset-rtsp-restream-low-latency
           roles:
             - detect
     live:
@@ -594,12 +594,12 @@ cameras:
     ffmpeg:
       inputs:
         - path: rtsp://localhost:8554/middle_hq
-          input_args: preset-rtsp-restream
+          input_args: preset-rtsp-restream-low-latency
           roles:
             - record
             - audio
         - path: rtsp://localhost:8554/middle_lq
-          input_args: preset-rtsp-restream
+          input_args: preset-rtsp-restream-low-latency
           roles:
             - detect
     detect:
@@ -651,12 +651,12 @@ cameras:
     ffmpeg:
       inputs:
         - path: rtsp://localhost:8554/backyard_hq
-          input_args: preset-rtsp-restream
+          input_args: preset-rtsp-restream-low-latency
           roles:
             - record
             - audio
         - path: rtsp://localhost:8554/backyard_lq
-          input_args: preset-rtsp-restream
+          input_args: preset-rtsp-restream-low-latency
           roles:
             - detect
     detect:

@@ -41,7 +41,7 @@ spec:
           main:
             image:
               repository: ghcr.io/blakeblackshear/frigate
-              tag: stable@sha256:dc77295ccc5a7258510ab6b1d9d5b7a339027305e2d29224338534febc4d1e89
+              tag: 0.15.0-tensorrt@sha256:c254c4114ebd46543c4d691cb07e8c0dfeba7ee04d2274f5d9f05b0652a07fe2
             env:
               TZ: ${TIMEZONE}
             envFrom:
@@ -151,10 +151,10 @@ spec:
           - path: /config/config.yml
             subPath: config.yml
             readOnly: false
-      # modelcache:
-      #   existingClaim: frigate-model-cache
-      #   globalMounts:
-      #     - path: /config/model_cache
+      modelcache:
+        existingClaim: frigate-model-cache
+        globalMounts:
+          - path: /config/model_cache
       cache:
         enabled: true
         type: emptyDir

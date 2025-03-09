@@ -9,25 +9,14 @@ spec:
     requests:
       storage: 20Gi
   storageClassName: longhorn-fast
-# ---
-# apiVersion: v1
-# kind: PersistentVolumeClaim
-# metadata:
-#   name: frigate-model-cache
-# spec:
-#   accessModes: ["ReadWriteOnce"]
-#   resources:
-#     requests:
-#       storage: 3Gi
-#   storageClassName: longhorn-fast
-# ---
-# apiVersion: v1
-# kind: PersistentVolumeClaim
-# metadata:
-#   name: suv-storage
-# spec:
-#   accessModes: ["ReadWriteOnce"]
-#   resources:
-#     requests:
-#       storage: 3Ti
-#   storageClassName: longhorn-iceberg
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: frigate-model-cache
+spec:
+  accessModes: ["ReadWriteOnce"]
+  resources:
+    requests:
+      storage: 3Gi
+  storageClassName: longhorn-fast

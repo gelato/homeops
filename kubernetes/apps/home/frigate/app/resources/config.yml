@@ -116,51 +116,51 @@ go2rtc:
     gates_hq:
       - rtsp://admin:12332145@192.168.108.104:554/stream1
       - "ffmpeg:gates_hq#audio=copy#audio=aac#audio=opus"
-    # gates_lq:
-    #   - rtsp://admin:12332145@192.168.108.104:554/stream2
-    #   - "ffmpeg:gates_lq#audio=copy#audio=aac#audio=opus"
+    gates_lq:
+      - rtsp://admin:12332145@192.168.108.104:554/stream2
+      - "ffmpeg:gates_lq#audio=copy#audio=aac#audio=opus"
     door_hq:
       - rtsp://admin:12332145@192.168.108.227:554/stream1
       - "ffmpeg:door_hq#audio=copy#audio=aac#audio=opus"
-    # door_lq:
-    #   - rtsp://admin:12332145@192.168.108.227:554/stream2
-    #   - "ffmpeg:door_lq#audio=copy#audio=aac#audio=opus"
+    door_lq:
+      - rtsp://admin:12332145@192.168.108.227:554/stream2
+      - "ffmpeg:door_lq#audio=copy#audio=aac#audio=opus"
     dvor_gates_hq:
       - rtsp://admin:12332145@192.168.108.210:554/stream1
       - "ffmpeg:dvor_gates_hq#audio=copy#audio=aac#audio=opus"
-    # dvor_gates_lq:
-    #   - rtsp://admin:12332145@192.168.108.210:554/stream2
-    #   - "ffmpeg:dvor_gates_lq#audio=copy#audio=aac#audio=opus"
+    dvor_gates_lq:
+      - rtsp://admin:12332145@192.168.108.210:554/stream2
+      - "ffmpeg:dvor_gates_lq#audio=copy#audio=aac#audio=opus"
     dom2_hq:
       - rtsp://admin:12332145@192.168.108.215:554/stream1
       - "ffmpeg:dom2_hq#audio=copy#audio=aac#audio=opus"
-    # dom2_lq:
-    #   - rtsp://admin:12332145@192.168.108.215:554/stream2
-    #   - "ffmpeg:dom2_lq#audio=copy#audio=aac#audio=opus"
-    middle_hq:
-      - rtsp://admin:12332145@192.168.97.27:554/stream1
-      - "ffmpeg:middle_hq#audio=copy#audio=aac#audio=opus"
-    # middle_lq:
-    #   - rtsp://admin:12332145@192.168.97.27:554/stream2
-    #   - "ffmpeg:middle_lq#audio=copy#audio=aac#audio=opus"
-    backyard_hq:
-      - rtsp://admin:12332145@192.168.111.65:554/stream1
-      - "ffmpeg:backyard_hq#audio=copy#audio=aac#audio=opus"
-    # backyard_lq:
-    #   - rtsp://admin:12332145@192.168.111.65:554/stream2
-    #   - "ffmpeg:backyard_lq#audio=copy#audio=aac#audio=opus"
+    dom2_lq:
+      - rtsp://admin:12332145@192.168.108.215:554/stream2
+      - "ffmpeg:dom2_lq#audio=copy#audio=aac#audio=opus"
     street_hq:
       - rtsp://admin:12332145@192.168.108.197:554/ch0_0
       - "ffmpeg:street_hq#video=h264#hardware#audio=aac#audio=opus"
-    # street_lq:
-    #   - rtsp://admin:12332145@192.168.108.197:554/ch0_1
-    #   - "ffmpeg:street_lq#video=h264#hardware#audio=aac#audio=opus"
+    street_lq:
+      - rtsp://admin:12332145@192.168.108.197:554/ch0_1
+      - "ffmpeg:street_lq#video=h264#hardware#audio=aac#audio=opus"
     doorbell_hq:
       - rtsp://admin:{FRIGATE_RTSP_PASSWORD}@192.168.107.174:554/Streaming/Channels/101/
       - "ffmpeg:doorbell_hq#audio=copy#audio=aac#audio=opus"
-    # doorbell_lq:
-    #   - rtsp://admin:{FRIGATE_RTSP_PASSWORD}@192.168.107.174:554/Streaming/Channels/102/
-    #   - "ffmpeg:doorbell_lq#audio=copy#audio=aac#audio=opus"
+    doorbell_lq:
+      - rtsp://admin:{FRIGATE_RTSP_PASSWORD}@192.168.107.174:554/Streaming/Channels/102/
+      - "ffmpeg:doorbell_lq#audio=copy#audio=aac#audio=opus"
+    middle_hq:
+      - rtsp://admin:12332145@192.168.97.27:554/stream1
+      - "ffmpeg:middle_hq#audio=copy#audio=aac#audio=opus"
+    middle_lq:
+      - rtsp://admin:12332145@192.168.97.27:554/stream2
+      - "ffmpeg:middle_lq#audio=copy#audio=aac#audio=opus"
+    backyard_hq:
+      - rtsp://admin:12332145@192.168.111.65:554/stream1
+      - "ffmpeg:backyard_hq#audio=copy#audio=aac#audio=opus"
+    backyard_lq:
+      - rtsp://admin:12332145@192.168.111.65:554/stream2
+      - "ffmpeg:backyard_lq#audio=copy#audio=aac#audio=opus"
   webrtc:
     candidates:
       - 192.168.108.55:8555
@@ -174,11 +174,10 @@ cameras:
           roles:
             - record
             - audio
+        - path: rtsp://localhost:8554/gates_lq
+          input_args: preset-rtsp-restream-low-latency
+          roles:
             - detect
-        # - path: rtsp://localhost:8554/gates_lq
-        #   input_args: preset-rtsp-restream-low-latency
-        #   roles:
-        #     - detect
     detect:
       width: 848
       height: 480
@@ -254,11 +253,10 @@ cameras:
           roles:
             - record
             - audio
+        - path: rtsp://localhost:8554/door_lq
+          input_args: preset-rtsp-restream-low-latency
+          roles:
             - detect
-        # - path: rtsp://localhost:8554/door_lq
-        #   input_args: preset-rtsp-restream-low-latency
-        #   roles:
-        #     - detect
     detect:
       width: 848
       height: 480
@@ -341,11 +339,10 @@ cameras:
           roles:
             - record
             - audio
+        - path: rtsp://localhost:8554/dvor_gates_lq
+          input_args: preset-rtsp-restream-low-latency
+          roles:
             - detect
-        # - path: rtsp://localhost:8554/dvor_gates_lq
-        #   input_args: preset-rtsp-restream-low-latency
-        #   roles:
-        #     - detect
     detect:
       width: 848
       height: 480
@@ -431,11 +428,10 @@ cameras:
           roles:
             - record
             - audio
+        - path: rtsp://localhost:8554/dom2_lq
+          input_args: preset-rtsp-restream-low-latency
+          roles:
             - detect
-        # - path: rtsp://localhost:8554/dom2_lq
-        #   input_args: preset-rtsp-restream-low-latency
-        #   roles:
-        #     - detect
     detect:
       width: 736
       height: 416
@@ -496,11 +492,10 @@ cameras:
           roles:
             - record
             - audio
+        - path: rtsp://localhost:8554/street_lq
+          input_args: preset-rtsp-restream-low-latency
+          roles:
             - detect
-        # - path: rtsp://localhost:8554/street_lq
-        #   input_args: preset-rtsp-restream-low-latency
-        #   roles:
-        #     - detect
     live:
       stream_name: street_hq
       quality: 1
@@ -551,11 +546,10 @@ cameras:
           roles:
             - record
             - audio
+        - path: rtsp://localhost:8554/doorbell_lq
+          input_args: preset-rtsp-restream-low-latency
+          roles:
             - detect
-        # - path: rtsp://localhost:8554/doorbell_lq
-        #   input_args: preset-rtsp-restream-low-latency
-        #   roles:
-        #     - detect
     live:
       stream_name: doorbell_hq
       quality: 1
@@ -606,11 +600,10 @@ cameras:
           roles:
             - record
             - audio
+        - path: rtsp://localhost:8554/middle_lq
+          input_args: preset-rtsp-restream-low-latency
+          roles:
             - detect
-        # - path: rtsp://localhost:8554/middle_lq
-        #   input_args: preset-rtsp-restream-low-latency
-        #   roles:
-        #     - detect
     detect:
       width: 848
       height: 480
@@ -620,53 +613,6 @@ cameras:
       stream_name: middle_hq
       quality: 1
     webui_url: ""
-    motion:
-      mask:
-        - 1,0.811,0.947,0.76,0.812,0.55,0.84,0.39,0.808,0.304,0.838,0.097,0.876,0,1,0
-        - 0.257,0.604,0.256,1,0.23,1,0,1,0.001,0,0.482,0,0.507,0.023,0.177,0.403,0.234,0.631
-        - 0.669,0.619,0.72,0.664,0.781,0.509,0.808,0.544,0.835,0.393,0.804,0.311,0.825,0.163,0.804,0.141,0.764,0.204,0.667,0.437,0.746,0.43
-      threshold: 35
-      contour_area: 25
-    zones:
-      inside_gates:
-        coordinates: 0.94,0.881,0.946,0.767,0.867,0.64,0.781,0.518,0.724,0.669
-        inertia: 5
-        loitering_time: 3
-        objects:
-          - person
-          - dog
-          - car
-      entryway:
-        coordinates: 0.571,0.171,0.461,0.085,0.181,0.405,0.236,0.624
-        inertia: 5
-        loitering_time: 5
-        objects:
-          - car
-          - bus
-      guests:
-        coordinates: 0.739,0.437,0.622,0.446,0.499,0.701,0.552,0.871
-        inertia: 5
-        loitering_time: 6
-        objects:
-          - person
-      sidewalk:
-        coordinates: 0.258,0.994,0.479,0.999,0.548,0.866,0.493,0.699,0.62,0.44,0.649,0.437,0.697,0.356,0.705,0.334,0.772,0.124,0.793,0.113,0.826,0.153,0.837,0.095,0.87,0,0.722,0.002,0.607,0.141,0.577,0.174,0.261,0.599
-        inertia: 5
-        loitering_time: 3
-        objects:
-          - person
-          - dog
-          - car
-    review:
-      alerts:
-        labels:
-          - car
-          - person
-          - bus
-        required_zones:
-          - entryway
-          - guests
-          - inside_gates
     mqtt:
       enabled: True
       timestamp: True
@@ -686,11 +632,10 @@ cameras:
           roles:
             - record
             - audio
+        - path: rtsp://localhost:8554/backyard_lq
+          input_args: preset-rtsp-restream-low-latency
+          roles:
             - detect
-        # - path: rtsp://localhost:8554/backyard_lq
-        #   input_args: preset-rtsp-restream-low-latency
-        #   roles:
-        #     - detect
     detect:
       width: 848
       height: 480
@@ -700,53 +645,6 @@ cameras:
       stream_name: backyard_hq
       quality: 1
     webui_url: ""
-    motion:
-      mask:
-        - 1,0.811,0.947,0.76,0.812,0.55,0.84,0.39,0.808,0.304,0.838,0.097,0.876,0,1,0
-        - 0.257,0.604,0.256,1,0.23,1,0,1,0.001,0,0.482,0,0.507,0.023,0.177,0.403,0.234,0.631
-        - 0.669,0.619,0.72,0.664,0.781,0.509,0.808,0.544,0.835,0.393,0.804,0.311,0.825,0.163,0.804,0.141,0.764,0.204,0.667,0.437,0.746,0.43
-      threshold: 35
-      contour_area: 25
-    zones:
-      inside_gates:
-        coordinates: 0.94,0.881,0.946,0.767,0.867,0.64,0.781,0.518,0.724,0.669
-        inertia: 5
-        loitering_time: 3
-        objects:
-          - person
-          - dog
-          - car
-      entryway:
-        coordinates: 0.571,0.171,0.461,0.085,0.181,0.405,0.236,0.624
-        inertia: 5
-        loitering_time: 5
-        objects:
-          - car
-          - bus
-      guests:
-        coordinates: 0.739,0.437,0.622,0.446,0.499,0.701,0.552,0.871
-        inertia: 5
-        loitering_time: 6
-        objects:
-          - person
-      sidewalk:
-        coordinates: 0.258,0.994,0.479,0.999,0.548,0.866,0.493,0.699,0.62,0.44,0.649,0.437,0.697,0.356,0.705,0.334,0.772,0.124,0.793,0.113,0.826,0.153,0.837,0.095,0.87,0,0.722,0.002,0.607,0.141,0.577,0.174,0.261,0.599
-        inertia: 5
-        loitering_time: 3
-        objects:
-          - person
-          - dog
-          - car
-    review:
-      alerts:
-        labels:
-          - car
-          - person
-          - bus
-        required_zones:
-          - entryway
-          - guests
-          - inside_gates
     mqtt:
       enabled: True
       timestamp: True

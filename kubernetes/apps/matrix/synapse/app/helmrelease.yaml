@@ -19,7 +19,7 @@ spec:
     publicServerName: "matrix.${SECRET_DOMAIN}"
 
     wellknown:
-      enabled: false
+      enabled: true
       replicaCount: 1
 
       useIpv6: false

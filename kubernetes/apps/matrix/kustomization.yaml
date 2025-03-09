@@ -9,3 +9,4 @@ resources:
   # - ./baibot/ks.yaml
   # - ./synatainer/ks.yaml
   # - ./mautrix-discord/ks.yaml
+  - ./conduwuit/ks.yaml

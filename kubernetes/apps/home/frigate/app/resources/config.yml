@@ -242,6 +242,7 @@ cameras:
       quality: 100
     birdseye:
       order: 0
+
   door:
     enabled: True
     ffmpeg:
@@ -327,6 +328,7 @@ cameras:
       quality: 100
     birdseye:
       order: 1
+
   dvor_gates:
     enabled: True
     ffmpeg:
@@ -415,6 +417,7 @@ cameras:
       quality: 100
     birdseye:
       order: 2
+
   dom2:
     enabled: True
     ffmpeg:
@@ -478,6 +481,7 @@ cameras:
       quality: 100
     birdseye:
       order: 3
+
   street:
     enabled: True
     ffmpeg:
@@ -531,6 +535,7 @@ cameras:
       quality: 100
     birdseye:
       order: 4
+
   doorbell:
     enabled: True
     ffmpeg:
@@ -575,6 +580,14 @@ cameras:
     #       - u_okna
     #       - za_zaborom
     #       - pod_oknami
+    mqtt:
+      enabled: True
+      timestamp: False
+      bounding_box: True
+      crop: True
+      height: 500
+      quality: 100
+
   middle:
     enabled: True
     ffmpeg:
@@ -588,6 +601,11 @@ cameras:
           input_args: preset-rtsp-restream
           roles:
             - detect
+    detect:
+      width: 848
+      height: 480
+      fps: 10
+      enabled: True
     live:
       stream_name: middle_hq
       quality: 1
@@ -626,8 +644,6 @@ cameras:
       crop: True
       height: 500
       quality: 100
-    birdseye:
-      order: 4
 
   backyard:
     enabled: True
@@ -642,6 +658,11 @@ cameras:
           input_args: preset-rtsp-restream
           roles:
             - detect
+    detect:
+      width: 848
+      height: 480
+      fps: 10
+      enabled: True
     live:
       stream_name: backyard_hq
       quality: 1
@@ -680,8 +701,6 @@ cameras:
       crop: True
       height: 500
       quality: 100
-    birdseye:
-      order: 4
 
 ui:
   time_format: browser

@@ -615,7 +615,7 @@ cameras:
       fps: 10
       enabled: True
     live:
-      stream_name: middle_hq
+      stream_name: middle
       quality: 1
     # motion:
     #   mask:
@@ -673,7 +673,7 @@ cameras:
       fps: 10
       enabled: True
     live:
-      stream_name: backyard_hq
+      stream_name: backyard
       quality: 1
     # motion:
     #   mask:

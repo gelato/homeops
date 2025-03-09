@@ -142,8 +142,12 @@ go2rtc:
     street_lq:
       - rtsp://admin:12332145@192.168.108.197:554/ch0_1
       - "ffmpeg:street_lq#video=h264#hardware#audio=aac#audio=opus"
-    doorbell_hq: "ffmpeg:rtsp://admin:{DOORBELL_PASSWORD}@192.168.107.174:554/Streaming/Channels/101/#audio=copy#audio=aac#audio=opus"
-    doorbell_lq: "ffmpeg:rtsp://admin:{DOORBELL_PASSWORD}@192.168.107.174:554/Streaming/Channels/102/#audio=copy#audio=aac#audio=opus"
+    doorbell_hq:
+      - rtsp://admin:{FRIGATE_RTSP_PASSWORD}@192.168.107.174:554/Streaming/Channels/101/
+      - "ffmpeg:doorbell_hq#audio=copy#audio=aac#audio=opus"
+    doorbell_lq:
+      - rtsp://admin:{FRIGATE_RTSP_PASSWORD}@192.168.107.174:554/Streaming/Channels/102/
+      - "ffmpeg:doorbell_lq#audio=copy#audio=aac#audio=opus"
     middle_hq:
       - rtsp://admin:12332145@192.168.97.27:554/stream1
       - "ffmpeg:middle_hq#audio=copy#audio=aac#audio=opus"

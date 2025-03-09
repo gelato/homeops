@@ -116,51 +116,51 @@ go2rtc:
     gates_hq:
       - rtsp://admin:12332145@192.168.108.104:554/stream1
       - "ffmpeg:gates_hq#audio=copy#audio=aac#audio=opus"
-    gates_lq:
-      - rtsp://admin:12332145@192.168.108.104:554/stream2
-      - "ffmpeg:gates_lq#audio=copy#audio=aac#audio=opus"
+    # gates_lq:
+    #   - rtsp://admin:12332145@192.168.108.104:554/stream2
+    #   - "ffmpeg:gates_lq#audio=copy#audio=aac#audio=opus"
     door_hq:
       - rtsp://admin:12332145@192.168.108.227:554/stream1
       - "ffmpeg:door_hq#audio=copy#audio=aac#audio=opus"
-    door_lq:
-      - rtsp://admin:12332145@192.168.108.227:554/stream2
-      - "ffmpeg:door_lq#audio=copy#audio=aac#audio=opus"
+    # door_lq:
+    #   - rtsp://admin:12332145@192.168.108.227:554/stream2
+    #   - "ffmpeg:door_lq#audio=copy#audio=aac#audio=opus"
     dvor_gates_hq:
       - rtsp://admin:12332145@192.168.108.210:554/stream1
       - "ffmpeg:dvor_gates_hq#audio=copy#audio=aac#audio=opus"
-    dvor_gates_lq:
-      - rtsp://admin:12332145@192.168.108.210:554/stream2
-      - "ffmpeg:dvor_gates_lq#audio=copy#audio=aac#audio=opus"
+    # dvor_gates_lq:
+    #   - rtsp://admin:12332145@192.168.108.210:554/stream2
+    #   - "ffmpeg:dvor_gates_lq#audio=copy#audio=aac#audio=opus"
     dom2_hq:
       - rtsp://admin:12332145@192.168.108.215:554/stream1
       - "ffmpeg:dom2_hq#audio=copy#audio=aac#audio=opus"
-    dom2_lq:
-      - rtsp://admin:12332145@192.168.108.215:554/stream2
-      - "ffmpeg:dom2_lq#audio=copy#audio=aac#audio=opus"
+    # dom2_lq:
+    #   - rtsp://admin:12332145@192.168.108.215:554/stream2
+    #   - "ffmpeg:dom2_lq#audio=copy#audio=aac#audio=opus"
     middle_hq:
       - rtsp://admin:12332145@192.168.97.27:554/stream1
       - "ffmpeg:middle_hq#audio=copy#audio=aac#audio=opus"
-    middle_lq:
-      - rtsp://admin:12332145@192.168.97.27:554/stream2
-      - "ffmpeg:middle_lq#audio=copy#audio=aac#audio=opus"
+    # middle_lq:
+    #   - rtsp://admin:12332145@192.168.97.27:554/stream2
+    #   - "ffmpeg:middle_lq#audio=copy#audio=aac#audio=opus"
     backyard_hq:
       - rtsp://admin:12332145@192.168.111.65:554/stream1
       - "ffmpeg:backyard_hq#audio=copy#audio=aac#audio=opus"
-    backyard_lq:
-      - rtsp://admin:12332145@192.168.111.65:554/stream2
-      - "ffmpeg:backyard_lq#audio=copy#audio=aac#audio=opus"
+    # backyard_lq:
+    #   - rtsp://admin:12332145@192.168.111.65:554/stream2
+    #   - "ffmpeg:backyard_lq#audio=copy#audio=aac#audio=opus"
     street_hq:
       - rtsp://admin:12332145@192.168.108.197:554/ch0_0
       - "ffmpeg:street_hq#video=h264#hardware#audio=aac#audio=opus"
-    street_lq:
-      - rtsp://admin:12332145@192.168.108.197:554/ch0_1
-      - "ffmpeg:street_lq#video=h264#hardware#audio=aac#audio=opus"
+    # street_lq:
+    #   - rtsp://admin:12332145@192.168.108.197:554/ch0_1
+    #   - "ffmpeg:street_lq#video=h264#hardware#audio=aac#audio=opus"
     doorbell_hq:
       - rtsp://admin:{FRIGATE_RTSP_PASSWORD}@192.168.107.174:554/Streaming/Channels/101/
       - "ffmpeg:doorbell_hq#audio=copy#audio=aac#audio=opus"
-    doorbell_lq:
-      - rtsp://admin:{FRIGATE_RTSP_PASSWORD}@192.168.107.174:554/Streaming/Channels/102/
-      - "ffmpeg:doorbell_lq#audio=copy#audio=aac#audio=opus"
+    # doorbell_lq:
+    #   - rtsp://admin:{FRIGATE_RTSP_PASSWORD}@192.168.107.174:554/Streaming/Channels/102/
+    #   - "ffmpeg:doorbell_lq#audio=copy#audio=aac#audio=opus"
   webrtc:
     candidates:
       - 192.168.108.55:8555
@@ -174,10 +174,11 @@ cameras:
           roles:
             - record
             - audio
-        - path: rtsp://localhost:8554/gates_lq
-          input_args: preset-rtsp-restream-low-latency
-          roles:
             - detect
+        # - path: rtsp://localhost:8554/gates_lq
+        #   input_args: preset-rtsp-restream-low-latency
+        #   roles:
+        #     - detect
     detect:
       width: 848
       height: 480
@@ -253,10 +254,11 @@ cameras:
           roles:
             - record
             - audio
-        - path: rtsp://localhost:8554/door_lq
-          input_args: preset-rtsp-restream-low-latency
-          roles:
             - detect
+        # - path: rtsp://localhost:8554/door_lq
+        #   input_args: preset-rtsp-restream-low-latency
+        #   roles:
+        #     - detect
     detect:
       width: 848
       height: 480
@@ -339,10 +341,11 @@ cameras:
           roles:
             - record
             - audio
-        - path: rtsp://localhost:8554/dvor_gates_lq
-          input_args: preset-rtsp-restream-low-latency
-          roles:
             - detect
+        # - path: rtsp://localhost:8554/dvor_gates_lq
+        #   input_args: preset-rtsp-restream-low-latency
+        #   roles:
+        #     - detect
     detect:
       width: 848
       height: 480
@@ -428,10 +431,11 @@ cameras:
           roles:
             - record
             - audio
-        - path: rtsp://localhost:8554/dom2_lq
-          input_args: preset-rtsp-restream-low-latency
-          roles:
             - detect
+        # - path: rtsp://localhost:8554/dom2_lq
+        #   input_args: preset-rtsp-restream-low-latency
+        #   roles:
+        #     - detect
     detect:
       width: 736
       height: 416
@@ -492,10 +496,11 @@ cameras:
           roles:
             - record
             - audio
-        - path: rtsp://localhost:8554/street_lq
-          input_args: preset-rtsp-restream-low-latency
-          roles:
             - detect
+        # - path: rtsp://localhost:8554/street_lq
+        #   input_args: preset-rtsp-restream-low-latency
+        #   roles:
+        #     - detect
     live:
       stream_name: street_hq
       quality: 1
@@ -546,10 +551,11 @@ cameras:
           roles:
             - record
             - audio
-        - path: rtsp://localhost:8554/doorbell_lq
-          input_args: preset-rtsp-restream-low-latency
-          roles:
             - detect
+        # - path: rtsp://localhost:8554/doorbell_lq
+        #   input_args: preset-rtsp-restream-low-latency
+        #   roles:
+        #     - detect
     live:
       stream_name: doorbell_hq
       quality: 1
@@ -598,10 +604,11 @@ cameras:
           roles:
             - record
             - audio
-        - path: rtsp://localhost:8554/middle_lq
-          input_args: preset-rtsp-restream-low-latency
-          roles:
             - detect
+        # - path: rtsp://localhost:8554/middle_lq
+        #   input_args: preset-rtsp-restream-low-latency
+        #   roles:
+        #     - detect
     detect:
       width: 848
       height: 480
@@ -655,10 +662,11 @@ cameras:
           roles:
             - record
             - audio
-        - path: rtsp://localhost:8554/backyard_lq
-          input_args: preset-rtsp-restream-low-latency
-          roles:
             - detect
+        # - path: rtsp://localhost:8554/backyard_lq
+        #   input_args: preset-rtsp-restream-low-latency
+        #   roles:
+        #     - detect
     detect:
       width: 848
       height: 480

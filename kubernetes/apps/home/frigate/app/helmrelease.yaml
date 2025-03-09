@@ -169,6 +169,13 @@ spec:
         hostPathType: Directory
         globalMounts:
           - path: /dev/bus/usb
+      dri:
+        enabled: true
+        type: hostPath
+        hostPath: /dev/dri
+        hostPathType: Directory
+        globalMounts:
+          - path: /dev/dri
       nfs-cctv:
         type: nfs
         server: tower.local

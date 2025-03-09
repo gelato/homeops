@@ -100,7 +100,7 @@ snapshots:
 semantic_search:
   enabled: True
   reindex: True
-  model_size: "large"
+  model_size: "small"
 
 # genai:
 #   # Optional: Enable AI description generation (default: shown below)

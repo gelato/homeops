@@ -615,9 +615,9 @@ cameras:
       height: 480
       fps: 10
       enabled: True
-    # live:
-    #   stream_name: middle_hq
-    #   quality: 1
+    live:
+      stream_name: middle_hq
+      quality: 1
     # motion:
     #   mask:
     #     - 0.205,0.796,0.312,0.417,0.476,0.41,0.474,0.294,0.536,0.291,0.538,0.188,0.626,0.072,0.649,0,0.001,0.001,0,0.413
@@ -653,11 +653,6 @@ cameras:
       crop: True
       height: 500
       quality: 100
-    onvif:
-      host: 192.168.97.27
-      port: 2020
-      user: admin
-      password: "12332145"
 
   backyard:
     enabled: True
@@ -677,9 +672,9 @@ cameras:
       height: 480
       fps: 10
       enabled: True
-    # live:
-    #   stream_name: backyard
-    #   quality: 1
+    live:
+      stream_name: backyard
+      quality: 1
     # motion:
     #   mask:
     #     - 0.205,0.796,0.312,0.417,0.476,0.41,0.474,0.294,0.536,0.291,0.538,0.188,0.626,0.072,0.649,0,0.001,0.001,0,0.413
@@ -716,12 +711,6 @@ cameras:
       height: 500
       quality: 100
 
-    onvif:
-      host: 192.168.111.65
-      port: 2020
-      user: admin
-      password: "12332145"
-
 ui:
   time_format: browser
   date_style: short
@@ -739,7 +728,7 @@ telemetry:
   stats:
     amd_gpu_stats: False
     intel_gpu_stats: True
-    network_bandwidth: False
+    network_bandwidth: True
   version_check: True
 
 camera_groups:

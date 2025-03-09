@@ -89,10 +89,10 @@ snapshots:
       car: 30
   quality: 90
 
-# semantic_search:
-#   enabled: True
-#   reindex: True
-#   model_size: "large"
+semantic_search:
+  enabled: True
+  reindex: True
+  model_size: "large"
 
 # genai:
 #   # Optional: Enable AI description generation (default: shown below)
@@ -665,7 +665,7 @@ cameras:
       fps: 10
       enabled: True
     live:
-      stream_name: backyard
+      stream_name: backyard_hq
       quality: 1
     # motion:
     #   mask:

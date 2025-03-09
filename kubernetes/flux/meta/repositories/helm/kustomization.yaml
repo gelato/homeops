@@ -29,4 +29,3 @@ resources:
   - ./repos/nvidia-charts.yaml
   - ./repos/ollama.yaml
   - ./repos/victoriametrics.yaml
-  - ./repos/cronce.yaml

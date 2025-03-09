@@ -40,27 +40,6 @@ logger:
 auth:
   enabled: false
 
-birdseye:
-  enabled: False
-  restream: True
-  width: 2304
-  height: 1296
-  quality: 1
-  #   objects - cameras are included if they have had a tracked object within the last 30 seconds
-  #   motion - cameras are included if motion was detected in the last 30 seconds
-  #   continuous - all cameras are included always
-  mode: continuous
-
-detect:
-  width: 640
-  height: 360
-  fps: 10
-  enabled: True
-
-motion:
-  threshold: 35
-  contour_area: 20
-
 objects:
   track:
     - person
@@ -73,6 +52,14 @@ objects:
       min_area: 5000
       max_area: 100000
       threshold: 0.7
+
+ffmpeg:
+  global_args: -hide_banner -loglevel warning -threads 2
+  hwaccel_args: "preset-intel-qsv-*"
+  input_args: preset-rtsp-generic
+  output_args:
+    detect: -threads 2 -f rawvideo -pix_fmt yuv420p
+    record: preset-record-generic
 
 record:
   enabled: True
@@ -100,7 +87,7 @@ snapshots:
   enabled: True
   clean_copy: False
   timestamp: False
-  bounding_box: False
+  bounding_box: True
   crop: False
   required_zones: []
   retain:
@@ -109,6 +96,28 @@ snapshots:
       person: 30
       car: 30
   quality: 90
+
+semantic_search:
+  enabled: True
+  reindex: True
+  model_size: "large"
+
+# genai:
+#   # Optional: Enable AI description generation (default: shown below)
+#   enabled: False
+#   # Required if enabled: Provider must be one of ollama, gemini, or openai
+#   provider: ollama
+#   # Required if provider is ollama. May also be used for an OpenAI API compatible backend with the openai provider.
+#   base_url: http://localhost::11434
+#   # Required if gemini or openai
+#   api_key: "{FRIGATE_GENAI_API_KEY}"
+#   # Optional: The default prompt for generating descriptions. Can use replacement
+#   # variables like "label", "sub_label", "camera" to make more dynamic. (default: shown below)
+#   prompt: "Describe the {label} in the sequence of images with as much detail as possible. Do not describe the background."
+#   # Optional: Object specific prompts to customize description results
+#   # Format: {label}: {prompt}
+#   object_prompts:
+#     person: "My special person prompt."
 
 go2rtc:
   streams:
@@ -136,18 +145,6 @@ go2rtc:
     dom2_lq:
       - rtsp://admin:12332145@192.168.108.215:554/stream2
       - "ffmpeg:dom2_lq#audio=copy#audio=aac#audio=opus"
-    street_hq:
-      - rtsp://admin:12332145@192.168.108.197:554/ch0_0
-      - "ffmpeg:street_hq#video=h264#hardware#audio=aac#audio=opus"
-    street_lq:
-      - rtsp://admin:12332145@192.168.108.197:554/ch0_1
-      - "ffmpeg:street_lq#video=h264#hardware#audio=aac#audio=opus"
-    doorbell_hq:
-      - rtsp://admin:{FRIGATE_RTSP_PASSWORD}@192.168.107.174:554/Streaming/Channels/101/
-      - "ffmpeg:doorbell_hq#audio=copy#audio=aac#audio=opus"
-    doorbell_lq:
-      - rtsp://admin:{FRIGATE_RTSP_PASSWORD}@192.168.107.174:554/Streaming/Channels/102/
-      - "ffmpeg:doorbell_lq#audio=copy#audio=aac#audio=opus"
     middle_hq:
       - rtsp://admin:12332145@192.168.97.27:554/stream1
       - "ffmpeg:middle_hq#audio=copy#audio=aac#audio=opus"
@@ -160,6 +157,18 @@ go2rtc:
     backyard_lq:
       - rtsp://admin:12332145@192.168.111.65:554/stream2
       - "ffmpeg:backyard_lq#audio=copy#audio=aac#audio=opus"
+    street_hq:
+      - rtsp://admin:12332145@192.168.108.197:554/ch0_0
+      - "ffmpeg:street_hq#video=h264#hardware#audio=aac#audio=opus"
+    street_lq:
+      - rtsp://admin:12332145@192.168.108.197:554/ch0_1
+      - "ffmpeg:street_lq#video=h264#hardware#audio=aac#audio=opus"
+    doorbell_hq:
+      - rtsp://admin:{FRIGATE_RTSP_PASSWORD}@192.168.107.174:554/Streaming/Channels/101/
+      - "ffmpeg:doorbell_hq#audio=copy#audio=aac#audio=opus"
+    doorbell_lq:
+      - rtsp://admin:{FRIGATE_RTSP_PASSWORD}@192.168.107.174:554/Streaming/Channels/102/
+      - "ffmpeg:doorbell_lq#audio=copy#audio=aac#audio=opus"
   webrtc:
     candidates:
       - 192.168.108.55:8555
@@ -644,6 +653,11 @@ cameras:
       crop: True
       height: 500
       quality: 100
+    onvif:
+      host: 192.168.97.27
+      port: 2020
+      user: admin
+      password: 12332145
 
   backyard:
     enabled: True
@@ -701,6 +715,12 @@ cameras:
       crop: True
       height: 500
       quality: 100
+
+    onvif:
+      host: 192.168.111.65
+      port: 2020
+      user: admin
+      password: 12332145
 
 ui:
   time_format: browser

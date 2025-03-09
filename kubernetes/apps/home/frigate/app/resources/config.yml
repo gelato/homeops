@@ -145,12 +145,12 @@ go2rtc:
     dom2_lq:
       - rtsp://admin:12332145@192.168.108.215:554/stream2
       - "ffmpeg:dom2_lq#audio=copy#audio=aac#audio=opus"
-    middle_hq:
-      - rtsp://admin:12332145@192.168.97.27:554/stream1
-      - "ffmpeg:middle_hq#audio=copy#audio=aac#audio=opus"
-    middle_lq:
-      - rtsp://admin:12332145@192.168.97.27:554/stream2
-      - "ffmpeg:middle_lq#audio=copy#audio=aac#audio=opus"
+    # middle_hq:
+    #   - rtsp://admin:12332145@192.168.97.27:554/stream1
+    #   - "ffmpeg:middle_hq#audio=copy#audio=aac#audio=opus"
+    # middle_lq:
+    #   - rtsp://admin:12332145@192.168.97.27:554/stream2
+    #   - "ffmpeg:middle_lq#audio=copy#audio=aac#audio=opus"
     backyard_hq:
       - rtsp://admin:12332145@192.168.111.65:554/stream1
       - "ffmpeg:backyard_hq#audio=copy#audio=aac#audio=opus"
@@ -601,12 +601,12 @@ cameras:
     enabled: True
     ffmpeg:
       inputs:
-        - path: rtsp://localhost:8554/middle_hq
+        - path: rtsp://admin:12332145@192.168.97.27:554/stream1
           input_args: preset-rtsp-restream
           roles:
             - record
             - audio
-        - path: rtsp://localhost:8554/middle_lq
+        - path: rtsp://admin:12332145@192.168.97.27:554/stream2
           input_args: preset-rtsp-restream
           roles:
             - detect

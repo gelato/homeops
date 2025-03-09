@@ -657,7 +657,7 @@ cameras:
       host: 192.168.97.27
       port: 2020
       user: admin
-      password: 12332145
+      password: "12332145"
 
   backyard:
     enabled: True
@@ -720,7 +720,7 @@ cameras:
       host: 192.168.111.65
       port: 2020
       user: admin
-      password: 12332145
+      password: "12332145"
 
 ui:
   time_format: browser

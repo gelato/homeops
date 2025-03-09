@@ -242,8 +242,9 @@ spec:
       # turnSecret: ''
       enableRegistration: false
       macaroonSecretKey: ${MATRIX_MACAROON_SECRET_KEY}
-      # trustedKeyServers:
-      #   - server_name: matrix.org
+
+      trustedKeyServers:
+        - server_name: matrix.org
 
     extraConfig:
       use_presence: true

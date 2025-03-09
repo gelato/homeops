@@ -53,14 +53,6 @@ objects:
       max_area: 100000
       threshold: 0.7
 
-ffmpeg:
-  global_args: -hide_banner -loglevel warning -threads 2
-  hwaccel_args: "preset-vaapi"
-  input_args: preset-rtsp-generic
-  output_args:
-    detect: -threads 2 -f rawvideo -pix_fmt yuv420p
-    record: preset-record-generic
-
 record:
   enabled: True
   expire_interval: 60

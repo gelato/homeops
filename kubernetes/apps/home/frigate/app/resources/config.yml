@@ -609,42 +609,42 @@ cameras:
         #   input_args: preset-rtsp-restream-low-latency
         #   roles:
         #     - detect
-    detect:
-      width: 848
-      height: 480
-      fps: 10
-      enabled: True
+    # detect:
+    #   width: 848
+    #   height: 480
+    #   fps: 10
+    #   enabled: True
     live:
       stream_name: middle_hq
       quality: 1
-    motion:
-      mask:
-        - 0.205,0.796,0.312,0.417,0.476,0.41,0.474,0.294,0.536,0.291,0.538,0.188,0.626,0.072,0.649,0,0.001,0.001,0,0.413
-        - 0.825,0.288,1,0.495,1,0,0.66,0,0.632,0.085
-    zones:
-      u_okna:
-        coordinates: 0,1,0,0.425,0.199,0.796,0.141,1
-        inertia: 5
-        objects:
-          - person
-      za_zaborom:
-        coordinates: 0.479,0.306,0.527,0.301,0.638,1,0.492,1
-        inertia: 5
-        objects:
-          - person
-      pod_oknami:
-        coordinates: 0.314,0.425,0.464,0.414,0.441,1,0.152,1
-        inertia: 5
-        objects:
-          - person
-    review:
-      alerts:
-        labels:
-          - person
-        required_zones:
-          - u_okna
-          - za_zaborom
-          - pod_oknami
+    # motion:
+    #   mask:
+    #     - 0.205,0.796,0.312,0.417,0.476,0.41,0.474,0.294,0.536,0.291,0.538,0.188,0.626,0.072,0.649,0,0.001,0.001,0,0.413
+    #     - 0.825,0.288,1,0.495,1,0,0.66,0,0.632,0.085
+    # zones:
+    #   u_okna:
+    #     coordinates: 0,1,0,0.425,0.199,0.796,0.141,1
+    #     inertia: 5
+    #     objects:
+    #       - person
+    #   za_zaborom:
+    #     coordinates: 0.479,0.306,0.527,0.301,0.638,1,0.492,1
+    #     inertia: 5
+    #     objects:
+    #       - person
+    #   pod_oknami:
+    #     coordinates: 0.314,0.425,0.464,0.414,0.441,1,0.152,1
+    #     inertia: 5
+    #     objects:
+    #       - person
+    # review:
+    #   alerts:
+    #     labels:
+    #       - person
+    #     required_zones:
+    #       - u_okna
+    #       - za_zaborom
+    #       - pod_oknami
     mqtt:
       enabled: True
       timestamp: False

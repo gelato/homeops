@@ -667,11 +667,11 @@ cameras:
         #   input_args: preset-rtsp-restream-low-latency
         #   roles:
         #     - detect
-    detect:
-      width: 848
-      height: 480
-      fps: 10
-      enabled: True
+    # detect:
+    #   width: 848
+    #   height: 480
+    #   fps: 10
+    #   enabled: True
     live:
       stream_name: backyard
       quality: 1

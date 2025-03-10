@@ -251,6 +251,9 @@ spec:
       enable_search: true
       dynamic_thumbnails: true
 
+      federation_domain_whitelist:
+        - matrix.org
+
       enable_registration_without_verification: true
 
       email:
@@ -296,6 +299,12 @@ spec:
         nginx.ingress.kubernetes.io/use-regex: "true"
         nginx.ingress.kubernetes.io/proxy-body-size: 10m
         external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
+      csHosts:
+        - matrix.skynerv.com
+      hosts:
+        - matrix.skynerv.com
+      wkHosts:
+        - matrix.skynerv.com
 
     postgresql:
       enabled: false

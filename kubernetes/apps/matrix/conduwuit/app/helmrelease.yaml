@@ -36,8 +36,10 @@ spec:
 
     extraEnv:
       # - CONDUWUIT_REGISTRATION_TOKEN: '12332145'
-      - CONDUWUIT_YES_I_AM_VERY_VERY_SURE_I_WANT_AN_OPEN_REGISTRATION_SERVER_PRONE_TO_ABUSE: 'true'
-      - CONDUWUIT_ALLOW_CHECK_FOR_UPDATES: 'true'
+      - name: CONDUWUIT_YES_I_AM_VERY_VERY_SURE_I_WANT_AN_OPEN_REGISTRATION_SERVER_PRONE_TO_ABUSE
+        value: 'true'
+      - name: CONDUWUIT_ALLOW_CHECK_FOR_UPDATES
+        value: 'true'
 
     service:
       type: ClusterIP

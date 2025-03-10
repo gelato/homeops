@@ -251,9 +251,6 @@ spec:
       enable_search: true
       dynamic_thumbnails: true
 
-      federation_domain_whitelist:
-        - matrix.org
-
       enable_registration_without_verification: true
 
       email:

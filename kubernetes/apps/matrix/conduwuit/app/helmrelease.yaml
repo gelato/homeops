@@ -31,7 +31,7 @@ spec:
     config:
       server_name: "myautrix.skynerv.com"
       max_request_size: "20000000"
-      allow_registration: false
+      allow_registration: true
       allow_federation: true
 
     service:

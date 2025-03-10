@@ -35,7 +35,7 @@ spec:
       allow_federation: true
 
     service:
-      type: loadBalancer
+      type: LoadBalancer
 
       port: 80
 

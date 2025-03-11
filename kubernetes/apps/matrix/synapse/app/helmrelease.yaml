@@ -22,18 +22,11 @@ spec:
       enabled: true
       replicaCount: 1
 
-      useIpv6: false
-
-      server:
-       m.server: matrix.skynerv.com:443
-
       client:
-       m.homeserver:
-         base_url: https://matrix.skynerv.com
+        m.homeserver:
+          base_url: "https://matrix.${SECRET_DOMAIN}"
 
-      service:
-        type: ClusterIP
-        port: 80
+      useIpv6: false
 
       extraData:
         support:
@@ -42,13 +35,6 @@ spec:
               email_address: 'admin@skynerv.com'
               role: 'admin'
           support_page: 'https://skynerv.com/support'
-
-      htdocsPath: /var/www/localhost/htdocs
-
-      image:
-        repository: ghcr.io/rtsp/docker-lighttpd
-        tag: latest
-        pullPolicy: Always
 
       podSecurityContext:
         fsGroup: 101
@@ -125,7 +111,7 @@ spec:
           - "/_matrix/federation/v1/media/.*"
 
       user_dir:
-        enabled: false
+        enabled: true
         name: userdir
         listeners: [client]
         csPaths:
@@ -296,12 +282,11 @@ spec:
         nginx.ingress.kubernetes.io/use-regex: "true"
         nginx.ingress.kubernetes.io/proxy-body-size: 10m
         external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
-      csHosts:
-        - matrix.skynerv.com
-      hosts:
-        - matrix.skynerv.com
-      wkHosts:
-        - matrix.skynerv.com
+      tls:
+        - secretName: synapse-tls
+          hosts:
+            - ${SECRET_DOMAIN}
+            - matrix.${SECRET_DOMAIN}
 
     postgresql:
       enabled: false

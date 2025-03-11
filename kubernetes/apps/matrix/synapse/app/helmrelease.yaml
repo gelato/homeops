@@ -110,13 +110,6 @@ spec:
           - "/_matrix/client/v1/media/.*"
           - "/_matrix/federation/v1/media/.*"
 
-      user_dir:
-        enabled: true
-        name: userdir
-        listeners: [client]
-        csPaths:
-          - "/_matrix/client/(api/v1|r0|v3|unstable)/user_directory/search$"
-
       frontend_proxy:
         enabled: true
         listeners: [client]
@@ -238,6 +231,7 @@ spec:
       dynamic_thumbnails: true
 
       enable_registration_without_verification: true
+      update_user_directory_from_worker: true
 
       email:
         smtp_host: smtp-relay.service.svc.cluster.local

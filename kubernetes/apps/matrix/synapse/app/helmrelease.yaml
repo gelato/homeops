@@ -110,6 +110,9 @@ spec:
           - "/_matrix/client/v1/media/.*"
           - "/_matrix/federation/v1/media/.*"
 
+      user_dir:
+        enabled: false
+
       frontend_proxy:
         enabled: true
         listeners: [client]
@@ -231,6 +234,7 @@ spec:
       dynamic_thumbnails: true
 
       enable_registration_without_verification: true
+
       update_user_directory_from_worker: true
 
       email:

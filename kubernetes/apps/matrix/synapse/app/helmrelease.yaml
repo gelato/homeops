@@ -197,8 +197,8 @@ spec:
           - "/_matrix/client/(r0|v3|unstable)/.*/account_data"
 
           ## The receipts event stream
-          - "/_matrix/client/(r0|v3|unstable)/rooms/.*/receipt"
-          - "/_matrix/client/(r0|v3|unstable)/rooms/.*/read_markers"
+          # - "/_matrix/client/(r0|v3|unstable)/rooms/.*/receipt"
+          # - "/_matrix/client/(r0|v3|unstable)/rooms/.*/read_markers"
 
           ## The presence event stream
           - "/_matrix/client/(api/v1|r0|v3|unstable)/presence/"

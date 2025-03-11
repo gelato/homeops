@@ -216,8 +216,8 @@ spec:
     config:
       reportStats: false
       publicBaseurl: "https://matrix.${SECRET_DOMAIN}"
-      # turnUris: []
-      # turnSecret: ''
+      turnUris: ["turns:torch.${SECRET_DOMAIN}?transport=udp", "turns:torch.${SECRET_DOMAIN}?transport=tcp"]
+      turnSecret: "${TURN_SERVER_PASS}"
       enableRegistration: false
       macaroonSecretKey: ${MATRIX_MACAROON_SECRET_KEY}
 

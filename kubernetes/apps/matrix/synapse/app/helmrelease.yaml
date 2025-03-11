@@ -22,13 +22,6 @@ spec:
       enabled: true
       replicaCount: 1
 
-      server:
-        m.server: "https://matrix.skynerv.com:443"
-
-      client:
-        m.homeserver:
-          base_url: "https://matrix.${SECRET_DOMAIN}:443"
-
       useIpv6: false
 
       extraData:

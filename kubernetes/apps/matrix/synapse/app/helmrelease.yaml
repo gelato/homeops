@@ -19,43 +19,8 @@ spec:
     publicServerName: "matrix.${SECRET_DOMAIN}"
 
     wellknown:
-      enabled: false
+      enabled: true
       replicaCount: 1
-
-      client:
-        m.homeserver:
-          base_url: "https://matrix.${SECRET_DOMAIN}"
-
-      useIpv6: false
-
-      extraData:
-        support:
-          admins:
-            - matrix_id: '@admin:skynerv.com'
-              email_address: 'admin@skynerv.com'
-              role: 'admin'
-          support_page: 'https://skynerv.com/support'
-
-      podSecurityContext:
-        fsGroup: 101
-        runAsGroup: 101
-        runAsUser: 100
-
-      securityContext:
-        capabilities:
-          drop:
-          - ALL
-        readOnlyRootFilesystem: true
-        runAsNonRoot: true
-        runAsUser: 100
-
-      resources:
-        limits:
-          cpu: 5m
-          memory: 15Mi
-        requests:
-          cpu: 5m
-          memory: 15Mi
 
     workers:
       default:

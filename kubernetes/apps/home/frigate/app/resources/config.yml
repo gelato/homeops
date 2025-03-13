@@ -618,38 +618,6 @@ cameras:
     birdseye:
       order: 6
 
-  backyard:
-    enabled: True
-    ffmpeg:
-      inputs:
-        - path: rtsp://localhost:8554/backyard_hq
-          input_args: preset-rtsp-restream-low-latency
-          roles:
-            - record
-            - audio
-        - path: rtsp://localhost:8554/backyard_lq
-          input_args: preset-rtsp-restream-low-latency
-          roles:
-            - detect
-    detect:
-      width: 848
-      height: 480
-      fps: 10
-      enabled: True
-    live:
-      stream_name: backyard_hq
-      quality: 1
-    webui_url: ""
-    mqtt:
-      enabled: True
-      timestamp: True
-      bounding_box: True
-      crop: False
-      height: 500
-      quality: 100
-    birdseye:
-      order: 7
-
 ui:
   time_format: browser
   date_style: short

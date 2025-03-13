@@ -646,5 +646,6 @@ camera_groups:
       - dom2
       - street
       - door
+      - middle
     icon: LuCar
     order: 0

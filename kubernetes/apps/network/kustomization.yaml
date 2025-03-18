@@ -5,7 +5,6 @@ kind: Kustomization
 resources:
   - ./external/ks.yaml
   - ./internal/ks.yaml
-  - ./stunner/ks.yaml
 components:
   - ../../flux/components/namespace
 patches:

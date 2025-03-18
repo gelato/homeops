@@ -9,5 +9,5 @@ spec:
     - name: udp-gateway
   rules:
     - backendRefs:
-        - name: kms
+        - name: synapse
           namespace: default

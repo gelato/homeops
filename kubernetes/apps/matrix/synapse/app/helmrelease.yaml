@@ -216,7 +216,7 @@ spec:
     config:
       reportStats: false
       publicBaseurl: "https://matrix.${SECRET_DOMAIN}"
-      turnUris: ["turns:${SECRET_IP}?transport=udp", "turns:${SECRET_IP}?transport=tcp"]
+      turnUris: ["turn:${SECRET_IP}?transport=udp", "turn:${SECRET_IP}?transport=tcp"]
       turnSecret: "${TURN_SERVER_PASS}"
       enableRegistration: false
       macaroonSecretKey: ${MATRIX_MACAROON_SECRET_KEY}

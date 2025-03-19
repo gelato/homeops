@@ -93,6 +93,7 @@ spec:
             dedup.minScrapeInterval: 30s
             search.minStalenessInterval: 5m
             vmalert.proxyURL: http://vmalert-victoria-metrics:8080
+            search.maxConcurrentRequests: 10
           storage:
             volumeClaimTemplate:
               spec:

@@ -37,6 +37,8 @@ nodes:
       - deviceSelector:
           hardwareAddr: "00:e0:4c:01:8f:b3"
         dhcp: false
+        dhcpOptions:
+          ipv6: true
         addresses:
           - "192.168.108.149/20"
         routes:
@@ -57,6 +59,8 @@ nodes:
       - deviceSelector:
           hardwareAddr: "e8:ff:1e:d1:26:0f"
         dhcp: false
+        dhcpOptions:
+          ipv6: true
         addresses:
           - "192.168.108.209/20"
         routes:
@@ -77,6 +81,8 @@ nodes:
       - deviceSelector:
           hardwareAddr: "e8:ff:1e:d1:24:1b"
         dhcp: false
+        dhcpOptions:
+          ipv6: true
         addresses:
           - "192.168.108.238/20"
         routes:
@@ -97,6 +103,8 @@ nodes:
       - deviceSelector:
           hardwareAddr: "58:11:22:d1:bb:57"
         dhcp: false
+        dhcpOptions:
+          ipv6: true
         addresses:
           - "192.168.108.199/20"
         routes:
@@ -118,6 +126,8 @@ nodes:
       - deviceSelector:
           hardwareAddr: "e8:ff:1e:d0:c2:31"
         dhcp: false
+        dhcpOptions:
+          ipv6: true
         addresses:
           - "192.168.108.212/20"
         routes:
@@ -138,6 +148,8 @@ nodes:
       - deviceSelector:
           hardwareAddr: "e8:ff:1e:d2:1b:d1"
         dhcp: false
+        dhcpOptions:
+          ipv6: true
         addresses:
           - "192.168.108.115/20"
         routes:

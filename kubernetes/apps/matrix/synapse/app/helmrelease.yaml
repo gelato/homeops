@@ -218,7 +218,8 @@ spec:
       publicBaseurl: "https://matrix.${SECRET_DOMAIN}"
       turnUris: ["turn:${SECRET_DOMAIN}?transport=udp", "turn:${SECRET_DOMAIN}?transport=tcp"]
       turnSecret: "${TURN_SERVER_PASS}"
-      enableRegistration: false
+      enableRegistration: true
+      registrationSharedSecret: ${MATRIX_REGISTRATION_SHARED_SECRET}
       macaroonSecretKey: ${MATRIX_MACAROON_SECRET_KEY}
 
       trustedKeyServers:
@@ -229,9 +230,6 @@ spec:
       enable_search: true
       dynamic_thumbnails: true
 
-      registration_shared_secret: ${MATRIX_REGISTRATION_SHARED_SECRET}
-
-      enable_registration: true
       enable_registration_without_verification: false
       registrations_require_3pid:
         - email

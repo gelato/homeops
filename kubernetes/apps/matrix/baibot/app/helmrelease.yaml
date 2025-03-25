@@ -38,6 +38,9 @@ spec:
             env:
               BAIBOT_PERSISTENCE_DATA_DIR_PATH: /data
               BAIBOT_CONFIG_FILE_PATH: /config/config.yml
+            envFrom:
+              - secretRef:
+                  name: baibot-secret
             probes:
               liveness:
                 enabled: false

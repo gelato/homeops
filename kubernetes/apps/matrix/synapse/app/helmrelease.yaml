@@ -244,6 +244,7 @@ spec:
       enable_3pid_lookup: true
 
       # default_identity_server: https://im.${SECRET_DOMAIN}
+      default_identity_server: https://vector.im
 
       enable_set_avatar_url: true
 

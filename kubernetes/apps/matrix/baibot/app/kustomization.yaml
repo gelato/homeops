@@ -4,4 +4,13 @@ kind: Kustomization
 resources:
   - ./externalsecret.yaml
   - ./helmrelease.yaml
-  - ../../../../templates/volsync
+  - ./secret.sops.yaml
+  - ./pvc.yaml
+configMapGenerator:
+  - name: baibot-config
+    files:
+      - config.yml=./resources/config.yml
+generatorOptions:
+  disableNameSuffixHash: true
+  annotations:
+    kustomize.toolkit.fluxcd.io/substitute: disabled

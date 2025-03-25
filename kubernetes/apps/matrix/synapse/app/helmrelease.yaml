@@ -229,6 +229,8 @@ spec:
       enable_search: true
       dynamic_thumbnails: true
 
+      registration_shared_secret: ${MATRIX_REGISTRATION_SHARED_SECRET}
+
       enable_registration_without_verification: true
 
       update_user_directory_from_worker: true

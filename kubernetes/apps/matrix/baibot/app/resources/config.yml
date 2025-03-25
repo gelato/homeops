@@ -115,14 +115,14 @@ agents:
     #       size: 256x256
     #       quality: standard
     #
-    - id: ollama
+    - id: ollama-text
       provider: ollama
       config:
         base_url: "http://ollama.ai.svc:11434/v1"
         api_key: null
         text_generation:
           model_id: "Hf.co/T-Tech/T-Lite-It-1.0-Q8_0-GGUF:Latest"
-          prompt: "Ты личный ассистент Зая, моодая красивая девушка. Ты образована и знаешь все обо всем в мире, на вопросы отвечаешь максимально лаконично и по делу."
+          prompt: "Ты личный ассистент Зая, молодая красивая девушка. Ты образована и знаешь все обо всем в мире, на вопросы отвечаешь максимально лаконично и по делу."
           temperature: 1.0
           max_response_tokens: 4096
           max_context_tokens: 128000

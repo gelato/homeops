@@ -216,7 +216,7 @@ spec:
     config:
       reportStats: false
       publicBaseurl: "https://matrix.${SECRET_DOMAIN}"
-      turnUris: ["turn:${SECRET_DOMAIN}?transport=udp", "turn:${SECRET_DOMAIN}?transport=tcp"]
+      turnUris: ["turn:${TURN_DOMAIN}?transport=udp", "turn:${TURN_DOMAIN}?transport=tcp"]
       turnSecret: "${TURN_SERVER_PASS}"
       enableRegistration: true
       registrationSharedSecret: ${MATRIX_REGISTRATION_SHARED_SECRET}

@@ -231,7 +231,10 @@ spec:
 
       registration_shared_secret: ${MATRIX_REGISTRATION_SHARED_SECRET}
 
-      enable_registration_without_verification: true
+      enable_registration: true
+      enable_registration_without_verification: false
+      registrations_require_3pid:
+        - email
 
       update_user_directory_from_worker: true
 
@@ -240,7 +243,12 @@ spec:
         smtp_port: 25
         notif_from: "Skynerv Matrix <noreply@${SECRET_DOMAIN}>"
 
-      enable_3pid_lookup: false
+      enable_3pid_lookup: true
+
+      # default_identity_server: https://im.${SECRET_DOMAIN}
+
+      enable_set_avatar_url: true
+
       # app_service_config_files:
       #   - "/mautrix-discord/registration.yaml"
       #   - "/mautrix-discord/double-puppet-registration.yaml"

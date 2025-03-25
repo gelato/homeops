@@ -27,7 +27,7 @@ user:
     recovery_passphrase: "${BAIBOT_RECOVERY_PASSPHRASE}"
 
     # An optional flag to reset the encryption recovery passphrase.
-    recovery_reset_allowed: false
+    recovery_reset_allowed: true
 
 # Command prefix. Leave empty to use the default (!bai).
 command_prefix: "!zai"

@@ -35,7 +35,7 @@ spec:
           app:
             image:
               repository: ghcr.io/music-assistant/server
-              tag: 2.5.0b9
+              tag: 2.5.0
             probes:
               liveness:
                 enabled: true

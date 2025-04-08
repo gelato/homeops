@@ -168,6 +168,7 @@ patches:
   - "@./patches/global/machine-time.yaml"
   - "@./patches/global/nfs.yaml"
   - "@./patches/global/machine-registries.yaml"
+  - "@./patches/global/image-cache.yaml"
 
 # Controller patches
 controlPlane:

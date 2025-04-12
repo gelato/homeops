@@ -11,7 +11,7 @@ spec:
   chart:
     spec:
       chart: redis
-      version: 20.11.3
+      version: 20.11.4
       sourceRef:
         kind: HelmRepository
         name: bitnami
@@ -89,7 +89,7 @@ spec:
       enabled: false
       image:
         repository: bitnami/redis-exporter
-        tag: 1.69.0-debian-12-r1
+        tag: 1.69.0-debian-12-r4
         redisTargetHost: redis-sentinel
       serviceMonitor:
         enabled: true

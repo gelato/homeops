@@ -216,22 +216,23 @@ spec:
     config:
       reportStats: false
       publicBaseurl: "https://matrix.${SECRET_DOMAIN}"
-      turnUris: ["turn:${SECRET_DOMAIN}?transport=udp", "turn:${SECRET_DOMAIN}?transport=tcp"]
+      turnUris: ["turns:${TURN_DOMAIN}?transport=udp", "turns:${TURN_DOMAIN}?transport=tcp"]
       turnSecret: "${TURN_SERVER_PASS}"
-      enableRegistration: false
+      enableRegistration: true
+      registrationSharedSecret: ${MATRIX_REGISTRATION_SHARED_SECRET}
       macaroonSecretKey: ${MATRIX_MACAROON_SECRET_KEY}
 
-      trustedKeyServers:
-        - server_name: matrix.org
+      # trustedKeyServers:
+      #   - server_name: matrix.org
 
     extraConfig:
       use_presence: true
       enable_search: true
       dynamic_thumbnails: true
 
-      registration_shared_secret: ${MATRIX_REGISTRATION_SHARED_SECRET}
-
-      enable_registration_without_verification: true
+      enable_registration_without_verification: false
+      registrations_require_3pid:
+        - email
 
       update_user_directory_from_worker: true
 
@@ -240,7 +241,13 @@ spec:
         smtp_port: 25
         notif_from: "Skynerv Matrix <noreply@${SECRET_DOMAIN}>"
 
-      enable_3pid_lookup: false
+      enable_3pid_lookup: true
+
+      # default_identity_server: https://im.${SECRET_DOMAIN}
+      default_identity_server: https://vector.im
+
+      enable_set_avatar_url: true
+
       # app_service_config_files:
       #   - "/mautrix-discord/registration.yaml"
       #   - "/mautrix-discord/double-puppet-registration.yaml"
@@ -283,6 +290,7 @@ spec:
           hosts:
             - ${SECRET_DOMAIN}
             - matrix.${SECRET_DOMAIN}
+            - tracking.${SECRET_DOMAIN}
 
     postgresql:
       enabled: false

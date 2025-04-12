@@ -32,8 +32,8 @@ spec:
         containers:
           app:
             image:
-              repository: quay.io/mizeraj/wyoming-gigaam-ctc
-              # repository: harbor.casa/library/wyoming-gigaam-ctc
+              # repository: quay.io/mizeraj/wyoming-gigaam-ctc
+              repository: harbor.casa/library/wyoming-gigaam-ctc
               tag: latest
             env:
               TZ: ${TIMEZONE}

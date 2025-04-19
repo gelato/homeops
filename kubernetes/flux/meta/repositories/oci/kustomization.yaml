@@ -6,4 +6,4 @@ resources:
   - ./repos/weaveworks.yaml
   - ./repos/bitnami.yaml
   - ./repos/prometheus-community.yaml
-  # - ./repos/matrix.yaml
+  - ./repos/matrix.yaml

@@ -5,7 +5,7 @@ metadata:
   name: &app synapse
 spec:
   interval: 5m
-  releaseName: matrix-synapse
+  # releaseName: matrix-synapse
   # chart:
   #   spec:
   #     chart: matrix-synapse

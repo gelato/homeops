@@ -31,3 +31,4 @@ resources:
   - ./repos/victoriametrics.yaml
   - ./repos/cronce.yaml
   - ./repos/stunner.yaml
+  # - ./repos/matrix.yaml

@@ -95,6 +95,13 @@ spec:
         existingClaim: jellyfin-transcode
         globalMounts:
           - path: /cache/transcodes
+      cache:
+        enabled: true
+        type: emptyDir
+        medium: Memory
+        sizeLimit: 3Gi
+        globalMounts:
+          - path: /tmp/jellyfin
       media:
         existingClaim: media-storage
         globalMounts:

@@ -40,7 +40,7 @@ spec:
           app:
             image:
               repository: ghcr.io/wez/govee2mqtt
-              tag: 2025.01.04-2c39a50f
+              tag: 2025.04.13-17d43d72
               pullPolicy: IfNotPresent
             ports:
               - name: http

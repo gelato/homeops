@@ -64,7 +64,8 @@ spec:
                   app.kubernetes.io/name: vmstorage
           extraArgs:
             dedup.minScrapeInterval: 30s
-            search.maxConcurrentRequests: "10"
+            search.maxConcurrentRequests: "16"
+            search.maxQueueDuration: "20"
           storage:
             volumeClaimTemplate:
               spec:
@@ -94,6 +95,8 @@ spec:
             dedup.minScrapeInterval: 30s
             search.minStalenessInterval: 5m
             vmalert.proxyURL: http://vmalert-victoria-metrics:8080
+            search.maxConcurrentRequests: "16"
+            search.maxQueueDuration: "20"
           storage:
             volumeClaimTemplate:
               spec:

@@ -64,6 +64,7 @@ spec:
                   app.kubernetes.io/name: vmstorage
           extraArgs:
             dedup.minScrapeInterval: 30s
+            search.maxConcurrentRequests: "10"
           storage:
             volumeClaimTemplate:
               spec:
@@ -141,7 +142,6 @@ spec:
                 app.kubernetes.io/name: vmalert
         extraArgs:
           external.url: https://vmalert.${SECRET_DOMAIN}
-          search.maxConcurrentRequests: "10"
         notifiers:
           - url: http://alertmanager.observability.svc.cluster.local:9093
       ingress:

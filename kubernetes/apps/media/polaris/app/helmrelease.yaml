@@ -1,0 +1,93 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2beta1.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: polaris
+  namespace: media
+spec:
+  chart:
+    spec:
+      chart: app-template
+      version: 3.7.3
+      interval: 30m
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  interval: 30m
+  values:
+    controllers:
+      main:
+        type: deployment
+        annotations:
+          reloader.stakater.com/auto: "true"
+        pod:
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+            fsGroup: 568
+            fsGroupChangePolicy: "OnRootMismatch"
+            supplementalGroups:
+              - 44
+              - 110
+              - 993
+        containers:
+          main:
+            image:
+              repository: quay.io/connectical/polaris
+              tag: 0.15.0-alpine3.21.3
+            resources:
+              requests:
+                cpu: 15m
+                memory: 512M
+              limits:
+                memory: 1G
+    service:
+      main:
+        controller: main
+        type: LoadBalancer
+        # externalTrafficPolicy: Cluster
+        ports:
+          http:
+            port: 5050
+    ingress:
+      main:
+        enabled: true
+        className: external
+        annotations:
+          external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
+        hosts:
+          - host: &host polaris.${SECRET_DOMAIN}
+            paths:
+              - path: /
+                service:
+                  identifier: main
+                  port: http
+        tls:
+          - hosts:
+              - *host
+    persistence:
+      data:
+        enabled: true
+        existingClaim: polaris-data
+        globalMounts:
+          - path: /var/lib/polaris
+      cache:
+        enabled: true
+        type: emptyDir
+        medium: Memory
+        sizeLimit: 3Gi
+        globalMounts:
+          - path: /var/cache/polaris
+      media:
+        existingClaim: media-storage
+        globalMounts:
+          - path: /media
+      nfs-media:
+        type: nfs
+        server: tower.local
+        path: /mnt/user/media/music
+        globalMounts:
+          - path: /music
+            readOnly: false

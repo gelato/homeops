@@ -15,5 +15,6 @@ resources:
   - ./jellyseerr/ks.yaml
   - ./immich/ks.yaml
   - ./jackett/ks.yaml
+  - ./polaris/ks.yaml
   # - ./games/ks.yaml
   # - ./rsync/ks.yaml

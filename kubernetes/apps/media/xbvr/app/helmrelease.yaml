@@ -35,8 +35,8 @@ spec:
         containers:
           main:
             image:
-              repository: quay.io/connectical/polaris
-              tag: 0.15.0-alpine3.21.3
+              repository: ghcr.io/xbapps/xbvr
+              tag: 0.4.33
             resources:
               requests:
                 cpu: 15m

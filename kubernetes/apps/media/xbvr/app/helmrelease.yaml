@@ -50,7 +50,7 @@ spec:
         # externalTrafficPolicy: Cluster
         ports:
           http:
-            port: 5050
+            port: 9999
     ingress:
       main:
         enabled: true

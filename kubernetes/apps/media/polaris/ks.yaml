@@ -10,7 +10,6 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: longhorn
-    - name: media-storage
   path: ./kubernetes/apps/media/polaris/app
   prune: true
   sourceRef:

@@ -8,5 +8,5 @@ spec:
   accessModes: ["ReadWriteOnce"]
   resources:
     requests:
-      storage: 512Mi
+      storage: 3Gi
   storageClassName: longhorn-fast

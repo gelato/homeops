@@ -20,7 +20,7 @@
   ],
   ignorePaths: [
     '**/*.sops.*',
-    'kubernetes/apps/matrix/synapse'
+    '**/apps/matrix/synapse'
   ],
   flux: {
     fileMatch: [

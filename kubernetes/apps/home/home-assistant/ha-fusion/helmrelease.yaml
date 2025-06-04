@@ -45,7 +45,7 @@ spec:
             image:
               repository: ghcr.io/matt8707/ha-fusion
               tag: latest
-              pullPolicy: IfNotPresent
+              pullPolicy: Always
             env:
               TZ: "${TIMEZONE}"
               HASS_URL: https://hass.skynerv.com

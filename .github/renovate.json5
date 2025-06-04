@@ -20,7 +20,7 @@
   ],
   ignorePaths: [
     '**/*.sops.*',
-    '**/apps/matrix/synapse'
+    '**/synapse/*.*'
   ],
   flux: {
     fileMatch: [

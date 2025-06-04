@@ -32,7 +32,7 @@ spec:
   values:
     defaultPodOptions:
       hostNetwork: false
-      runtimeClassName: nvidia
+      # runtimeClassName: nvidia
     controllers:
       main:
         annotations:
@@ -41,7 +41,8 @@ spec:
           main:
             image:
               repository: ghcr.io/blakeblackshear/frigate
-              tag: 0.15.1-tensorrt@sha256:e6015f63335d4c9865ddd6987df62e60b9e8cad2a43f8d0cb4ff296ee795e7d1
+              # tag: 0.15.1-tensorrt@sha256:e6015f63335d4c9865ddd6987df62e60b9e8cad2a43f8d0cb4ff296ee795e7d1
+              tag: stable
             env:
               TZ: ${TIMEZONE}
             envFrom:
@@ -78,13 +79,13 @@ spec:
                 memory: 6769M
               limits:
                 memory: 24G
-                # gpu.intel.com/i915: 1
-                nvidia.com/gpu: 1
+                gpu.intel.com/i915: 1
+                # nvidia.com/gpu: 1
         pod:
           nodeSelector:
             google.feature.node.kubernetes.io/coral: "true"
-            # intel.feature.node.kubernetes.io/gpu: "true"
-            nvidia.com/gpu.present: "true"
+            intel.feature.node.kubernetes.io/gpu: "true"
+            # nvidia.com/gpu.present: "true"
     service:
       main:
         controller: main
@@ -111,9 +112,9 @@ spec:
         annotations:
           hajimari.io/enable: "true"
           hajimari.io/icon: cbi:frigate
-          # nginx.org/proxy-read-timeout: "86400s"
-          # nginx.org/proxy-send-timeout: "86400s"
-          # nginx.org/websocket-services: "main"
+          nginx.org/proxy-read-timeout: "86400s"
+          nginx.org/proxy-send-timeout: "86400s"
+          nginx.org/websocket-services: "main"
           # nginx.ingress.kubernetes.io/whitelist-source-range: |
           #   10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
         className: internal
@@ -159,7 +160,7 @@ spec:
         enabled: true
         type: emptyDir
         medium: Memory
-        sizeLimit: 30Gi
+        sizeLimit: 8Gi
         globalMounts:
           - path: /dev/shm
       usb:

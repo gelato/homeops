@@ -84,7 +84,7 @@ spec:
           nodeSelector:
             google.feature.node.kubernetes.io/coral: "true"
             # intel.feature.node.kubernetes.io/gpu: "true"
-            nvidia.com/gpu.present: "true"
+            # nvidia.com/gpu.present: "true"
     service:
       main:
         controller: main

@@ -60,6 +60,9 @@ spec:
                 cpu: 10m
               limits:
                 memory: 1Gi
+    pod:
+      nodeSelector:
+        kubernetes.io/hostname: "weilai"
     service:
       app:
         controller: go2rtc

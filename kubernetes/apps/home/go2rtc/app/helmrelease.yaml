@@ -61,8 +61,15 @@ spec:
               limits:
                 memory: 1Gi
     pod:
-      nodeSelector:
-        kubernetes.io/hostname: "weilai"
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    name: frigate
+                topologyKey: kubernetes.io/hostname
     service:
       app:
         controller: go2rtc

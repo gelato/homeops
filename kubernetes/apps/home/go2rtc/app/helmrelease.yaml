@@ -33,6 +33,17 @@ spec:
             runAsUser: 65534
             runAsGroup: 65534
             seccompProfile: { type: RuntimeDefault }
+          nodeSelector:
+            intel.feature.node.kubernetes.io/gpu: "true"
+          affinity:
+            podAntiAffinity:
+              preferredDuringSchedulingIgnoredDuringExecution:
+                - weight: 100
+                  podAffinityTerm:
+                    labelSelector:
+                      matchLabels:
+                        name: frigate
+                    topologyKey: kubernetes.io/hostname
         containers:
           app:
             image:
@@ -60,18 +71,6 @@ spec:
                 cpu: 10m
               limits:
                 memory: 1Gi
-    pod:
-      nodeSelector:
-        intel.feature.node.kubernetes.io/gpu: "true"
-      affinity:
-        podAntiAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-            - weight: 100
-              podAffinityTerm:
-                labelSelector:
-                  matchLabels:
-                    name: frigate
-                topologyKey: kubernetes.io/hostname
     service:
       app:
         controller: go2rtc

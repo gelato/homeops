@@ -41,10 +41,10 @@ spec:
           main:
             image:
               repository: ghcr.io/blakeblackshear/frigate
-              # tag: 0.15.1-tensorrt@sha256:e6015f63335d4c9865ddd6987df62e60b9e8cad2a43f8d0cb4ff296ee795e7d1
-              tag: stable
+              tag: 0.15.1@sha256:c4e02d2c511847eebbda8e0e370b41c78e7b51247353de79340e06c3e95f11be
             env:
               TZ: ${TIMEZONE}
+              LIBVA_DRIVER_NAME: i965
             envFrom:
               - secretRef:
                   name: frigate-secret
@@ -98,15 +98,6 @@ spec:
             enabled: true
             primary: true
             port: *port
-          go2rtc:
-            enabled: true
-            port: &api-port 1984
-          rtsp:
-            enabled: true
-            port: &restream-port 8554
-          webrtc:
-            enabled: true
-            port: 8555
     ingress:
       main:
         annotations:
@@ -125,17 +116,6 @@ spec:
                 service:
                   identifier: main
                   port: http
-          - host: "go2rtc-frigate.${SECRET_DOMAIN}"
-            paths:
-              - path: /
-                service:
-                  identifier: main
-                  port: *api-port
-              - path: /ws
-                pathType: Prefix
-                service:
-                  identifier: main
-                  port: *port
         tls:
           - hosts:
               - *host

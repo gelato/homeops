@@ -17,4 +17,4 @@ resources:
   - ./wyoming-whisper/ks.yaml
   - ./wyoming-gigaam-ctc/ks.yaml
   - ./silerotts/ks.yaml
-  # - ./squeezelite/ks.yaml
+  - ./go2rtc/ks.yaml

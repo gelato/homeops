@@ -61,6 +61,8 @@ spec:
               limits:
                 memory: 1Gi
     pod:
+      nodeSelector:
+        intel.feature.node.kubernetes.io/gpu: "true"
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
@@ -70,15 +72,6 @@ spec:
                   matchLabels:
                     name: frigate
                 topologyKey: kubernetes.io/hostname
-        podAffinity:
-              requiredDuringSchedulingIgnoredDuringExecution:
-              - labelSelector:
-                  matchExpressions:
-                    - key: "intel.feature.node.kubernetes.io/gpu"
-                      operator: In
-                      values:
-                        - true
-                topologyKey: "kubernetes.io/hostname"
     service:
       app:
         controller: go2rtc

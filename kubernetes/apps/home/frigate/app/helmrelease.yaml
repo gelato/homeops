@@ -74,10 +74,11 @@ spec:
               privileged: true
             resources:
               requests:
-                cpu: 2162m
-                memory: 6769M
+                cpu: 2821m
+                memory: 9617M
               limits:
-                memory: 24G
+                cpu: 4110m
+                memory: 17G
                 # gpu.intel.com/i915: 1
                 nvidia.com/gpu: 1
         pod:

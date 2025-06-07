@@ -125,7 +125,7 @@ spec:
                 service:
                   identifier: main
                   port: http
-          - host: "go2rtc.${SECRET_DOMAIN}"
+          - host: "go2rtc-frigate.${SECRET_DOMAIN}"
             paths:
               - path: /
                 service:

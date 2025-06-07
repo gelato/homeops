@@ -14,10 +14,6 @@ detectors:
     type: edgetpu
     device: usb
 
-ffmpeg:
-  global_args: ["-hide_banner", "-loglevel", "warning"]
-  hwaccel_args: preset-intel-qsv-h264
-
 database:
   path: /data/frigate.db
 
@@ -95,6 +91,8 @@ snapshots:
 
 semantic_search:
   enabled: True
+  reindex: True
+  model_size: "large"
 
 # genai:
 #   # Optional: Enable AI description generation (default: shown below)
@@ -113,16 +111,59 @@ semantic_search:
 #   object_prompts:
 #     person: "My special person prompt."
 
+go2rtc:
+  streams:
+    gates_hq:
+      - rtsp://admin:12332145@192.168.108.104:554/stream1
+      - "ffmpeg:gates_hq#audio=copy#audio=aac#audio=opus"
+    gates_lq:
+      - rtsp://admin:12332145@192.168.108.104:554/stream2
+      - "ffmpeg:gates_lq#audio=copy#audio=aac#audio=opus"
+    door_hq:
+      - rtsp://admin:12332145@192.168.108.227:554/stream1
+      - "ffmpeg:door_hq#audio=copy#audio=aac#audio=opus"
+    door_lq:
+      - rtsp://admin:12332145@192.168.108.227:554/stream2
+      - "ffmpeg:door_lq#audio=copy#audio=aac#audio=opus"
+    dvor_gates_hq:
+      - rtsp://admin:12332145@192.168.108.210:554/stream1
+      - "ffmpeg:dvor_gates_hq#audio=copy#audio=aac#audio=opus"
+    dvor_gates_lq:
+      - rtsp://admin:12332145@192.168.108.210:554/stream2
+      - "ffmpeg:dvor_gates_lq#audio=copy#audio=aac#audio=opus"
+    dom2_hq:
+      - rtsp://admin:12332145@192.168.108.215:554/stream1
+      - "ffmpeg:dom2_hq#audio=copy#audio=aac#audio=opus"
+    dom2_lq:
+      - rtsp://admin:12332145@192.168.108.215:554/stream2
+      - "ffmpeg:dom2_lq#audio=copy#audio=aac#audio=opus"
+    middle_hq:
+      - rtsp://admin:12332145@192.168.97.27:554/stream1
+      - "ffmpeg:middle_hq#audio=copy#audio=aac#audio=opus"
+    middle_lq:
+      - rtsp://admin:12332145@192.168.97.27:554/stream2
+      - "ffmpeg:middle_lq#audio=copy#audio=aac#audio=opus"
+    street_hq:
+      - rtsp://admin:12332145@192.168.111.65:554/stream1
+      - "ffmpeg:street_hq#audio=copy#audio=aac#audio=opus"
+    street_lq:
+      - rtsp://admin:12332145@192.168.111.65:554/stream2
+      - "ffmpeg:street_lq#audio=copy#audio=aac#audio=opus"
+  webrtc:
+    candidates:
+      - 192.168.108.55:8555
 cameras:
   gates:
     enabled: True
     ffmpeg:
       inputs:
-        - path: rtsp://go2rtc:554/gates_hq
+        - path: rtsp://localhost:8554/gates_hq
+          input_args: preset-rtsp-restream-low-latency
           roles:
             - record
             - audio
-        - path: rtsp://go2rtc:554/gates_lq
+        - path: rtsp://localhost:8554/gates_lq
+          input_args: preset-rtsp-restream-low-latency
           roles:
             - detect
     detect:
@@ -195,11 +236,13 @@ cameras:
     enabled: True
     ffmpeg:
       inputs:
-        - path: rtsp://go2rtc:554/door_hq
+        - path: rtsp://localhost:8554/door_hq
+          input_args: preset-rtsp-restream-low-latency
           roles:
             - record
             - audio
-        - path: rtsp://go2rtc:554/door_lq
+        - path: rtsp://localhost:8554/door_lq
+          input_args: preset-rtsp-restream-low-latency
           roles:
             - detect
     detect:
@@ -279,11 +322,13 @@ cameras:
     enabled: True
     ffmpeg:
       inputs:
-        - path: rtsp://go2rtc:554/dvor_gates_hq
+        - path: rtsp://localhost:8554/dvor_gates_hq
+          input_args: preset-rtsp-restream-low-latency
           roles:
             - record
             - audio
-        - path: rtsp://go2rtc:554/dvor_gates_lq
+        - path: rtsp://localhost:8554/dvor_gates_lq
+          input_args: preset-rtsp-restream-low-latency
           roles:
             - detect
     detect:
@@ -366,11 +411,13 @@ cameras:
     enabled: True
     ffmpeg:
       inputs:
-        - path: rtsp://go2rtc:554/dom2_hq
+        - path: rtsp://localhost:8554/dom2_hq
+          input_args: preset-rtsp-restream-low-latency
           roles:
             - record
             - audio
-        - path: rtsp://go2rtc:554/dom2_lq
+        - path: rtsp://localhost:8554/dom2_lq
+          input_args: preset-rtsp-restream-low-latency
           roles:
             - detect
     detect:
@@ -428,11 +475,13 @@ cameras:
     enabled: True
     ffmpeg:
       inputs:
-        - path: rtsp://go2rtc:554/street_hq
+        - path: rtsp://localhost:8554/street_hq
+          input_args: preset-rtsp-restream-low-latency
           roles:
             - record
             - audio
-        - path: rtsp://go2rtc:554/street_lq
+        - path: rtsp://localhost:8554/street_lq
+          input_args: preset-rtsp-restream-low-latency
           roles:
             - detect
     detect:
@@ -486,11 +535,13 @@ cameras:
     enabled: True
     ffmpeg:
       inputs:
-        - path: rtsp://go2rtc:554/middle_hq
+        - path: rtsp://localhost:8554/middle_hq
+          input_args: preset-rtsp-restream-low-latency
           roles:
             - record
             - audio
-        - path: rtsp://go2rtc:554/middle_lq
+        - path: rtsp://localhost:8554/middle_lq
+          input_args: preset-rtsp-restream-low-latency
           roles:
             - detect
     detect:

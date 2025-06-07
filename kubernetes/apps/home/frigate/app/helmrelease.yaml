@@ -32,7 +32,7 @@ spec:
   values:
     defaultPodOptions:
       hostNetwork: false
-      # runtimeClassName: nvidia
+      runtimeClassName: nvidia
     controllers:
       main:
         annotations:
@@ -41,7 +41,7 @@ spec:
           main:
             image:
               repository: ghcr.io/blakeblackshear/frigate
-              tag: 0.15.1@sha256:c4e02d2c511847eebbda8e0e370b41c78e7b51247353de79340e06c3e95f11be
+              tag: 0.15.0-tensorrt@sha256:c254c4114ebd46543c4d691cb07e8c0dfeba7ee04d2274f5d9f05b0652a07fe2
             env:
               TZ: ${TIMEZONE}
             envFrom:
@@ -77,14 +77,14 @@ spec:
                 cpu: 2162m
                 memory: 6769M
               limits:
-                memory: 16G
-                gpu.intel.com/i915: 1
-                # nvidia.com/gpu: 1
+                memory: 24G
+                # gpu.intel.com/i915: 1
+                nvidia.com/gpu: 1
         pod:
           nodeSelector:
             google.feature.node.kubernetes.io/coral: "true"
-            intel.feature.node.kubernetes.io/gpu: "true"
-            # nvidia.com/gpu.present: "true"
+            # intel.feature.node.kubernetes.io/gpu: "true"
+            nvidia.com/gpu.present: "true"
     service:
       main:
         controller: main
@@ -97,14 +97,23 @@ spec:
             enabled: true
             primary: true
             port: *port
+          go2rtc:
+            enabled: true
+            port: &api-port 1984
+          rtsp:
+            enabled: true
+            port: &restream-port 8554
+          webrtc:
+            enabled: true
+            port: 8555
     ingress:
       main:
         annotations:
           hajimari.io/enable: "true"
           hajimari.io/icon: cbi:frigate
-          nginx.org/proxy-read-timeout: "86400s"
-          nginx.org/proxy-send-timeout: "86400s"
-          nginx.org/websocket-services: "main"
+          # nginx.org/proxy-read-timeout: "86400s"
+          # nginx.org/proxy-send-timeout: "86400s"
+          # nginx.org/websocket-services: "main"
           # nginx.ingress.kubernetes.io/whitelist-source-range: |
           #   10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
         className: internal
@@ -115,6 +124,17 @@ spec:
                 service:
                   identifier: main
                   port: http
+          - host: "go2rtc.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                service:
+                  identifier: main
+                  port: *api-port
+              - path: /ws
+                pathType: Prefix
+                service:
+                  identifier: main
+                  port: *port
         tls:
           - hosts:
               - *host
@@ -139,7 +159,7 @@ spec:
         enabled: true
         type: emptyDir
         medium: Memory
-        sizeLimit: 8Gi
+        sizeLimit: 30Gi
         globalMounts:
           - path: /dev/shm
       usb:

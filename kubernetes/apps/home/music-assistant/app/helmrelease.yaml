@@ -62,6 +62,8 @@ spec:
         ports:
           http:
             port: 8095
+          flow:
+            port: 8097
 
     ingress:
       app:

@@ -55,10 +55,9 @@ objects:
 
 record:
   enabled: True
-  expire_interval: 60
   sync_recordings: True
   retain:
-    days: 14
+    days: 3
     mode: all
   preview:
     quality: very_high
@@ -66,13 +65,13 @@ record:
     pre_capture: 5
     post_capture: 5
     retain:
-      days: 14
+      days: 3
       mode: active_objects
   detections:
     pre_capture: 5
     post_capture: 5
     retain:
-      days: 14
+      days: 3
       mode: active_objects
 
 snapshots:
@@ -83,71 +82,69 @@ snapshots:
   crop: False
   required_zones: []
   retain:
-    default: 30
+    default: 10
     objects:
-      person: 30
-      car: 30
+      person: 10
+      car: 10
   quality: 90
 
 semantic_search:
   enabled: True
-  reindex: True
-  model_size: "large"
 
-# genai:
-#   # Optional: Enable AI description generation (default: shown below)
-#   enabled: False
-#   # Required if enabled: Provider must be one of ollama, gemini, or openai
-#   provider: ollama
-#   # Required if provider is ollama. May also be used for an OpenAI API compatible backend with the openai provider.
-#   base_url: http://localhost::11434
-#   # Required if gemini or openai
-#   api_key: "{FRIGATE_GENAI_API_KEY}"
-#   # Optional: The default prompt for generating descriptions. Can use replacement
-#   # variables like "label", "sub_label", "camera" to make more dynamic. (default: shown below)
-#   prompt: "Describe the {label} in the sequence of images with as much detail as possible. Do not describe the background."
-#   # Optional: Object specific prompts to customize description results
-#   # Format: {label}: {prompt}
-#   object_prompts:
-#     person: "My special person prompt."
+genai:
+  # Optional: Enable AI description generation (default: shown below)
+  enabled: True
+  # Required if enabled: Provider must be one of ollama, gemini, or openai
+  provider: ollama
+  # Required if provider is ollama. May also be used for an OpenAI API compatible backend with the openai provider.
+  base_url: http://ollama.ai.svc::11434
+  # Required if gemini or openai
+  api_key: "{FRIGATE_GENAI_API_KEY}"
+  # Optional: The default prompt for generating descriptions. Can use replacement
+  # variables like "label", "sub_label", "camera" to make more dynamic. (default: shown below)
+  prompt: "Опиши {label} в последовательности изображений с максимальным количеством деталей. Не описывай задний фон."
+  # Optional: Object specific prompts to customize description results
+  # Format: {label}: {prompt}
+  object_prompts:
+    person: "Опиши этого человека с максимальным количеством деталей, не описывай задний фон"
 
 go2rtc:
   streams:
     gates_hq:
-      - rtsp://admin:12332145@192.168.108.104:554/stream1
+      - rtsp://admin:{{FRIGATE_RTSP_PASSWORD}}@nvr.local:554/Streaming/Channels/301
       - "ffmpeg:gates_hq#audio=copy#audio=aac#audio=opus"
     gates_lq:
-      - rtsp://admin:12332145@192.168.108.104:554/stream2
+      - rtsp://admin:{{FRIGATE_RTSP_PASSWORD}}@nvr.local:554/Streaming/Channels/302
       - "ffmpeg:gates_lq#audio=copy#audio=aac#audio=opus"
     door_hq:
-      - rtsp://admin:12332145@192.168.108.227:554/stream1
+      - rtsp://admin:{{FRIGATE_RTSP_PASSWORD}}@nvr.local:554/Streaming/Channels/601
       - "ffmpeg:door_hq#audio=copy#audio=aac#audio=opus"
     door_lq:
-      - rtsp://admin:12332145@192.168.108.227:554/stream2
+      - rtsp://admin:{{FRIGATE_RTSP_PASSWORD}}@nvr.local:554/Streaming/Channels/602
       - "ffmpeg:door_lq#audio=copy#audio=aac#audio=opus"
     dvor_gates_hq:
-      - rtsp://admin:12332145@192.168.108.210:554/stream1
+      - rtsp://admin:{{FRIGATE_RTSP_PASSWORD}}@nvr.local:554/Streaming/Channels/401
       - "ffmpeg:dvor_gates_hq#audio=copy#audio=aac#audio=opus"
     dvor_gates_lq:
-      - rtsp://admin:12332145@192.168.108.210:554/stream2
+      - rtsp://admin:{{FRIGATE_RTSP_PASSWORD}}@nvr.local:554/Streaming/Channels/402
       - "ffmpeg:dvor_gates_lq#audio=copy#audio=aac#audio=opus"
     dom2_hq:
-      - rtsp://admin:12332145@192.168.108.215:554/stream1
+      - rtsp://admin:{{FRIGATE_RTSP_PASSWORD}}@nvr.local:554/Streaming/Channels/201
       - "ffmpeg:dom2_hq#audio=copy#audio=aac#audio=opus"
     dom2_lq:
-      - rtsp://admin:12332145@192.168.108.215:554/stream2
+      - rtsp://admin:{{FRIGATE_RTSP_PASSWORD}}@nvr.local:554/Streaming/Channels/202
       - "ffmpeg:dom2_lq#audio=copy#audio=aac#audio=opus"
     middle_hq:
-      - rtsp://admin:12332145@192.168.97.27:554/stream1
+      - rtsp://admin:{{FRIGATE_RTSP_PASSWORD}}@nvr.local:554/Streaming/Channels/101
       - "ffmpeg:middle_hq#audio=copy#audio=aac#audio=opus"
     middle_lq:
-      - rtsp://admin:12332145@192.168.97.27:554/stream2
+      - rtsp://admin:{{FRIGATE_RTSP_PASSWORD}}@nvr.local:554/Streaming/Channels/102
       - "ffmpeg:middle_lq#audio=copy#audio=aac#audio=opus"
     street_hq:
-      - rtsp://admin:12332145@192.168.111.65:554/stream1
+      - rtsp://admin:{{FRIGATE_RTSP_PASSWORD}}@nvr.local:554/Streaming/Channels/501
       - "ffmpeg:street_hq#audio=copy#audio=aac#audio=opus"
     street_lq:
-      - rtsp://admin:12332145@192.168.111.65:554/stream2
+      - rtsp://admin:{{FRIGATE_RTSP_PASSWORD}}@nvr.local:554/Streaming/Channels/502
       - "ffmpeg:street_lq#audio=copy#audio=aac#audio=opus"
   webrtc:
     candidates:
@@ -169,7 +166,7 @@ cameras:
     detect:
       width: 848
       height: 480
-      fps: 10
+      fps: 5
       enabled: True
     live:
       stream_name: gates_hq
@@ -248,7 +245,7 @@ cameras:
     detect:
       width: 848
       height: 480
-      fps: 10
+      fps: 5
       enabled: True
     live:
       stream_name: door_hq
@@ -334,7 +331,7 @@ cameras:
     detect:
       width: 848
       height: 480
-      fps: 10
+      fps: 5
       enabled: True
     live:
       stream_name: dvor_gates_hq
@@ -423,7 +420,7 @@ cameras:
     detect:
       width: 736
       height: 416
-      fps: 10
+      fps: 5
       enabled: True
     live:
       stream_name: dom2_hq
@@ -487,7 +484,7 @@ cameras:
     detect:
       width: 848
       height: 480
-      fps: 10
+      fps: 5
       enabled: True
     live:
       stream_name: street_hq
@@ -547,7 +544,7 @@ cameras:
     detect:
       width: 848
       height: 480
-      fps: 10
+      fps: 5
       enabled: True
     live:
       stream_name: middle_hq

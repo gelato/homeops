@@ -80,7 +80,6 @@ snapshots:
   timestamp: False
   bounding_box: True
   crop: False
-  required_zones: []
   retain:
     default: 10
     objects:
@@ -97,7 +96,7 @@ genai:
   # Required if enabled: Provider must be one of ollama, gemini, or openai
   provider: ollama
   # Required if provider is ollama. May also be used for an OpenAI API compatible backend with the openai provider.
-  base_url: http://ollama.ai.svc::11434
+  base_url: http://ollama.ai.svc:11434
   # Required if gemini or openai
   api_key: "{FRIGATE_GENAI_API_KEY}"
   # Optional: The default prompt for generating descriptions. Can use replacement

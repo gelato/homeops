@@ -135,12 +135,12 @@ spec:
 
     extraEnv:
       - name: OLLAMA_NUM_PARALLEL
-        value: 1
+        value: "1"
       - name: OLLAMA_MAX_LOADED_MODELS
-        value: 3
+        value: "3"
       - name: OLLAMA_MAX_QUEUE
-        value: 512
+        value: "512"
       - name: OLLAMA_FLASH_ATTENTION
-        value: 1
+        value: "1"
       # - name: OLLAMA_KV_CACHE_TYPE
       #   value: q8_0

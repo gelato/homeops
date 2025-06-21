@@ -41,20 +41,14 @@ spec:
       models:
         pull:
           - llama3.1:8b
+          - gemma3:12b
           # - qwen2.5-coder:7b
           # - llava-llama3:8b
-          - gemma2:9b
-          #- hf.co/ai-sage/GigaChat-20B-A3B-instruct-GGUF:Q8_0
-          - gaplo917/gemma2-tools:9b
-          - llama3-groq-tool-use:8b
           - hf.co/t-tech/T-lite-it-1.0-Q8_0-GGUF
 
         run:
-          - llama3.1:8b               # ??       - K8SGPT / OTerm / General
-          # - qwen2.5-coder:7b      # 8BG      - Code
-          # - llava-llama3:8b           # ??       - Frigate
-          #- hf.co/ai-sage/GigaChat-20B-A3B-instruct-GGUF:Q8_0 # Gigachat-lite
-          - gaplo917/gemma2-tools:9b
+          # - llama3.1:8b               # ??       - K8SGPT / OTerm / General
+          - gemma3:12b
           - hf.co/t-tech/T-lite-it-1.0-Q8_0-GGUF
 
       gpu:
@@ -65,7 +59,7 @@ spec:
         # Default model to serve, if not set, no model will be served at container startup
         type: 'nvidia'
 
-      defaultModel: "cow/gemma2_tools"
+      defaultModel: "gemma3:12b"
 
       serviceAccount:
         # Specifies whether a service account should be created
@@ -138,3 +132,15 @@ spec:
 
     nodeSelector:
       nvidia.com/gpu.present: "true"
+
+    extraEnv:
+      - name: OLLAMA_NUM_PARALLEL
+        value: 1
+      - name: OLLAMA_MAX_LOADED_MODELS
+        value: 3
+      - name: OLLAMA_MAX_QUEUE
+        value: 512
+      - name: OLLAMA_FLASH_ATTENTION
+        value: 1
+      # - name: OLLAMA_KV_CACHE_TYPE
+      #   value: q8_0

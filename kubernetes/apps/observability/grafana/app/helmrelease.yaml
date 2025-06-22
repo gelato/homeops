@@ -54,66 +54,6 @@ spec:
               path: /var/lib/grafana/dashboards/default
             orgId: 1
             type: file
-          - name: "flux"
-            orgId: 1
-            folder: "Flux"
-            type: file
-            disableDeletion: false
-            editable: true
-            options:
-              path: /var/lib/grafana/dashboards/flux
-          - name: "kubernetes"
-            orgId: 1
-            folder: "Kubernetes"
-            type: file
-            disableDeletion: false
-            editable: true
-            options:
-              path: /var/lib/grafana/dashboards/kubernetes
-          - name: "networking"
-            org_id: 1
-            folder: "Networking"
-            type: file
-            disableDeletion: false
-            editable: true
-            options:
-              path: /var/lib/grafana/dashboards/networking
-          - name: "system"
-            orgId: 1
-            folder: "System"
-            type: file
-            disableDeletion: false
-            editable: true
-            allowUiUpdates: true
-            options:
-              path: /var/lib/grafana/dashboards/system
-          - name: "monitoring"
-            orgId: 1
-            folder: "Monitoring"
-            type: file
-            disableDeletion: false
-            editable: true
-            allowUiUpdates: true
-            options:
-              path: /var/lib/grafana/dashboards/monitoring
-          - name: "nginx"
-            orgId: 1
-            folder: "Nginx"
-            type: file
-            disableDeletion: false
-            editable: true
-            allowUiUpdates: true
-            options:
-              path: /var/lib/grafana/dashboards/nginx
-          - name: "storage"
-            orgId: 1
-            folder: "Storage"
-            type: file
-            disableDeletion: false
-            editable: true
-            allowUiUpdates: true
-            options:
-              path: /var/lib/grafana/dashboards/storage
     dashboards:
       default:
         unifi-insights:
@@ -136,7 +76,6 @@ spec:
           gnetId: 11312
           revision: 9
           datasource: Prometheus
-      system:
         smartctl-exporter:
           # renovate: depName="SMARTctl Exporter Dashboard"
           gnetId: 22604
@@ -152,7 +91,6 @@ spec:
           url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/cert-manager/dashboards/cert-manager.json
           datasource:
             - { name: DS_PROMETHEUS, value: Prometheus }
-      storage:
         minio:
           # renovate: depName="MinIO Dashboard"
           gnetId: 13502
@@ -179,13 +117,11 @@ spec:
           revision: 1
           datasource:
             - { name: DS_PROMETHEUS, value: Prometheus }
-      monitoring:
         prometheus:
           # renovate: depName="Prometheus"
           gnetId: 19105
           revision: 7
           datasource: Prometheus
-      flux:
         # TODO: fix
         flux-cluster:
           url: https://raw.githubusercontent.com/fluxcd/flux2-monitoring-example/main/monitoring/configs/dashboards/cluster.json
@@ -199,7 +135,6 @@ spec:
             #   url: https://raw.githubusercontent.com/fluxcd/flux2-monitoring-example/main/monitoring/configs/dashboards/logs.json
             #   datasource:
             - { name: DS_PROMETHEUS, value: Prometheus }
-      nginx:
         nginx:
           url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/grafana/dashboards/nginx.json
           datasource:
@@ -221,7 +156,6 @@ spec:
           url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/grafana/dashboards/nginx.json
           datasource:
             - { name: DS_PROMETHEUS, value: Prometheus }
-      networking:
         cilium-agent:
           gnetId: 16611
           revision: 1
@@ -248,7 +182,6 @@ spec:
           gnetId: 15038
           revision: 3
           datasource: Prometheus
-      kubernetes:
         kubernetes-api-server:
           # renovate: depName="Kubernetes / System / API Server"
           gnetId: 15761

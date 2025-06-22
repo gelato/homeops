@@ -10,6 +10,7 @@ resources:
   # - ./victoria-metrics/ks.yaml
   # - ./victoria-logs/ks.yaml
   - ./grafana/ks.yaml
+  - ./loki/ks.yaml
   # - ./ntfy/ks.yaml
   - ./goldilocks/ks.yaml
   - ./apprise/ks.yaml

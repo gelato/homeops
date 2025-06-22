@@ -376,7 +376,6 @@ spec:
       dashboards:
         enabled: true
         searchNamespace: ALL
-        labelValue: ""
         label: grafana_dashboard
         folderAnnotation: grafana_folder
         provider:
@@ -384,16 +383,17 @@ spec:
           foldersFromFilesStructure: true
       datasources:
         enabled: true
-        initDatasources: true
         searchNamespace: ALL
         labelValue: ""
       plugins:
-        - grafana-clock-panel
-        - grafana-piechart-panel
-        - grafana-worldmap-panel
-        - natel-discrete-panel
-        - pr0ps-trackmap-panel
-        - vonage-status-panel
+        enabled: true
+    plugins:
+      - grafana-clock-panel
+      - grafana-piechart-panel
+      - grafana-worldmap-panel
+      - natel-discrete-panel
+      - pr0ps-trackmap-panel
+      - vonage-status-panel
     serviceMonitor:
       enabled: true
     ingress:

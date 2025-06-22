@@ -59,7 +59,7 @@ spec:
               repository: ghcr.io/twin/gatus
               tag: v5.18.1@sha256:97525568fdef34539b1b4d015aef2d1cf6f58f1bc087443387b349940544394d
             env:
-              TZ: America/Los_Angeles
+              TZ: ${TIMEZONE}
               GATUS_CONFIG_PATH: /config
               GATUS_DELAY_START_SECONDS: 5
               CUSTOM_WEB_PORT: &port 80
@@ -87,11 +87,12 @@ spec:
             options:
               - { name: ndots, value: "1" }
           securityContext:
-            runAsUser: 568
-            runAsGroup: 568
             runAsNonRoot: true
-            fsGroup: 568
+            runAsUser: 65534
+            runAsGroup: 65534
+            fsGroup: 65534
             fsGroupChangePolicy: OnRootMismatch
+            seccompProfile: { type: RuntimeDefault }
     service:
       app:
         controller: gatus
@@ -109,9 +110,9 @@ spec:
             scrapeTimeout: 10s
     ingress:
       app:
-        className: internal
-        # annotations:
-        #   external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
+        className: external
+        annotations:
+          external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
         hosts:
           - host: &host status.${SECRET_DOMAIN}
             paths:

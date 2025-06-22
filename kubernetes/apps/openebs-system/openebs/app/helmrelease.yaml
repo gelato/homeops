@@ -36,6 +36,18 @@ spec:
         volumeSnapshots:
           enabled: false
           keep: false
+    loki:
+      enabled: false
+    alloy:
+      enabled: false
+    minio:
+      enabled: false
+    zfs-localpv:
+      enabled: false
+    lvm-localpv:
+      enabled: false
+    mayastor:
+      enabled: false
     localpv-provisioner:
       localpv:
         image:
@@ -47,3 +59,6 @@ spec:
         name: openebs-hostpath
         isDefaultClass: false
         basePath: *hostPath
+      helperPod:
+        image:
+          registry: quay.io/

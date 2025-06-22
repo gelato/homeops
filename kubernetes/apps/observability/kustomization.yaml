@@ -14,7 +14,7 @@ resources:
   - ./goldilocks/ks.yaml
   - ./apprise/ks.yaml
   - ./kube-state-metrics/ks.yaml
-  - ./alertmanager/ks.yaml
+  # - ./alertmanager/ks.yaml
   # Exporters
   - ./exporters
 components:

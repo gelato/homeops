@@ -200,17 +200,14 @@ spec:
       server:
         root_url: https://grafana.${SECRET_DOMAIN}
       auth:
-        signout_redirect_url: "https://authentik.company/application/o/grafana/end-session/"
+        signout_redirect_url: "https://id.skynerv.com/application/o/grafana/end-session/"
         oauth_auto_login: true
       auth.basic:
         disable_login_form: false
       auth.generic_oauth:
         enabled: true
         name: authentik
-        # client_id: abcd # Set by env vars
-        # client_secret: abcd # Set by env vars
         scopes: "openid profile email"
-        empty_scopes: false
         auth_url: https://${SSO_DOMAIN_PREFIX}.${SECRET_DOMAIN}/application/o/authorize/
         token_url: https://${SSO_DOMAIN_PREFIX}.${SECRET_DOMAIN}/application/o/token/
         api_url: https://${SSO_DOMAIN_PREFIX}.${SECRET_DOMAIN}/application/o/userinfo/

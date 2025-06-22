@@ -31,7 +31,6 @@ spec:
       namespace: storage
   values:
     nameOverride: &name prometheus
-    fullnameOverride: *name
     crds:
       enabled: false
       upgradeJob:

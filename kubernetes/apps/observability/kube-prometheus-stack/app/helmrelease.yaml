@@ -77,6 +77,8 @@ spec:
     kubeProxy:
       enabled: false
     prometheus:
+      additionalLabels:
+        app: prometheus
       ingress:
         enabled: true
         annotations:

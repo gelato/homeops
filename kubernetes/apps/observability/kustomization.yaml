@@ -9,7 +9,7 @@ resources:
   # - ./unpoller/ks.yaml
   # - ./victoria-metrics/ks.yaml
   # - ./victoria-logs/ks.yaml
-  # - ./grafana/ks.yaml
+  - ./grafana/ks.yaml
   # - ./ntfy/ks.yaml
   - ./goldilocks/ks.yaml
   - ./apprise/ks.yaml

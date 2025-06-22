@@ -237,16 +237,6 @@ spec:
           revision: 1
           datasource:
             - { name: DS_PROMETHEUS, value: Prometheus }
-        hubble-dns:
-          gnetId: 16612
-          revision: 37
-          datasource:
-            - { name: DS_PROMETHEUS, value: Prometheus }
-        hubble-overview:
-          gnetId: 16612
-          revision: 39
-          datasource:
-            - { name: DS_PROMETHEUS, value: Prometheus }
         cloudflared:
           # renovate: depName="Cloudflare Tunnels (cloudflared)"
           gnetId: 17457
@@ -294,12 +284,6 @@ spec:
           gnetId: 11454
           revision: 14
           datasource: Prometheus
-        node-exporter-full:
-          # renovate: depName="Node Exporter Full"
-          gnetId: 1860
-          revision: 41
-          datasource:
-            - { name: DS_PROMETHEUS, value: Prometheus }
     datasources:
       datasources.yaml:
         apiVersion: 1

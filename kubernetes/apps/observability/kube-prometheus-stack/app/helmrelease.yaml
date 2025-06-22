@@ -78,7 +78,7 @@ spec:
       enabled: false
     prometheus:
       additionalLabels:
-        app: prometheus
+        component: prom-server
       ingress:
         enabled: true
         annotations:

@@ -7,3 +7,4 @@ resources:
   - ./alertmanagerconfig.yaml
   - ./helmrelease.yaml
   - ./scrapeconfig.yaml
+  - ../../../../templates/gatus/guarded

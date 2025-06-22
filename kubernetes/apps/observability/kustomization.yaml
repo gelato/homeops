@@ -15,6 +15,7 @@ resources:
   - ./apprise/ks.yaml
   - ./kube-state-metrics/ks.yaml
   # - ./alertmanager/ks.yaml
+  - ./kube-prometheus-stack/ks.yaml
   # Exporters
   - ./exporters
 components:

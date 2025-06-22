@@ -32,10 +32,7 @@
             "bars": false,
             "dashLength": 10,
             "dashes": false,
-            "datasource": {
-                "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
-            },
+            "datasource": "Prometheus",
             "fieldConfig": {
                 "defaults": {
                     "links": []
@@ -79,10 +76,7 @@
             "steppedLine": false,
             "targets": [
                 {
-                    "datasource": {
-                        "type": "prometheus",
-                        "uid": "PBFA97CFB590B2093"
-                    },
+                    "datasource": "Prometheus",
                     "exemplar": true,
                     "expr": "hass_sensor_unit_ms{entity=\"sensor.coral_inference_speed\"}",
                     "groupBy": [
@@ -157,10 +151,7 @@
             }
         },
         {
-            "datasource": {
-                "type": "loki",
-                "uid": "P8E80F9AEF21F6940"
-            },
+            "datasource": "Loki",
             "gridPos": {
                 "h": 7,
                 "w": 24,
@@ -180,10 +171,7 @@
             },
             "targets": [
                 {
-                    "datasource": {
-                        "type": "loki",
-                        "uid": "P8E80F9AEF21F6940"
-                    },
+                    "datasource": "Loki",
                     "editorMode": "builder",
                     "expr": "{container=\"frigate\"} |= ``",
                     "queryType": "range",
@@ -199,10 +187,7 @@
             "bars": false,
             "dashLength": 10,
             "dashes": false,
-            "datasource": {
-                "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
-            },
+            "datasource": "Prometheus",
             "fieldConfig": {
                 "defaults": {
                     "links": []
@@ -246,10 +231,7 @@
             "steppedLine": false,
             "targets": [
                 {
-                    "datasource": {
-                        "type": "prometheus",
-                        "uid": "PBFA97CFB590B2093"
-                    },
+                    "datasource": "Prometheus",
                     "exemplar": true,
                     "expr": "hass_sensor_unit_fps{entity=\"sensor.detection_fps\"}",
                     "interval": "",
@@ -297,10 +279,7 @@
             "bars": false,
             "dashLength": 10,
             "dashes": false,
-            "datasource": {
-                "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
-            },
+            "datasource": "Prometheus",
             "fieldConfig": {
                 "defaults": {
                     "links": []
@@ -344,10 +323,7 @@
             "steppedLine": false,
             "targets": [
                 {
-                    "datasource": {
-                        "type": "prometheus",
-                        "uid": "PBFA97CFB590B2093"
-                    },
+                    "datasource": "Prometheus",
                     "exemplar": true,
                     "expr": "hass_sensor_unit_fps{entity=\"sensor.office_camera_fps\"}",
                     "interval": "",
@@ -355,10 +331,7 @@
                     "refId": "A"
                 },
                 {
-                    "datasource": {
-                        "type": "prometheus",
-                        "uid": "PBFA97CFB590B2093"
-                    },
+                    "datasource": "Prometheus",
                     "exemplar": true,
                     "expr": "hass_sensor_unit_fps{entity=\"sensor.office_detection_fps\"}",
                     "hide": false,
@@ -407,10 +380,7 @@
             "bars": false,
             "dashLength": 10,
             "dashes": false,
-            "datasource": {
-                "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
-            },
+            "datasource": "Prometheus",
             "fieldConfig": {
                 "defaults": {
                     "links": []
@@ -454,10 +424,7 @@
             "steppedLine": false,
             "targets": [
                 {
-                    "datasource": {
-                        "type": "prometheus",
-                        "uid": "PBFA97CFB590B2093"
-                    },
+                    "datasource": "Prometheus",
                     "exemplar": true,
                     "expr": "hass_sensor_unit_fps{entity=\"sensor.driveway_camera_fps\"}",
                     "interval": "",
@@ -465,10 +432,7 @@
                     "refId": "A"
                 },
                 {
-                    "datasource": {
-                        "type": "prometheus",
-                        "uid": "PBFA97CFB590B2093"
-                    },
+                    "datasource": "Prometheus",
                     "exemplar": true,
                     "expr": "hass_sensor_unit_fps{entity=\"sensor.driveway_detection_fps\"}",
                     "hide": false,
@@ -517,10 +481,7 @@
             "bars": false,
             "dashLength": 10,
             "dashes": false,
-            "datasource": {
-                "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
-            },
+            "datasource": "Prometheus",
             "fieldConfig": {
                 "defaults": {
                     "links": []
@@ -564,10 +525,7 @@
             "steppedLine": false,
             "targets": [
                 {
-                    "datasource": {
-                        "type": "prometheus",
-                        "uid": "PBFA97CFB590B2093"
-                    },
+                    "datasource": "Prometheus",
                     "exemplar": true,
                     "expr": "hass_sensor_unit_fps{entity=\"sensor.lounge_camera_fps\"}",
                     "interval": "",
@@ -575,10 +533,7 @@
                     "refId": "A"
                 },
                 {
-                    "datasource": {
-                        "type": "prometheus",
-                        "uid": "PBFA97CFB590B2093"
-                    },
+                    "datasource": "Prometheus",
                     "exemplar": true,
                     "expr": "hass_sensor_unit_fps{entity=\"sensor.lounge_detection_fps\"}",
                     "hide": false,
@@ -627,10 +582,7 @@
             "bars": false,
             "dashLength": 10,
             "dashes": false,
-            "datasource": {
-                "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
-            },
+            "datasource": "Prometheus",
             "fieldConfig": {
                 "defaults": {
                     "links": []
@@ -674,10 +626,7 @@
             "steppedLine": false,
             "targets": [
                 {
-                    "datasource": {
-                        "type": "prometheus",
-                        "uid": "PBFA97CFB590B2093"
-                    },
+                    "datasource": "Prometheus",
                     "exemplar": true,
                     "expr": "hass_sensor_unit_fps",
                     "interval": "",

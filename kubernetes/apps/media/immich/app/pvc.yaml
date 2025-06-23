@@ -9,4 +9,3 @@ spec:
     requests:
       storage: 350Gi
   storageClassName: longhorn-ssd
-  volumeName: pvc-6aa3b27f-67ac-422e-b8f1-8e2d3deb4770

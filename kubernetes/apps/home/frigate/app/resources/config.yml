@@ -180,8 +180,8 @@ cameras:
     zones:
       inside_gates:
         coordinates: 0.94,0.881,0.946,0.767,0.867,0.64,0.801,0.54,0.751,0.698
-        inertia: 5
-        loitering_time: 3
+        inertia: 2
+        loitering_time: 1
         objects:
           - person
           - dog
@@ -196,7 +196,7 @@ cameras:
       guests:
         coordinates: 0.739,0.437,0.622,0.446,0.499,0.701,0.552,0.871
         inertia: 5
-        loitering_time: 6
+        loitering_time: 4
         objects:
           - person
       sidewalk:
@@ -338,22 +338,22 @@ cameras:
     zones:
       before_gates:
         coordinates: 0.395,0.277,0.362,0.416,0.617,0.404,0.603,0.264
-        inertia: 5
-        loitering_time: 3
+        inertia: 3
+        loitering_time: 1
         objects:
           - person
           - car
       before_gates_2:
         coordinates: 0.396,0.269,0.601,0.257,0.585,0.028,0.455,0.035,0.409,0.045,0.416,0.167
-        inertia: 5
-        loitering_time: 3
+        inertia: 3
+        loitering_time: 1
         objects:
           - person
           - car
       at_the_door:
         coordinates: 0.168,0.7,0.29,0.718,0.366,0.355,0.259,0.364
-        inertia: 5
-        loitering_time: 3
+        inertia: 3
+        loitering_time: 1
         objects:
           - person
       in_the_garden:

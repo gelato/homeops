@@ -90,23 +90,23 @@ snapshots:
 semantic_search:
   enabled: True
 
-# genai:
-#   # Optional: Enable AI description generation (default: shown below)
-#   enabled: True
-#   # Required if enabled: Provider must be one of ollama, gemini, or openai
-#   provider: ollama
-#   # Required if provider is ollama. May also be used for an OpenAI API compatible backend with the openai provider.
-#   base_url: http://ollama.ai.svc:11434
-#   model: gemma3:12b
-#   # Required if gemini or openai
-#   api_key: "{FRIGATE_GENAI_API_KEY}"
-#   # Optional: The default prompt for generating descriptions. Can use replacement
-#   # variables like "label", "sub_label", "camera" to make more dynamic. (default: shown below)
-#   prompt: "Опиши {label} в последовательности изображений с максимальным количеством деталей. Не описывай задний фон."
-#   # Optional: Object specific prompts to customize description results
-#   # Format: {label}: {prompt}
-#   object_prompts:
-#     person: "Опиши этого человека с максимальным количеством деталей, не описывай задний фон"
+genai:
+  # Optional: Enable AI description generation (default: shown below)
+  enabled: True
+  # Required if enabled: Provider must be one of ollama, gemini, or openai
+  provider: ollama
+  # Required if provider is ollama. May also be used for an OpenAI API compatible backend with the openai provider.
+  base_url: http://ollama.ai.svc:11434
+  model: llava:7b
+  # Required if gemini or openai
+  api_key: "{FRIGATE_GENAI_API_KEY}"
+  # Optional: The default prompt for generating descriptions. Can use replacement
+  # variables like "label", "sub_label", "camera" to make more dynamic. (default: shown below)
+  prompt: "Используй только русский язык. Опиши {label} в последовательности изображений с максимальным количеством деталей. Не описывай задний фон."
+  # Optional: Object specific prompts to customize description results
+  # Format: {label}: {prompt}
+  object_prompts:
+    person: "Используй только русский язык. Опиши этого человека с максимальным количеством деталей, не описывай задний фон"
 
 go2rtc:
   streams:

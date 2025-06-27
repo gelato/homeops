@@ -38,7 +38,7 @@ spec:
               tag: 2.5.0
             args:
               - --model
-              - google/gemma-3n-E2B
+              - openai/whisper-large-v3
               - --use-transformers
               - --language
               - ru

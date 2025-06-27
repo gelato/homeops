@@ -38,7 +38,11 @@ spec:
               tag: 2.5.0
             args:
               - --model
+              - custom
+              - --custom_model
               - google/gemma-3n-E2B
+              - --custom_model_type
+              - transformers
               - --use-transformers
               - --language
               - ru

@@ -42,8 +42,8 @@ spec:
               - --use-transformers
               - --language
               - ru
-              # - --device
-              # - cuda
+              - --device
+              - cuda
             env:
               TZ: ${TIMEZONE}
             resources:

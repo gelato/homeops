@@ -121,7 +121,7 @@ agents:
         base_url: "http://ollama.ai.svc:11434/v1"
         api_key: null
         text_generation:
-          model_id: "Hf.co/T-Tech/T-Lite-It-1.0-Q8_0-GGUF:Latest"
+          model_id: "gemma3:12b"
           prompt: "Ты личный ассистент Зая, молодая красивая девушка. Ты образована и знаешь все обо всем в мире, на вопросы отвечаешь максимально лаконично и по делу. Будь человечной, важно чтоб ты не была похожа на машину."
           temperature: 1.0
           max_response_tokens: 4096

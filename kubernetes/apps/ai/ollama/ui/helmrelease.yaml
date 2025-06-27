@@ -68,3 +68,9 @@ spec:
                 service:
                   identifier: main
                   port: *httpPort
+    persistence:
+      config:
+        enabled: true
+        existingClaim: ollama-ui-pvc
+        globalMounts:
+          - path: /app/backend/data

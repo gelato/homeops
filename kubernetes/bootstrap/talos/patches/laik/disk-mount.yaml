@@ -1,0 +1,14 @@
+machine:
+  kubelet:
+    extraMounts:
+      - destination: /var/mnt/nvme
+        type: bind
+        source: /var/mnt/nvme
+        options:
+          - bind
+          - rshared
+          - rw
+  disks:
+    - device: /dev/disk/by-id/nvme-ARDOR_GAMING_m.2_NVME_512GB_AL1284_MBM447066041
+      partitions:
+        - mountpoint: /var/mnt/nvme

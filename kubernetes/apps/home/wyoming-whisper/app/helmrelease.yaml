@@ -35,10 +35,11 @@ spec:
           app:
             image:
               repository: rhasspy/wyoming-whisper
-              tag: latest
+              tag: 2.5.0
             args:
               - --model
-              - large-v3
+              - google/gemma-3n-E2B
+              - --use-transformers
               - --language
               - ru
               # - --device

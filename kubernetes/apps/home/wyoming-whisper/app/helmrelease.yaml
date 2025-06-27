@@ -38,8 +38,6 @@ spec:
               tag: 2.5.0
             args:
               - --model
-              - custom
-              - --custom_model
               - google/gemma-3n-E2B
               - --use-transformers
               - --language
@@ -48,6 +46,7 @@ spec:
               - cuda
             env:
               TZ: ${TIMEZONE}
+              HF_TOKEN: ${HF_TOKEN}
             resources:
               limits:
                 memory: 16Gi

@@ -6,7 +6,7 @@ resources:
   - ./synapse/ks.yaml
   # - ./element/ks.yaml
   - ./synapse-admin/ks.yaml
-  # - ./baibot/ks.yaml
+  - ./baibot/ks.yaml
   # - ./synatainer/ks.yaml
   # - ./mautrix-discord/ks.yaml
   # - ./conduwuit/ks.yaml

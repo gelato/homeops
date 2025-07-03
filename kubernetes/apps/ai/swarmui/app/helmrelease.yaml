@@ -1,0 +1,99 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: swarmui
+  namespace: ai
+spec:
+  interval: 30m
+  timeout: 15m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.7.3
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s-charts
+        namespace: flux-system
+  driftDetection:
+    mode: enabled
+
+  values:
+    controllers:
+      swarmui:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        pod:
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+            fsGroup: 1000
+            fsGroupChangePolicy: "OnRootMismatch"
+          nodeSelector:
+            nvidia.feature.node.kubernetes.io/gpu: "true"
+          runtimeClassName: nvidia
+        containers:
+          app:
+            image:
+              repository: ghcr.io/spiceratops/swarmui
+              tag: 0.9.5@sha256:5dae778dc7ef2c6f66bc1ab058cab524c7a92924bf8f4432a56c5aad8a9b93e6
+            env:
+              TZ: ${TIMEZONE}
+            resources:
+              requests:
+                cpu: 500m
+                memory: 4Gi
+              limits:
+                memory: 6Gi
+                nvidia.com/gpu: 1
+    service:
+      app:
+        controller: swarmui
+        ports:
+          http:
+            port: 7801
+    ingress:
+      app:
+        enabled: true
+        className: internal
+        annotations:
+          hajimari.io/appName: "SwarmUI AI"
+          hajimari.io/enable: "true"
+          hajimari.io/instance: "admin"
+          hajimari.io/group: "AI"
+        hosts:
+          - host: swarmui.${SECRET_DOMAIN}
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+        tls:
+          - hosts:
+              - swarmui.${SECRET_DOMAIN}
+    persistence:
+      data:
+        enabled: true
+        existingClaim: swarmui
+        globalMounts:
+          - path: /SwarmUI/Data
+            subPath: data
+          - path: /SwarmUI/dlbackend
+            subPath: dlbackend
+          - path: /SwarmUI/src/BuiltinExtensions/ComfyUIBackend/DLNodes
+            subPath: dlnodes
+          - path: /SwarmUI/src/BuiltinExtensions/ComfyUIBackend/CustomWorkflows
+            subPath: workflows
+      output:
+        type: nfs
+        server: tower.local
+        path: /mnt/user/ai-output
+        globalMounts:
+          - path: /SwarmUI/Output
+            readOnly: false
+      models:
+        type: nfs
+        server: tower.local
+        path: /mnt/user/ai-models
+        globalMounts:
+          - path: /SwarmUI/Models

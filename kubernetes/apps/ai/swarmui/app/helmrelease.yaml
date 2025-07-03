@@ -35,7 +35,7 @@ spec:
         containers:
           app:
             image:
-              repository: docker.io/mizeraj/swarmui
+              repository: docker.io/mizeraj/swarmui-pt
               tag: "0.9.6"
             env:
               TZ: ${TIMEZONE}

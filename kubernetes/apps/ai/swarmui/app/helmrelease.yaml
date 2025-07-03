@@ -35,8 +35,8 @@ spec:
         containers:
           app:
             image:
-              repository: nemanjan00/swarmui
-              tag: latest@sha256:111c736b09f8235511a1cc4aa314c1e68ec11a243d3a5e538cc951a36f17e60a
+              repository: docker.io/eedev/swarmui-docker
+              tag: latest@sha256:3b722bc65d9bd46a067933132d9ade8cf557480fcf9a3b4a747ceaa1909566d9
             env:
               TZ: ${TIMEZONE}
             resources:

@@ -14,11 +14,11 @@ resources:
   # - ./ntfy/ks.yaml
   - ./goldilocks/ks.yaml
   - ./apprise/ks.yaml
-  - ./kube-state-metrics/ks.yaml
+  # - ./kube-state-metrics/ks.yaml
   - ./promtail/ks.yaml
   - ./kube-prometheus-stack/ks.yaml
   # Exporters
-  - ./exporters
+  # - ./exporters
 components:
   - ../../flux/components/namespace
 patches:

@@ -36,6 +36,13 @@ spec:
         pod:
           runtimeClassName: nvidia
 
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+            runAsNonRoot: true
+            fsGroup: 1000
+            fsGroupChangePolicy: OnRootMismatch
+
           affinity:
             nodeAffinity:
               requiredDuringSchedulingIgnoredDuringExecution:
@@ -72,11 +79,7 @@ spec:
               limits:
                 memory: 34Gi
                 nvidia.com/gpu: 1 # requesting 1 GPU
-    defaultPodOptions:
-      securityContext:
-        runAsNonRoot: false
-        runAsUser: 0
-        runAsGroup: 0
+
     service:
       app:
         controller: comfyui

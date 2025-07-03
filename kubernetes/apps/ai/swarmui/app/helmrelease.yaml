@@ -29,8 +29,6 @@ spec:
             runAsGroup: 1000
             fsGroup: 1000
             fsGroupChangePolicy: "OnRootMismatch"
-          nodeSelector:
-            nvidia.feature.node.kubernetes.io/gpu: "true"
           runtimeClassName: nvidia
         containers:
           app:

@@ -35,7 +35,9 @@ spec:
             image:
               repository: ghcr.io/spiceratops/swarmui
               tag: 0.9.5@sha256:5dae778dc7ef2c6f66bc1ab058cab524c7a92924bf8f4432a56c5aad8a9b93e6
-              command: ./launchtools/launch-standard-docker.sh fixch
+            command:
+              - ./launchtools/launch-standard-docker.sh
+              - fixch
             env:
               TZ: ${TIMEZONE}
             resources:

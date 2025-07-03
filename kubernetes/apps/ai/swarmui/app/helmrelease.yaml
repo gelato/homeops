@@ -37,7 +37,7 @@ spec:
               tag: 0.9.5@sha256:5dae778dc7ef2c6f66bc1ab058cab524c7a92924bf8f4432a56c5aad8a9b93e6
             command:
               - sleep
-              - 50000
+              - "50000"
             env:
               TZ: ${TIMEZONE}
             resources:

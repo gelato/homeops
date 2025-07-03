@@ -27,17 +27,16 @@ spec:
           securityContext:
             runAsUser: 1000
             runAsGroup: 1000
+            runAsNonRoot: true
             fsGroup: 1000
-            fsGroupChangePolicy: "OnRootMismatch"
+            fsGroupChangePolicy: OnRootMismatch
+            supplementalGroups: [1010]
           runtimeClassName: nvidia
         containers:
           app:
             image:
-              repository: ghcr.io/spiceratops/swarmui
-              tag: 0.9.5@sha256:5dae778dc7ef2c6f66bc1ab058cab524c7a92924bf8f4432a56c5aad8a9b93e6
-            command:
-              - sleep
-              - "50000"
+              repository: docker.io/eedev/swarmui-docker
+              tag: latest@sha256:3b722bc65d9bd46a067933132d9ade8cf557480fcf9a3b4a747ceaa1909566d9
             env:
               TZ: ${TIMEZONE}
             resources:

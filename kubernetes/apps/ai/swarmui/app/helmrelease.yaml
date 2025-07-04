@@ -91,7 +91,7 @@ spec:
           - path: /workspace/StableSwarmUI/Data
       dlbackend:
         enabled: true
-        existingClaim: swarmui
+        existingClaim: swarmui-dlbackend
         globalMounts:
           - path: /workspace/StableSwarmUI/dlbackend
       output:

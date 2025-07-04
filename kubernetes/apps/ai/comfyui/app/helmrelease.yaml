@@ -121,12 +121,12 @@ spec:
         globalMounts:
           - path: /app/Output
 
-      # config:
-      #   type: configMap
-      #   name: comfyui-configmap
-      #   advancedMounts:
-      #     comfyui:
-      #       app:
-      #         - path: /workspace/ComfyUI/custom_nodes/ComfyUI-Manager/config.ini
-      #           subPath: config.ini
-      #           readOnly: true
+      config:
+        type: configMap
+        name: comfyui-configmap
+        advancedMounts:
+          comfyui:
+            app:
+              - path: /workspace/ComfyUI/custom_nodes/ComfyUI-Manager/config.ini
+                subPath: config.ini
+                readOnly: true

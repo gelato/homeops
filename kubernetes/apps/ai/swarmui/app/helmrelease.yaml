@@ -90,11 +90,11 @@ spec:
               - swarm-sync.${SECRET_DOMAIN}
               - swarm-jupyter.${SECRET_DOMAIN}
     persistence:
-      data:
-        enabled: true
-        existingClaim: swarmui
-        globalMounts:
-          - path: /workspace/StableSwarmUI/Data
+      # data:
+      #   enabled: true
+      #   existingClaim: swarmui
+      #   globalMounts:
+      #     - path: /workspace/StableSwarmUI/Data
       dlbackend:
         enabled: true
         existingClaim: swarmui-dlbackend

@@ -58,15 +58,15 @@ spec:
             image:
               repository: vastai/comfy
               tag: cuda-12.8-auto@sha256:6d8bbfae6bbf7ee4c29b01a610be5369fc268c658a7dbba2cbe0ffdc2a4e3ef5
-            env:
-              AUTO_UPDATE: "false"
-              DIRECT_ADDRESS_GET_WAN: "true"
-              SERVICEPORTAL_URL: "comfy.${SECRET_DOMAIN}"
-              WEB_ENABLE_AUTH: "false"
-              WORKSPACE: "/workspace"
-              CF_QUICK_TUNNELS: "false"
-              SERVERLESS: "false"
-              PROVISIONING_SCRIPT: "https://raw.githubusercontent.com/ai-dock/comfyui/main/config/provisioning/flux.sh"
+            # env:
+            #   AUTO_UPDATE: "false"
+            #   DIRECT_ADDRESS_GET_WAN: "true"
+            #   SERVICEPORTAL_URL: "comfy.${SECRET_DOMAIN}"
+            #   WEB_ENABLE_AUTH: "false"
+            #   WORKSPACE: "/workspace"
+            #   CF_QUICK_TUNNELS: "false"
+            #   SERVERLESS: "false"
+            #   PROVISIONING_SCRIPT: "https://raw.githubusercontent.com/ai-dock/comfyui/main/config/provisioning/flux.sh"
 
             securityContext:
               privileged: true
@@ -121,12 +121,12 @@ spec:
         globalMounts:
           - path: /app/Output
 
-      config:
-        type: configMap
-        name: comfyui-configmap
-        advancedMounts:
-          comfyui:
-            app:
-              - path: /workspace/ComfyUI/custom_nodes/ComfyUI-Manager/config.ini
-                subPath: config.ini
-                readOnly: true
+      # config:
+      #   type: configMap
+      #   name: comfyui-configmap
+      #   advancedMounts:
+      #     comfyui:
+      #       app:
+      #         - path: /workspace/ComfyUI/custom_nodes/ComfyUI-Manager/config.ini
+      #           subPath: config.ini
+      #           readOnly: true

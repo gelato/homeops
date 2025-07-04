@@ -88,16 +88,21 @@ spec:
         enabled: true
         existingClaim: swarmui
         globalMounts:
-          - path: /app/Data
+          - path: /workspace/StableSwarmUI/Data
+      dlbackend:
+        enabled: true
+        existingClaim: swarmui
+        globalMounts:
+          - path: /workspace/StableSwarmUI/dlbackend
       output:
         type: nfs
         server: tower.local
         path: /mnt/user/ai-output
         globalMounts:
-          - path: /app/Output
+          - path: /workspace/StableSwarmUI/Output
       models:
         type: nfs
         server: tower.local
         path: /mnt/user/ai-models
         globalMounts:
-          - path: /app/Models
+          - path: /workspace/StableSwarmUI/Models

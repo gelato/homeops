@@ -84,7 +84,7 @@ spec:
         controller: comfyui
         ports:
           http:
-            port: 8188
+            port: 8080
 
     ingress:
       app:

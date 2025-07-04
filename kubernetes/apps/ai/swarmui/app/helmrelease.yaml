@@ -109,8 +109,7 @@ spec:
         globalMounts:
           - path: /workspace/SwarmUI/Output
       models:
-        type: nfs
-        server: tower.local
-        path: /mnt/user/ai-models
+        enabled: true
+        existingClaim: swarmui-models
         globalMounts:
           - path: /workspace/SwarmUI/Models

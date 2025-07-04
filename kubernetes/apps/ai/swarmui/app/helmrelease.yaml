@@ -52,6 +52,10 @@ spec:
         ports:
           http:
             port: 2254
+          sync:
+            port: 8384
+          jupyter:
+            port: 7888
     ingress:
       app:
         enabled: true
@@ -68,6 +72,14 @@ spec:
                 service:
                   identifier: app
                   port: http
+              - path: /sync
+                service:
+                  identifier: app
+                  port: sync
+              - path: /jupyter
+                service:
+                  identifier: app
+                  port: jupyter
         tls:
           - hosts:
               - swarmui.${SECRET_DOMAIN}

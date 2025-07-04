@@ -84,7 +84,13 @@ spec:
         controller: comfyui
         ports:
           http:
+            port: 8188
+          portal:
+            port: 1111
+          jupyter:
             port: 8080
+          sync:
+            port: 8384
 
     ingress:
       app:
@@ -103,6 +109,18 @@ spec:
                 service:
                   identifier: app
                   port: http
+              - path: /sync
+                service:
+                  identifier: app
+                  port: sync
+              - path: /portal
+                service:
+                  identifier: app
+                  port: portal
+              - path: /jupyter
+                service:
+                  identifier: app
+                  port: jupyter
         tls:
           - hosts:
               - *host

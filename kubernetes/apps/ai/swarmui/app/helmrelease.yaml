@@ -36,7 +36,7 @@ spec:
           app:
             image:
               repository: docker.io/mizeraj/swarmui-pt
-              tag: 0.9.6@sha256:3636d4104ca47863da251787aeddc3269036d78765687a5703ff2d18c5f0ae10
+              tag: 0.9.6@sha256:efeb721106e3532a9daa065866767329ec940a5220e0460187c712714b64e694
             env:
               TZ: ${TIMEZONE}
             resources:
@@ -44,7 +44,6 @@ spec:
                 cpu: 500m
                 memory: 4Gi
               limits:
-                memory: 6Gi
                 nvidia.com/gpu: 1
     service:
       app:
@@ -102,8 +101,6 @@ spec:
             subPath: dlnodes
           - path: /workspace/SwarmUI/src/BuiltinExtensions/ComfyUIBackend/CustomWorkflows
             subPath: workflows
-          - path: /usr/local/lib/python3.11/dist-packages
-            subPath: dist-packages
       output:
         type: nfs
         server: tower.local

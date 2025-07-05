@@ -36,7 +36,7 @@ spec:
           app:
             image:
               repository: docker.io/mizeraj/swarmui
-              tag: 0.9.6@sha256:d91837a996296105ed55c99a5afb2ef996b0edb78b1c41f9ccc3cd52c3bd6581
+              tag: 0.9.6@sha256:2a8ca978d1aa86552b38a52286b6cbb6d034743bb38eeee4e2d0af5cd2c8f695
             env:
               TZ: ${TIMEZONE}
             resources:
@@ -50,7 +50,7 @@ spec:
         controller: swarmui
         ports:
           http:
-            port: 2254
+            port: 7801
           sync:
             port: 8384
           jupyter:

@@ -35,8 +35,8 @@ spec:
         containers:
           app:
             image:
-              repository: docker.io/mizeraj/swarmui-pt
-              tag: 0.9.6@sha256:efeb721106e3532a9daa065866767329ec940a5220e0460187c712714b64e694
+              repository: docker.io/mizeraj/swarmui
+              tag: 0.9.6@sha256:4516944bf255372a95927bf7be1db1654723bd1b5b6ce06a42a789aed5eb5e81
             env:
               TZ: ${TIMEZONE}
             resources:
@@ -93,22 +93,22 @@ spec:
         enabled: true
         existingClaim: swarmui
         globalMounts:
-          - path: /workspace/SwarmUI/Data
+          - path: /app/SwarmUI/Data
             subPath: data
-          - path: /workspace/SwarmUI/dlbackend
+          - path: /app/SwarmUI/dlbackend
             subPath: dlbackend
-          - path: /workspace/SwarmUI/src/BuiltinExtensions/ComfyUIBackend/DLNodes
+          - path: /app/SwarmUI/src/BuiltinExtensions/ComfyUIBackend/DLNodes
             subPath: dlnodes
-          - path: /workspace/SwarmUI/src/BuiltinExtensions/ComfyUIBackend/CustomWorkflows
+          - path: /app/SwarmUI/src/BuiltinExtensions/ComfyUIBackend/CustomWorkflows
             subPath: workflows
       output:
         type: nfs
         server: tower.local
         path: /mnt/user/ai-output
         globalMounts:
-          - path: /workspace/SwarmUI/Output
+          - path: /app/SwarmUI/Output
       models:
         enabled: true
         existingClaim: swarmui-models
         globalMounts:
-          - path: /workspace/SwarmUI/Models
+          - path: /app/SwarmUI/Models

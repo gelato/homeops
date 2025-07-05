@@ -102,6 +102,8 @@ spec:
             subPath: dlnodes
           - path: /workspace/SwarmUI/src/BuiltinExtensions/ComfyUIBackend/CustomWorkflows
             subPath: workflows
+          - path: /usr/local/lib/python3.11/dist-packages
+            subPath: dist-packages
       output:
         type: nfs
         server: tower.local

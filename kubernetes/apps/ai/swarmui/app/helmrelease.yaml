@@ -36,7 +36,7 @@ spec:
           app:
             image:
               repository: docker.io/mizeraj/swarmui
-              tag: 0.9.6@sha256:2a8ca978d1aa86552b38a52286b6cbb6d034743bb38eeee4e2d0af5cd2c8f695
+              tag: 0.9.6@sha256:ea82a291acd5320c7c6412e44a005e5a1099106a10457d1ff1c1a7fb3e2ce8fb
             env:
               TZ: ${TIMEZONE}
             resources:
@@ -93,13 +93,13 @@ spec:
         enabled: true
         existingClaim: swarmui
         globalMounts:
-          - path: /app/SwarmUI/Data
+          - path: /app/Data
             subPath: data
-          - path: /app/SwarmUI/dlbackend
+          - path: /app/dlbackend
             subPath: dlbackend
-          - path: /app/SwarmUI/src/BuiltinExtensions/ComfyUIBackend/DLNodes
+          - path: /app/src/BuiltinExtensions/ComfyUIBackend/DLNodes
             subPath: dlnodes
-          - path: /app/SwarmUI/src/BuiltinExtensions/ComfyUIBackend/CustomWorkflows
+          - path: /app/src/BuiltinExtensions/ComfyUIBackend/CustomWorkflows
             subPath: workflows
       output:
         type: nfs

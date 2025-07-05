@@ -106,9 +106,9 @@ spec:
         server: tower.local
         path: /mnt/user/ai-output
         globalMounts:
-          - path: /app/SwarmUI/Output
+          - path: /app/Output
       models:
         enabled: true
         existingClaim: swarmui-models
         globalMounts:
-          - path: /app/SwarmUI/Models
+          - path: /app/Models

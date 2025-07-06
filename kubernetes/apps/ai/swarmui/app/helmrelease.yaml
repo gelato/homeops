@@ -108,7 +108,8 @@ spec:
         globalMounts:
           - path: /app/Output
       models:
-        enabled: true
-        existingClaim: swarmui-models
+        type: nfs
+        server: tower.local
+        path: /mnt/user/ai-models
         globalMounts:
           - path: /app/Models

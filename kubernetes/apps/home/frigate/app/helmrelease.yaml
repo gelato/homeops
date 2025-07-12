@@ -41,7 +41,7 @@ spec:
           main:
             image:
               repository: ghcr.io/blakeblackshear/frigate
-              tag: 0.15.1-tensorrt@sha256:e6015f63335d4c9865ddd6987df62e60b9e8cad2a43f8d0cb4ff296ee795e7d1
+              tag: 0.15.2-tensorrt@sha256:2b5c63de9537352fdf97364857f8d7a1beb5e1e744af5e72c17a4e0869487679
             env:
               TZ: ${TIMEZONE}
             envFrom:

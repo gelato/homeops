@@ -6,4 +6,3 @@ resources:
   - ./namespace.yaml
   - ./ollama/ks.yaml
   - ./swarmui/ks.yaml
-  # - ./comfyui/ks.yaml

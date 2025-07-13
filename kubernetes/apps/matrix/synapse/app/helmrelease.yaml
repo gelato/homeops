@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: matrix-synapse
-      version: 3.12.0
+      version: 3.12.4
       sourceRef:
         kind: HelmRepository
         name: matrix-synapse
@@ -226,8 +226,8 @@ spec:
     config:
       reportStats: false
       publicBaseurl: "https://matrix.${SECRET_DOMAIN}"
-      turnUris: ["turns:${TURN_DOMAIN}?transport=udp", "turns:${TURN_DOMAIN}?transport=tcp"]
-      turnSecret: "${TURN_SERVER_PASS}"
+      # turnUris: ["turns:${TURN_DOMAIN}?transport=udp", "turns:${TURN_DOMAIN}?transport=tcp"]
+      # turnSecret: "${TURN_SERVER_PASS}"
       enableRegistration: true
       registrationSharedSecret: ${MATRIX_REGISTRATION_SHARED_SECRET}
       macaroonSecretKey: ${MATRIX_MACAROON_SECRET_KEY}

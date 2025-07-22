@@ -55,7 +55,7 @@ spec:
               NUMBER_OF_THREADS: 6
               LANGUAGE: ru
               SAMPLE_RATE: 48000
-              HA_FIX: False
+              HA_FIX: True
             probes: &probes
               liveness:
                 enabled: true

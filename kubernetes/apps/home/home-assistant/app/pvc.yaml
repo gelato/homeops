@@ -7,6 +7,6 @@ spec:
   accessModes: ["ReadWriteOnce"]
   resources:
     requests:
-      storage: 45Gi
+      storage: 50Gi
   storageClassName: longhorn-fast
   volumeName: pvc-961c5211-c224-4376-affe-2a3b8a46c253

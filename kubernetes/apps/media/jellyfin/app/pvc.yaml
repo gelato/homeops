@@ -20,4 +20,4 @@ spec:
   resources:
     requests:
       storage: 150Gi
-  storageClassName: longhorn-fast
+  storageClassName: openebs-hostpath

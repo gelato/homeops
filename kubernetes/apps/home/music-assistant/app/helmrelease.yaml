@@ -89,6 +89,13 @@ spec:
           music-assistant:
             app:
               - path: /usr/local/lib/python3.12/site-packages/hass_client
+      nfs-media:
+        type: nfs
+        server: tower.local
+        path: /mnt/user/media
+        globalMounts:
+          - path: /nfs-media
+            readOnly: false
       temp:
         enabled: true
         type: emptyDir

@@ -74,7 +74,7 @@ nodes:
   - hostname: "eri"
     ipAddress: "192.168.108.238"
     installDiskSelector:
-      serial: "NJR368R008680P70GX"
+      serial: "MBM447165407"
     machineSpec:
       secureboot: false
     talosImageURL: factory.talos.dev/installer/2f1c847e5457afb7846b421f696d72f212633499dfe7f16fd667081b7904cfc6

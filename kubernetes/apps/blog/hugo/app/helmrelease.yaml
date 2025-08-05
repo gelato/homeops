@@ -1,0 +1,101 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app hugo
+spec:
+  chart:
+    spec:
+      chart: app-template
+      version: 3.7.3
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  interval: 15m
+  install:
+    remediation:
+      retries: -1
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  driftDetection:
+    mode: enabled
+    ignore:
+      - paths:
+          - /spec/containers/resources/limits
+        target:
+          kind: Pod
+  values:
+    defaultPodOptions:
+      securityContext:
+        runAsGroup: 101
+        runAsUser: 101
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
+
+    controllers:
+      hugo:
+        annotations:
+          reloader.stakater.com/search: "true"
+        replicas: 2
+        strategy: RollingUpdate
+        containers:
+          app:
+            image:
+              # renovate: datasource=docker image=ghcr.io/ahgraber/aimlbling-about
+              repository: ghcr.io/ahgraber/aimlbling-about
+              tag: "2025.08.050912"
+              pullPolicy: Always
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+            resources:
+              requests:
+                cpu: 100m
+                memory: 128M
+              limits:
+                memory: 256M
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: 80
+    ingress:
+      app:
+        className: external
+        annotations:
+          external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
+          nginx.ingress.kubernetes.io/configuration-snippet: |
+            more_set_headers "Content-Security-Policy: default-src 'self' ninerealmlabs.com *.ninerealmlabs.com;connect-src 'self' ninerealmlabs.com *.ninerealmlabs.com;img-src * data:;font-src 'self';frame-ancestors 'self';object-src 'none';script-src 'self' 'unsafe-inline' 'unsafe-eval' ninerealmlabs.com *.ninerealmlabs.com https://cdn.plot.ly;style-src 'self' 'unsafe-inline'";
+            more_set_headers "Cache-Control: public, max-age=86400";
+          # nginx.ingress.kubernetes.io/whitelist-source-range: |
+          #   10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
+        hosts:
+          - host: &host "aimlbling-about.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  identifier: app
+                  port: http
+        tls:
+          - hosts:
+              - *host
+    persistence:
+      tmp:
+        type: emptyDir
+        globalMounts:
+          - path: /tmp

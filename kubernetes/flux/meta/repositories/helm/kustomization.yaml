@@ -31,4 +31,5 @@ resources:
   - ./repos/victoriametrics.yaml
   - ./repos/cronce.yaml
   - ./repos/stunner.yaml
+  - ./repos/mysql-operator.yaml
   # - ./repos/matrix.yaml

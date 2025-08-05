@@ -6,7 +6,7 @@ metadata:
   namespace: database
 spec:
   replicas: 1
-  mysqlVersion: 8
+  mysqlVersion: "8"
   secretName: mysql-main
   backupSecretName: mysql-main-backup
   backupSchedule: "@daily"

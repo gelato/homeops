@@ -1,0 +1,28 @@
+---
+apiVersion: mysql.presslabs.org/v1alpha1
+kind: MysqlUser
+metadata:
+  name: ghost-database-user
+  namespace: blog
+spec:
+  user: ghost-user
+  clusterRef:
+    name: mysql-main
+    namespace: database
+  password:
+    name: ghost-password
+    key: PASSWORD
+  allowedHosts:
+    - "10.%.%.%"
+  permissions:
+    - schema: ghost-db
+      permissions:
+        - SELECT
+        - UPDATE
+        - CREATE
+        - DELETE
+        - ALTER
+        - DROP
+        - INSERT
+        - REFERENCES
+        - RELOAD

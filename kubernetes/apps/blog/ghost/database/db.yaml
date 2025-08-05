@@ -1,0 +1,10 @@
+apiVersion: mysql.presslabs.org/v1alpha1
+kind: MysqlDatabase
+metadata:
+  name: ghost-mysql-database
+  namespace: blog
+spec:
+  database: ghost-db
+  clusterRef:
+    name: mysql-main
+    namespace: database

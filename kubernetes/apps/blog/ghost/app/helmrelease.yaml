@@ -1,0 +1,78 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: ghost
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.7.3
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  dependsOn:
+    - name: longhorn
+      namespace: storage
+    - name: mysql-operator
+      namespace: database
+  values:
+    controllers:
+      ghost:
+        containers:
+          app:
+            image:
+              repository: ghost
+              tag: 5.130.3
+            env:
+              TZ: ${TIMEZONE}
+              url: "https://blog.${SECRET_DOMAIN}"
+              database__client: mysql
+              NODE_ENV: production
+            envFrom:
+              - secretRef:
+                  name: ghost-secret
+    service:
+      app:
+        controller: ghost
+        ports:
+          http:
+            port: 2368
+    ingress:
+      main:
+        enabled: true
+        className: external
+        annotations:
+          nginx.ingress.kubernetes.io/proxy-body-size: 2G
+          hajimari.io/enable: "true"
+          hajimari.io/appName: "Journal (Ghost)"
+          hajimari.io/info: "Blogging software"
+          hajimari.io/icon: "image-multiple"
+        hosts:
+          - host: blog.${SECRET_DOMAIN}
+            paths:
+              - path: "/"
+                pathType: "Prefix"
+                service:
+                  identifier: main
+                  port: http
+        tls:
+          - hosts:
+              - blog.${SECRET_DOMAIN}
+    persistence:
+      content:
+        enabled: true
+        globalMounts:
+          - path: /var/lib/ghost/content
+        existingClaim: ghost

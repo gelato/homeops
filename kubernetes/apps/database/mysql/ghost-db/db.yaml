@@ -1,7 +1,7 @@
 apiVersion: mysql.presslabs.org/v1alpha1
 kind: MysqlDatabase
 metadata:
-  name: ghost-mysql-database
+  name: ghost-database
   namespace: database
 spec:
   database: ghost-db

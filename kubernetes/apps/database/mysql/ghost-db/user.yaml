@@ -7,7 +7,7 @@ metadata:
 spec:
   user: ghost-user
   clusterRef:
-    name: mysql-main
+    name: main
     namespace: database
   password:
     name: ghost-password

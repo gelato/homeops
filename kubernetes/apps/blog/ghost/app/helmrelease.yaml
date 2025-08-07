@@ -37,7 +37,7 @@ spec:
               tag: 6.0.0
             env:
               TZ: ${TIMEZONE}
-              url: "https://blog.${SECRET_DOMAIN}"
+              url: "https://magic.${SECRET_DOMAIN}"
               database__client: mysql
               NODE_ENV: production
             envFrom:
@@ -61,7 +61,7 @@ spec:
           hajimari.io/info: "Blogging software"
           hajimari.io/icon: "image-multiple"
         hosts:
-          - host: blog.${SECRET_DOMAIN}
+          - host: &host magic.${SECRET_DOMAIN}
             paths:
               - path: "/"
                 pathType: "Prefix"
@@ -70,7 +70,7 @@ spec:
                   port: http
         tls:
           - hosts:
-              - blog.${SECRET_DOMAIN}
+              - *host
     persistence:
       content:
         enabled: true

@@ -6,5 +6,5 @@ metadata:
 spec:
   database: ghost-db
   clusterRef:
-    name: mysql-main
+    name: main
     namespace: database

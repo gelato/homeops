@@ -44,7 +44,7 @@ spec:
               - secretRef:
                   name: ghost-secret
     service:
-      app:
+      main:
         controller: ghost
         ports:
           http:

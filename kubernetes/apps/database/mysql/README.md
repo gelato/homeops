@@ -69,9 +69,9 @@ spec:
   ## specify the remote deletion policy. It can be on of ["retain", "delete"]
   # remoteDeletePolicy: retain
   ```
-  ## DB secret:
-  ```
-  apiVersion: v1
+## DB secret:
+```
+apiVersion: v1
 kind: Secret
 metadata:
   name: my-secret

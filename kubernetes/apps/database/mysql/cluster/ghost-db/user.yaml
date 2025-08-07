@@ -17,13 +17,4 @@ spec:
   permissions:
     - schema: ghost-db
       tables: ["*"]
-      permissions:
-        - SELECT
-        - UPDATE
-        - CREATE
-        - DELETE
-        - ALTER
-        - DROP
-        - INSERT
-        - REFERENCES
-        - RELOAD
+      permissions: [SELECT, INSERT, UPDATE, DELETE, CREATE, INDEX, ALTER, CREATE TEMPORARY TABLES, LOCK TABLES, EXECUTE, CREATE VIEW, SHOW VIEW, CREATE ROUTINE, ALTER ROUTINE, EVENT, TRIGGER]

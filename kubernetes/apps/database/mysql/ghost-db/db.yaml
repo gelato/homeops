@@ -2,7 +2,7 @@ apiVersion: mysql.presslabs.org/v1alpha1
 kind: MysqlDatabase
 metadata:
   name: ghost-mysql-database
-  namespace: blog
+  namespace: database
 spec:
   database: ghost-db
   clusterRef:

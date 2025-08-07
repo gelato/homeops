@@ -16,9 +16,6 @@ spec:
   timeout: 5m
   releaseName: mysql-operator
   values:
-    # Pasted from:
-    # https://github.com/bitpoke/mysql-operator/blob/b00e45641054b7cca2ce50476fefd5b711e1ecd9/deploy/charts/mysql-operator/values.yaml
-
     # Default values for mysql-operator.
     # This is a YAML-formatted file.
     # Declare variables to be passed into your templates.
@@ -27,47 +24,26 @@ spec:
     image:
       repository: docker.io/bitpoke/mysql-operator
       pullPolicy: IfNotPresent
-      # Overrides the image tag whose default is the chart appVersion.
-      # tag: ""
 
     sidecar57:
       image:
         repository: docker.io/bitpoke/mysql-operator-sidecar-5.7
-        # Overrides the image tag whose default is the chart appVersion.
-        # tag: ""
 
     sidecar80:
       image:
         repository: docker.io/bitpoke/mysql-operator-sidecar-8.0
-        # Overrides the image tag whose default is the chart appVersion.
-        # tag: ""
 
     metricsExporter:
       image:
         repository: docker.io/prom/mysqld-exporter
-        # tag: ""
-
-    imagePullSecrets: []
-    nameOverride: ""
-    fullnameOverride: ""
-
-    extraEnv: []
-
-    extraArgs: []
+        tag: "v0.13.0"
 
     rbac:
-      create: false
+      create: true
 
     serviceAccount:
       # Specifies whether a service account should be created
       create: true
-      # Annotations to add to the service account
-      annotations: {}
-      # The name of the service account to use.
-      # If not set and create is true, a name is generated using the fullname template
-      name: ""
-
-    podAnnotations: {}
 
     podSecurityContext:
       runAsNonRoot: true
@@ -76,48 +52,19 @@ spec:
       runAsGroup: 65532
       fsGroup: 65532
 
-    securityContext: {}
-      # capabilities:
-      #   drop:
-      #   - ALL
-      # readOnlyRootFilesystem: true
-      # runAsNonRoot: true
-      # runAsUser: 1000
-
     podDisruptionBudget:
       enabled: true
       maxUnavailable: 1
-
-    resources: {}
-      # We usually recommend not to specify default resources and to leave this as a conscious
-      # choice for the user. This also increases chances charts run on environments with little
-      # resources, such as Minikube. If you do want to specify resources, uncomment the following
-      # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-      # limits:
-      #   cpu: 100m
-      #   memory: 128Mi
-      # requests:
-      #   cpu: 100m
-      #   memory: 128Mi
-
-    nodeSelector: {}
-
-    tolerations: []
-
-    affinity: {}
 
     # Insert a pre-stop lifecycle hook and trigger a failover. NOTE: Use this when your cluster network
     # policy allows to connect across namespaces and the mysql node is able to connecto to operator pod
     gracefulShutdown:
       enabled: true
 
-    # in which namespace to watch for resource, leave empty to watch in all namespaces
-    watchNamespace:
-
     # Install a ServiceMonitor for monitoring the operator
     serviceMonitor:
       # enabled should be set to true to enable prometheus-operator discovery of this service
-      enabled: false
+      enabled: true
       # the Service port.name where prometheus metrics are exposed
       servicePortName: prometheus
       # the Service port.port where metrics are exposed
@@ -135,7 +82,7 @@ spec:
 
     # The operator will install a ServiceMonitor if you have prometheus-operator installed.
     mysqlClustersGlobalServiceMonitor:
-      enabled: false
+      enabled: true
       ## Additional labels for the serviceMonitor. Useful if you have multiple prometheus operators running to select only specific ServiceMonitors
       # additionalLabels:
       #   prometheus: prom-internal
@@ -157,16 +104,6 @@ spec:
       image:
         repository: docker.io/bitpoke/mysql-operator-orchestrator
         pullPolicy: IfNotPresent
-        # Overrides the image tag whose default is the chart appVersion.
-        # tag: ""
-
-      securityContext: {}
-        # capabilities:
-        #   drop:
-        #   - ALL
-        # readOnlyRootFilesystem: true
-        # runAsNonRoot: true
-        # runAsUser: 1000
 
       # secretName:  # specify an existing secret to use for orchestrator topology credentials
 
@@ -174,35 +111,23 @@ spec:
       topologyUser: orchestrator
       topologyPassword:  # this is empty and will be random generated if not specified
 
-      resources: {}
-        # For example
-        # limits:
-        #  cpu: 100m
-        #  memory: 128Mi
-        # requests:
-        #  cpu: 100m
-        #  memory: 128Mi
-
       service:
         type: ClusterIP
         port: 80
         # nodePort: 3000
 
       ingress:
-        enabled: false
-        className: ""
-        annotations: {}
-          # kubernetes.io/ingress.class: nginx
-          # kubernetes.io/tls-acme: "true"
+        enabled: true
+        className: "internal"
         hosts:
-          - host: chart-example.local
+          - host: &host orchestrator.${SECRET_DOMAIN}
             paths:
               - path: /
                 pathType: ImplementationSpecific
-        tls: []
-        #  - secretName: chart-example-tls
-        #    hosts:
-        #      - chart-example.local
+        tls:
+         - secretName: mysql-orchestrator-tls
+           hosts:
+             - *host
 
 
       persistence:
@@ -214,15 +139,8 @@ spec:
         ##   GKE, AWS & OpenStack)
         ##
         storageClass: "longhorn-fast"
-        # annotations: {}
-        # selector:
-        #  matchLabels: {}
         accessMode: "ReadWriteOnce"
         size: 1Gi
-        # inject an init container which properly sets the ownership for the orchestrator's data volume
-        # this is needed when the PV provisioner does not properly sets permissions for fsGroup
-        # when enabling this, you MUST change the securityContext.runAsNonRoot to false
-        fsGroupWorkaroundEnabled: false
 
       # key value map of orchestrator conf directives.
       # see: https://github.com/github/orchestrator/blob/master/conf/orchestrator-sample.conf.json
@@ -276,7 +194,9 @@ spec:
           - "/usr/local/bin/orc-helper event -w '{failureClusterAlias}' 'OrcFailureDetection' 'Failure: {failureType}, failed host: {failedHost}, lost replcas: {lostReplicas}' || true"
           - "/usr/local/bin/orc-helper failover-in-progress '{failureClusterAlias}' '{failureDescription}' || true"
 
-        # PreGracefulTakeoverProcesses:
+        PreGracefulTakeoverProcesses:
+          - "/usr/local/bin/orc-helper failover-in-progress '{failureClusterAlias}' '{failureDescription}' || true"
+
         PreFailoverProcesses:
           # as backup in case the first request fails
           - "/usr/local/bin/orc-helper failover-in-progress '{failureClusterAlias}' '{failureDescription}' || true"

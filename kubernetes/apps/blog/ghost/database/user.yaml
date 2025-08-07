@@ -16,6 +16,7 @@ spec:
     - "10.%.%.%"
   permissions:
     - schema: ghost-db
+      tables: ["*"]
       permissions:
         - SELECT
         - UPDATE

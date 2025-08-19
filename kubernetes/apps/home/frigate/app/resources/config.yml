@@ -97,7 +97,7 @@ genai:
   provider: ollama
   # Required if provider is ollama. May also be used for an OpenAI API compatible backend with the openai provider.
   base_url: http://ollama.ai.svc:11434
-  model: gemma3n:latest
+  model: llava:7b
   # Required if gemini or openai
   api_key: "{FRIGATE_GENAI_API_KEY}"
   # Optional: The default prompt for generating descriptions. Can use replacement

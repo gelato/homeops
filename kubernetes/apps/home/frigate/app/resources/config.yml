@@ -102,12 +102,12 @@ genai:
   api_key: "{FRIGATE_GENAI_API_KEY}"
   # Optional: The default prompt for generating descriptions. Can use replacement
   # variables like "label", "sub_label", "camera" to make more dynamic. (default: shown below)
-  prompt: "Используй только русский язык. Опиши {label} в последовательности изображений с максимальным количеством деталей. Не описывай задний фон."
+  prompt: "Опиши {label} в последовательности изображений с максимальным количеством деталей. Не описывай задний фон."
   # Optional: Object specific prompts to customize description results
   # Format: {label}: {prompt}
   object_prompts:
-    person: "Используй только русский язык. Опиши этого человека с максимальным количеством деталей, не описывай задний фон"
-    car: "Используй только русский язык. Опиши этот автомобиль с максимальным количеством деталей, не описывай задний фон"
+    person: "Опиши этого человека с максимальным количеством деталей, не описывай задний фон"
+    car: "Опиши этот автомобиль с максимальным количеством деталей, не описывай задний фон"
 
 go2rtc:
   streams:

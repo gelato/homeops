@@ -90,22 +90,22 @@ snapshots:
 semantic_search:
   enabled: True
 
-genai:
-  # Optional: Enable AI description generation (default: shown below)
-  enabled: True
-  # Required if enabled: Provider must be one of ollama, gemini, or openai
-  provider: ollama
-  # Required if provider is ollama. May also be used for an OpenAI API compatible backend with the openai provider.
-  base_url: http://ollama.ai.svc:11434
-  model: hf.co/VanHolder/llava-saiga-8b-Q8_0-GGUF:Q8_0
-  # Required if gemini or openai
-  api_key: "{FRIGATE_GENAI_API_KEY}"
-  # Optional: The default prompt for generating descriptions. Can use replacement
-  # variables like "label", "sub_label", "camera" to make more dynamic. (default: shown below)
-  prompt: "Проанализируй {label} на этих изображениях с камеры видеонаблюдения {camera}. Сосредоточься на действиях, поведении и потенциальном намерении {label}, а не просто на описании его внешнего вида."
-  object_prompts:
-    person: "Внимательно изучи главного героя на этих изображениях. Что он делает и что его действия могут указывать на его намерения (например, подходит к двери, выходит из помещения, стоит на месте)? Не описывай окружающую обстановку или статичные детали."
-    car: "Обрати внимание на основной автомобиль на этих изображениях. Обратите внимание на его движение, направление или цель (например, парковка, приближение, объезд). Если это автомобиль доставки, укажи компанию."
+# genai:
+#   # Optional: Enable AI description generation (default: shown below)
+#   enabled: True
+#   # Required if enabled: Provider must be one of ollama, gemini, or openai
+#   provider: ollama
+#   # Required if provider is ollama. May also be used for an OpenAI API compatible backend with the openai provider.
+#   base_url: http://ollama.ai.svc:11434
+#   model: hf.co/VanHolder/llava-saiga-8b-Q8_0-GGUF:Q8_0
+#   # Required if gemini or openai
+#   api_key: "{FRIGATE_GENAI_API_KEY}"
+#   # Optional: The default prompt for generating descriptions. Can use replacement
+#   # variables like "label", "sub_label", "camera" to make more dynamic. (default: shown below)
+#   prompt: "Проанализируй {label} на этих изображениях с камеры видеонаблюдения {camera}. Сосредоточься на действиях, поведении и потенциальном намерении {label}, а не просто на описании его внешнего вида."
+#   object_prompts:
+#     person: "Внимательно изучи главного героя на этих изображениях. Что он делает и что его действия могут указывать на его намерения (например, подходит к двери, выходит из помещения, стоит на месте)? Не описывай окружающую обстановку или статичные детали."
+#     car: "Обрати внимание на основной автомобиль на этих изображениях. Обратите внимание на его движение, направление или цель (например, парковка, приближение, объезд). Если это автомобиль доставки, укажи компанию."
 
 go2rtc:
   streams:

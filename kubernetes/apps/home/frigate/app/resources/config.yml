@@ -163,9 +163,10 @@ cameras:
           roles:
             - record
             - audio
-        - path: rtsp://localhost:8554/gates_lq
-          roles:
             - detect
+        # - path: rtsp://localhost:8554/gates_lq
+        #   roles:
+        #     - detect
     detect:
       width: 848
       height: 480
@@ -240,9 +241,10 @@ cameras:
           roles:
             - record
             - audio
-        - path: rtsp://localhost:8554/door_lq
-          roles:
             - detect
+        # - path: rtsp://localhost:8554/door_lq
+        #   roles:
+        #     - detect
     detect:
       width: 848
       height: 480
@@ -324,9 +326,10 @@ cameras:
           roles:
             - record
             - audio
-        - path: rtsp://localhost:8554/dvor_gates_lq
-          roles:
             - detect
+        # - path: rtsp://localhost:8554/dvor_gates_lq
+        #   roles:
+        #     - detect
     detect:
       width: 848
       height: 480

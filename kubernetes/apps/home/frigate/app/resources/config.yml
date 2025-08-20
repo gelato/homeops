@@ -612,7 +612,7 @@ cameras:
       stream_name: garden_hq
       quality: 1
     zones:
-      garden:
+      garden_zone:
         coordinates: 0.163,0.99,0.665,0.997,0.934,0.851,0.935,0.564,0.843,0.417,0.747,0.256,0.681,0.256,0.62,0.336,0.348,0.383,0.212,0.559,0.136,0.752
         inertia: 2
         objects:

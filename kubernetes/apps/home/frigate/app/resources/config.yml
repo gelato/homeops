@@ -97,15 +97,15 @@ genai:
   provider: ollama
   # Required if provider is ollama. May also be used for an OpenAI API compatible backend with the openai provider.
   base_url: http://ollama.ai.svc:11434
-  model: llava:7b
+  model: hf.co/VanHolder/llava-saiga-8b-Q8_0-GGUF:Q8_0
   # Required if gemini or openai
   api_key: "{FRIGATE_GENAI_API_KEY}"
   # Optional: The default prompt for generating descriptions. Can use replacement
   # variables like "label", "sub_label", "camera" to make more dynamic. (default: shown below)
-  prompt: "Speak Russian using only language. Analyze the {label} in these images from the {camera} security camera. Focus on the actions, behavior, and potential intent of the {label}, rather than just describing its appearance."
+  prompt: "Проанализируй {label} на этих изображениях с камеры видеонаблюдения {camera}. Сосредоточься на действиях, поведении и потенциальном намерении {label}, а не просто на описании его внешнего вида."
   object_prompts:
-    person: "Speak using only Russian language. Examine the main person in these images. What are they doing and what might their actions suggest about their intent (e.g., approaching a door, leaving an area, standing still)? Do not describe the surroundings or static details. Use Russian language as a native speaker."
-    car: "Speak using only Russian language. Observe the primary vehicle in these images. Focus on its movement, direction, or purpose (e.g., parking, approaching, circling). If it's a delivery vehicle, mention the company. Use Russian language as a native speaker."
+    person: "Внимательно изучи главного героя на этих изображениях. Что он делает и что его действия могут указывать на его намерения (например, подходит к двери, выходит из помещения, стоит на месте)? Не описывай окружающую обстановку или статичные детали."
+    car: "Обрати внимание на основной автомобиль на этих изображениях. Обратите внимание на его движение, направление или цель (например, парковка, приближение, объезд). Если это автомобиль доставки, укажи компанию."
 
 go2rtc:
   streams:

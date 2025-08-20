@@ -97,17 +97,15 @@ genai:
   provider: ollama
   # Required if provider is ollama. May also be used for an OpenAI API compatible backend with the openai provider.
   base_url: http://ollama.ai.svc:11434
-  model: moondream:latest
+  model: llava:7b
   # Required if gemini or openai
   api_key: "{FRIGATE_GENAI_API_KEY}"
   # Optional: The default prompt for generating descriptions. Can use replacement
   # variables like "label", "sub_label", "camera" to make more dynamic. (default: shown below)
-  prompt: "Опиши {label} в последовательности изображений с максимальным количеством деталей. Не описывай задний фон."
-  # Optional: Object specific prompts to customize description results
-  # Format: {label}: {prompt}
+  prompt: "Analyze the {label} in these images from the {camera} security camera. Focus on the actions, behavior, and potential intent of the {label}, rather than just describing its appearance. Use Russian language as a native speaker."
   object_prompts:
-    person: "Опиши этого человека с максимальным количеством деталей, не описывай задний фон"
-    car: "Опиши этот автомобиль с максимальным количеством деталей, не описывай задний фон"
+    person: "Examine the main person in these images. What are they doing and what might their actions suggest about their intent (e.g., approaching a door, leaving an area, standing still)? Do not describe the surroundings or static details. Use Russian language as a native speaker."
+    car: "Observe the primary vehicle in these images. Focus on its movement, direction, or purpose (e.g., parking, approaching, circling). If it's a delivery vehicle, mention the company. Use Russian language as a native speaker."
 
 go2rtc:
   streams:

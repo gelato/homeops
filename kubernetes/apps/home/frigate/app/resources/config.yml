@@ -624,7 +624,7 @@ cameras:
           - person
           - dog
         required_zones:
-          - garden
+          - garden_zone
     webui_url: ""
     mqtt:
       enabled: True

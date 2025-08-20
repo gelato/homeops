@@ -168,8 +168,8 @@ cameras:
         #   roles:
         #     - detect
     detect:
-      width: 848
-      height: 480
+      # width: 848
+      # height: 480
       fps: 5
       enabled: True
     live:
@@ -246,8 +246,8 @@ cameras:
         #   roles:
         #     - detect
     detect:
-      width: 848
-      height: 480
+      # width: 848
+      # height: 480
       fps: 5
       enabled: True
     live:
@@ -331,8 +331,8 @@ cameras:
         #   roles:
         #     - detect
     detect:
-      width: 848
-      height: 480
+      # width: 848
+      # height: 480
       fps: 5
       enabled: True
     live:

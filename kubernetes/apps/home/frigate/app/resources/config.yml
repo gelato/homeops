@@ -173,8 +173,9 @@ cameras:
       fps: 5
       enabled: True
     live:
-      stream_name: gates_hq
-      quality: 1
+      streams:
+        main_stream: gates_hq
+        sub_stream: gates_lq
     webui_url: ""
     motion:
       mask:
@@ -251,8 +252,9 @@ cameras:
       fps: 5
       enabled: True
     live:
-      stream_name: door_hq
-      quality: 1
+      streams:
+        main_stream: door_hq
+        sub_stream: door_lq
     webui_url: "https://192.168.108.104/"
     motion:
       mask:
@@ -336,8 +338,9 @@ cameras:
       fps: 5
       enabled: True
     live:
-      stream_name: dvor_gates_hq
-      quality: 1
+      streams:
+        main_stream: dvor_gates_hq
+        sub_stream: dvor_gates_lq
     webui_url: "https://192.168.108.210/"
     motion:
       mask:
@@ -423,8 +426,9 @@ cameras:
       fps: 5
       enabled: True
     live:
-      stream_name: dom2_hq
-      quality: 1
+      streams:
+        main_stream: dom2_hq
+        sub_stream: dom2_lq
     webui_url: "https://192.168.108.215/"
     motion:
       mask:
@@ -485,8 +489,9 @@ cameras:
       fps: 5
       enabled: True
     live:
-      stream_name: street_hq
-      quality: 1
+      streams:
+        main_stream: street_hq
+        sub_stream: street_lq
     motion:
       mask:
         - 0.319,1,0.484,0.664,0.431,0.481,0.352,0,0.001,0.001,0,0.413
@@ -543,8 +548,9 @@ cameras:
       fps: 5
       enabled: True
     live:
-      stream_name: middle_hq
-      quality: 1
+      streams:
+        main_stream: middle_hq
+        sub_stream: middle_lq
     motion:
       mask:
         - 0.188,0.988,0.108,0.813,0.05,0.6,0.046,0.553,0.002,0.556,0.001,0.004,0.334,0.003,0.335,0.994
@@ -610,8 +616,9 @@ cameras:
       fps: 5
       enabled: True
     live:
-      stream_name: garden_hq
-      quality: 1
+      streams:
+        main_stream: garden_hq
+        sub_stream: garden_lq
     motion:
       mask:
         - 0.42,0.5,0.441,0.781,0.503,0.857,0.568,0.849,0.639,0.915,0.741,0.84,0.726,0.709,0.672,0.606,0.663,0.477,0.682,0.41,0.625,0.406,0.605,0.263,0.489,0.323,0.509,0.476

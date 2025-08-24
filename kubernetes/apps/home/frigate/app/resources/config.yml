@@ -151,9 +151,9 @@ go2rtc:
     garden_lq:
       - rtsp://admin:{FRIGATE_RTSP_PASSWORD}@nvr.local:554/Streaming/Channels/702
       - "ffmpeg:garden_lq#audio=copy#audio=aac#audio=opus"
-  webrtc:
-    candidates:
-      - 192.168.108.55:8555
+  # webrtc:
+  #   candidates:
+  #     - 192.168.108.55:8555
 cameras:
   gates:
     enabled: True

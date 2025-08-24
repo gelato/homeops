@@ -175,7 +175,7 @@ cameras:
     live:
       streams:
         main_stream: gates_hq
-        sub_stream: gates_lq
+        sub_stream: gates_hq
     webui_url: ""
     motion:
       mask:
@@ -254,7 +254,7 @@ cameras:
     live:
       streams:
         main_stream: door_hq
-        sub_stream: door_lq
+        sub_stream: door_hq
     webui_url: "https://192.168.108.104/"
     motion:
       mask:
@@ -340,7 +340,7 @@ cameras:
     live:
       streams:
         main_stream: dvor_gates_hq
-        sub_stream: dvor_gates_lq
+        sub_stream: dvor_gates_hq
     webui_url: "https://192.168.108.210/"
     motion:
       mask:

@@ -85,6 +85,11 @@ spec:
         enabled: true
     networkPolicy:
       enabled: false
+    kubectl:
+      image:
+        registry: docker.io
+        repository: bitnami/kubectl
+        tag: 1.33.3-debian-12-r3
     metrics:
       enabled: false
       serviceMonitor:

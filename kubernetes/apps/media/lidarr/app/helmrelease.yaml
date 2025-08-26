@@ -50,17 +50,17 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/szinn/lidarr-develop
-              tag: 2.10.1.4589@sha256:c60a512ae329c4fb24fc7ce22aa8df9456eaae6de7fc980b3c2fa820b2eea81c
+              repository: ghcr.io/home-operations/lidarr
+              tag: 2.13.2.4685@sha256:af72fba52ef9e438a8c010f77a43bb3910da7c31cbf30d90cbcf0b351a82d4d6
             env:
               TZ: ${TIMEZONE}
-              LIDARR__APP__INSTANCENAME: Lidarr
+              LIDARR__INSTANCE_NAME: Lidarr
               LIDARR__APP__THEME: dark
               LIDARR__AUTH__METHOD: External
               LIDARR__AUTH__REQUIRED: DisabledForLocalAddresses
               LIDARR__LOG__DBENABLED: "False"
               LIDARR__LOG_LEVEL: info
-              LIDARR__SERVER__PORT: &port 8686
+              LIDARR__PORT: &port 8686
             envFrom:
               - secretRef:
                   name: lidarr-secret

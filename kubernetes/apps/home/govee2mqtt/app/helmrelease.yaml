@@ -36,16 +36,6 @@ spec:
             runAsUser: 65534
             runAsGroup: 65534
             runAsNonRoot: true
-          affinity:
-            podAffinity:
-              requiredDuringSchedulingIgnoredDuringExecution:
-              - labelSelector:
-                  matchExpressions:
-                    - key: "app.kubernetes.io/name"
-                      operator: In
-                      values:
-                        - home-assistant
-                topologyKey: "kubernetes.io/hostname"
         containers:
           app:
             image:

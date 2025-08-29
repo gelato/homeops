@@ -95,7 +95,10 @@ spec:
       reloader.stakater.com/search: "true"
     podAnnotations:
       configmap.reloader.stakater.com/reload: descheduler
-    nodeSelector:
-      node-role.kubernetes.io/control-plane=: "true"
     leaderElection:
       enabled: true
+    nodeSelector:
+      node-role.kubernetes.io/control-plane: "true"
+    tolerations:
+      - key: node-role.kubernetes.io/control-plane
+        operator: Exists

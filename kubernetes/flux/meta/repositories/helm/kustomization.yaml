@@ -32,4 +32,5 @@ resources:
   - ./repos/cronce.yaml
   - ./repos/stunner.yaml
   - ./repos/mysql-operator.yaml
+  - ./repos/descheduler.yaml
   # - ./repos/matrix.yaml

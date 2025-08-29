@@ -80,12 +80,12 @@ spec:
                 - RemovePodsViolatingNodeAffinity
                 - RemovePodsViolatingNodeTaints
 
-    resources:
-      requests:
-        cpu: 50m
-        memory: 50M
-      limits:
-        memory: 105M
+    # resources:
+    #   requests:
+    #     cpu: 50m
+    #     memory: 50M
+    #   limits:
+    #     memory: 105M
 
     service:
       enabled: true

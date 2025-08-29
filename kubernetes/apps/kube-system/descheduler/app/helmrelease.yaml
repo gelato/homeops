@@ -97,8 +97,13 @@ spec:
       configmap.reloader.stakater.com/reload: descheduler
     leaderElection:
       enabled: true
-    nodeSelector:
-      node-role.kubernetes.io/control-plane: "true"
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: node-role.kubernetes.io/control-plane
+                  operator: Exists
     tolerations:
       - key: node-role.kubernetes.io/control-plane
         operator: Exists

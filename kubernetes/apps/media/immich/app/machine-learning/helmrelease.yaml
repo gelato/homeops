@@ -95,7 +95,7 @@ spec:
       machine-learning-cache:
         existingClaim: immich-machine-learning-cache
         advancedMounts:
-          machine-learning:
+          immich-machine-learning:
             main:
               - path: /cache
                 subPath: cache

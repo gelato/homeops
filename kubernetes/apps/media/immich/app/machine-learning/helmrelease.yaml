@@ -71,7 +71,7 @@ spec:
                 memory: 16G
             securityContext:
               allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
+              readOnlyRootFilesystem: false
               capabilities: { drop: ["ALL"] }
         pod:
           enableServiceLinks: false

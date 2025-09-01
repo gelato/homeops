@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  namespace: collab
+  namespace: home
   name: wger-static-pvc
 spec:
   accessModes:
@@ -17,7 +17,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  namespace: collab
+  namespace: home
   name: wger-media-pvc
 spec:
   accessModes:
@@ -32,7 +32,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  namespace: collab
+  namespace: home
   name: wger-celery-beat-pvc
 spec:
   accessModes:
@@ -47,7 +47,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  namespace: collab
+  namespace: home
   name: wger-db-pvc
 spec:
   accessModes:
@@ -62,7 +62,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  namespace: collab
+  namespace: home
   name: wger-redis-pvc
 spec:
   accessModes:

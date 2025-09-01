@@ -95,7 +95,7 @@ spec:
         persistentVolumeClaimName: wger-db-pvc
 
     redis:
-      enabled: false
+      enabled: true
       auth:
         enabled: false
       storage:

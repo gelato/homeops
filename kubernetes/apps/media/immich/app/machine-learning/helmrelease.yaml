@@ -104,7 +104,7 @@ spec:
       geocoding-dump:
         type: emptyDir
         advancedMounts:
-          app:
+          immich-machine-learning:
             main:
               - path: /usr/src/app/.reverse-geocoding-dump
                 subPath: geocoding

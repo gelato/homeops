@@ -9,3 +9,15 @@ spec:
     requests:
       storage: 350Gi
   storageClassName: longhorn-ssd
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: immich-machine-learning-cache
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 20Gi
+  storageClassName: longhorn-fast

@@ -37,9 +37,12 @@ spec:
           app:
             image:
               repository: ghcr.io/immich-app/immich-machine-learning
-              tag: v1.139.4@sha256:7eb755fd9989f8554ed8f5332b931caf996826c51498400534c8c78d1c2f226f
+              tag: v1.140.1@sha256:7c78ce7562246a5126d62bed9ba609f7129842a3f4c243b99e2dd68fb0ba43a7
             env:
               TZ: ${TIMEZONE}
+              MPLCONFIGDIR: "/cache/matplotlib"
+              MACHINE_LEARNING_PRELOAD__CLIP: "ViT-L-16-SigLIP-256__webli"
+              IMMICH_MEDIA_LOCATION: &mediaLocation /usr/src/app/upload
             envFrom:
               - configMapRef:
                   name: immich-configmap
@@ -88,15 +91,25 @@ spec:
         enabled: true
         existingClaim: immich-upload
         globalMounts:
-          - path: /usr/src/app/upload
-      cache:
-        type: emptyDir
-        globalMounts:
-          - path: /cache
+          - path: *mediaLocation
+      machine-learning-cache:
+        existingClaim: immich-machine-learning-cache
+        advancedMounts:
+          machine-learning:
+            main:
+              - path: /cache
+                subPath: cache
+              - path: /.cache
+                subPath: dotCache
       geocoding-dump:
         type: emptyDir
-        globalMounts:
-          - path: /usr/src/app/.reverse-geocoding-dump
+        advancedMounts:
+          server:
+            main:
+              - path: /usr/src/app/.reverse-geocoding-dump
+                subPath: geocoding
+              - path: /usr/src/app/.transformers_cache
+                subPath: transformers
       tmp:
         type: emptyDir
         globalMounts:

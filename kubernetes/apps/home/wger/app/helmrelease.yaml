@@ -72,8 +72,7 @@ spec:
       enabled: true
       url: sport.${SECRET_DOMAIN}
       tls: true
-      annotations:
-        kubernetes.io/ingress.class: internal
+      ingressClassName: internal
 
     postgres:
       enabled: true

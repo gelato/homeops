@@ -19,3 +19,4 @@ resources:
   - ./silerotts/ks.yaml
   - ./wger/ks.yaml
   - ./grocy/ks.yaml
+  - ./kitchenowl/ks.yaml

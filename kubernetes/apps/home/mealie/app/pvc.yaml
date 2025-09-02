@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: kitchenowl-data
+  name: mealie-pvc
 spec:
   accessModes: ["ReadWriteOnce"]
   resources:

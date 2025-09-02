@@ -1,77 +1,94 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2beta2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app homechart
+  name: mosquitto
 spec:
-  interval: 15m
+  interval: 30m
   chart:
     spec:
-      chart: homechart
-      version: 1.0.0
-      interval: 15m
+      chart: app-template
+      version: 3.7.3
       sourceRef:
         kind: HelmRepository
-        name: homechart
+        name: bjw-s
         namespace: flux-system
-  maxHistory: 3
   install:
     remediation:
       retries: 3
   upgrade:
     cleanupOnFail: true
     remediation:
-      strategy: rollback
       retries: 3
+  uninstall:
+    keepHistory: false
+  dependsOn:
+    - name: cloudnative-pg
+      namespace: database
   values:
-    homechart:
-      # Configure Homechart specific settings here
-      config:
-        # Specify environment variables below, either as plain text values or secrets
-        secrets:
-          username: ${HOMECHART_PG_USER}
-          password: ${HOMECHART_PG_PASSWORD}
-        values:
-          HOMECHART_APP_BASEURL: "https://home.${SECRET_DOMAIN}"
-      # Configure Homechart deployment settings here
-      deployment:
-        affinity: {}
-        annotations: {}
-        imagePullSecrets: []
-        nodeSelector: {}
-        repository: ghcr.io/candiddev/homechart:latest
-        resources: {}
-        # You can run multiple instances of Homechart for high availability, it defaults to one.
-        # replicas: 1
-        tolerations: {}
-      # Configure Homechart ingress settings here
-      ingress:
-        annotations: {}
-        # Change this to the hostname you want to use for Homechart.  Make sure you set HOMECHART_APP_BASEURL to include this under homechart.config.values, e.g. if host is example.com, and you're using TLS, HOMECHART_APP_BASEURL should be https://example.com
-        host: "home.${SECRET_DOMAIN}"
-        ingressClassName: "internal"
-        # Configure TLS settings for the ingress.
-        # tls:
-        #   hosts:
-        #     - home.${SECRET_DOMAIN}
-
-      postgresql:
-        config:
-          password: ${HOMECHART_PG_PASSWORD}
-          username: ${HOMECHART_PG_USER}
-        # Disable PostgreSQL StatefulSet if you're using a shared PostgreSQL instance.
-        enabled: true
-        statefulset:
-          # affinity: {}
-          # annotations: {}
-          imagePullPolicy: Always
-          # imagePullSecrets: []
-          # nodeSelector: {}
-          repository: docker.io/library/postgres:14
-          storageAccessModes:
-            - ReadWriteOnce
-          # Change this if you want the PostgreSQL StatefulSet to use a specific disk type.
-          storageClassName: "longhorn-fast"
-          storageSize: 2Gi
-          uid: 100
+    controllers:
+      main:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/onedr0p/postgres-init
+              tag: 16
+            envFrom:
+              - secretRef:
+                  name: homechart-secret
+        containers:
+          main:
+            image:
+              repository: ghcr.io/candiddev/homechart
+              tag: v2025.09.01@sha256:fc5572b1eebf43d6647f0af8d6604c296a4f5f8a2ab7eab9c59c8900871f17d1
+            env:
+              TZ: ${TIMEZONE}
+              HOMECHART_postgresql_hostname: postgres-lb.database.svc
+              HOMECHART_postgresql_password: ${HOMECHART_PG_PASSWORD}
+              HOMECHART_postgresql_username: ${HOMECHART_PG_USER}
+              HOMECHART_postgresql_database: ${HOMECHART_DB_NAME}
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /api
+                    port: 3000
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+              startup:
+                enabled: false
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+            resources:
+              requests:
+                cpu: 15m
+                memory: 105M
+              limits:
+                memory: 1G
+        pod:
+          securityContext:
+            runAsUser: 568
+            runAsGroup: 568
+            runAsNonRoot: true
+            fsGroup: 568
+            fsGroupChangePolicy: OnRootMismatch
+    ingress:
+      app:
+        className: internal
+        hosts:
+          - host: home.${SECRET_DOMAIN}
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http

@@ -34,5 +34,4 @@ resources:
   - ./repos/mysql-operator.yaml
   - ./repos/descheduler.yaml
   - ./repos/wger.yaml
-  - ./repos/homechart.yaml
   # - ./repos/matrix.yaml

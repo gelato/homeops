@@ -45,19 +45,18 @@ spec:
 
     ingress:
       main:
-        enabled: true
-        className: internal
         annotations:
           hajimari.io/appName: "Grocy - продукты и все такое"
           hajimari.io/enable: "true"
           hajimari.io/instance: "admin"
           hajimari.io/group: "Home"
+        className: internal
         hosts:
           - host: &host "grocy.${SECRET_DOMAIN}"
             paths:
               - path: /
                 service:
-                  name: main
+                  identifier: main
                   port: http
         tls:
           - hosts:

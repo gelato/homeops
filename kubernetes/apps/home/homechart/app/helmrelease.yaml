@@ -52,9 +52,9 @@ spec:
         host: "home.${SECRET_DOMAIN}"
         ingressClassName: "internal"
         # Configure TLS settings for the ingress.
-        tls:
-          hosts:
-            - home.${SECRET_DOMAIN}
+        # tls:
+        #   hosts:
+        #     - home.${SECRET_DOMAIN}
 
       postgresql:
         config:

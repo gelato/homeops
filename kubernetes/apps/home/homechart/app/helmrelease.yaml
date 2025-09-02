@@ -53,9 +53,8 @@ spec:
         ingressClassName: "internal"
         # Configure TLS settings for the ingress.
         tls:
-          - hosts:
+          hosts:
             - home.${SECRET_DOMAIN}
-            secretName: homechart-cert
 
       postgresql:
         config:

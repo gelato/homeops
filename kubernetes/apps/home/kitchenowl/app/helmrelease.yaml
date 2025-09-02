@@ -64,7 +64,7 @@ spec:
               SMTP_HOST: smtp-relay.services.svc.cluster.local
               SMTP_FROM: ko@skynerv.com
               STORAGE_PATH: "/data"
-              LLM_MODEL: gemma3n:latest
+              LLM_MODEL: ollama/gemma3n:latest
               LLM_API_URL: http://ollama.ai.svc:11434
             envFrom: *envFrom
             resources:

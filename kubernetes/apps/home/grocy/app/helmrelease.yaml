@@ -41,7 +41,7 @@ spec:
         controller: main
         ports:
           http:
-            port: 8080
+            port: 9283
 
     ingress:
       main:

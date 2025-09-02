@@ -47,10 +47,6 @@ spec:
             env:
               TZ: ${TIMEZONE}
               homechart_database_uri: postgresql://${HOMECHART_PG_USER}:${HOMECHART_PG_PASSWORD}@postgres-lb.database.svc.cluster.local/${HOMECHART_DB_NAME}
-              # HOMECHART_postgresql_hostname: postgres-lb.database.svc.cluster.local
-              # HOMECHART_postgresql_password: ${HOMECHART_PG_PASSWORD}
-              # HOMECHART_postgresql_username: ${HOMECHART_PG_USER}
-              # HOMECHART_postgresql_database: ${HOMECHART_DB_NAME}
             probes:
               liveness: &probes
                 enabled: true

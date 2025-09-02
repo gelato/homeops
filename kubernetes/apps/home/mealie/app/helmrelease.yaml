@@ -48,6 +48,10 @@ spec:
               # SMTP_AUTH_STRATEGY: TLS
               # SMTP_USER: mealie@${SECRET_DOMAIN}
               OPENAI_BASE_URL: http://ollama.ai.svc:11434/v1
+              OPENAI_MODEL: gemma3n:latest
+              OPENAI_WORKERS: 2
+              OPENAI_SEND_DATABASE_DATA: true
+              OPENAI_REQUEST_TIMEOUT: 10
             envFrom: *envFrom
             resources:
               requests:

@@ -47,7 +47,7 @@ spec:
               # SMTP_FROM_EMAIL: noreply@${SECRET_DOMAIN}
               # SMTP_AUTH_STRATEGY: TLS
               # SMTP_USER: mealie@${SECRET_DOMAIN}
-              OPENAI_BASE_URL: http://ollama.ai.svc:11434
+              OPENAI_BASE_URL: http://ollama.ai.svc:11434/v1
             envFrom: *envFrom
             resources:
               requests:

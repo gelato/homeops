@@ -58,7 +58,7 @@ spec:
               COLLECT_METRICS: false
               DB_DRIVER: postgresql
               EMAIL_MANDATORY: false
-              FRONT_URL: &host https://ko.${SECRET_DOMAIN}
+              FRONT_URL: https://ko.${SECRET_DOMAIN}
               OPEN_REGISTRATION: true
               SMTP_PORT: 25
               SMTP_HOST: smtp-relay.services.svc.cluster.local
@@ -83,7 +83,7 @@ spec:
       main:
         className: internal
         hosts:
-          - host: *host
+          - host: &host ko.${SECRET_DOMAIN}
             paths:
               - path: /
                 service:

@@ -18,4 +18,4 @@ resources:
   - ./wyoming-gigaam-ctc/ks.yaml
   - ./silerotts/ks.yaml
   - ./wger/ks.yaml
-  - ./homechart/ks.yaml
+  # - ./homechart/ks.yaml

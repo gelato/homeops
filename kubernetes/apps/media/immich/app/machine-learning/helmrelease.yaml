@@ -90,6 +90,8 @@ spec:
                 subPath: cache
               - path: /.cache
                 subPath: dotCache
+              - path: /.config
+                subPath: dotConfig
       geocoding-dump:
         existingClaim: immich-machine-learning-cache
         advancedMounts:

@@ -91,7 +91,7 @@ spec:
               - path: /.cache
                 subPath: dotCache
       geocoding-dump:
-        type: emptyDir
+        existingClaim: immich-machine-learning-cache
         advancedMounts:
           immich-machine-learning:
             main:

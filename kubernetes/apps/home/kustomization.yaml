@@ -17,6 +17,5 @@ resources:
   - ./wyoming-whisper/ks.yaml
   - ./wyoming-gigaam-ctc/ks.yaml
   - ./silerotts/ks.yaml
-  - ./wger/ks.yaml
   - ./grocy/ks.yaml
   - ./mealie/ks.yaml

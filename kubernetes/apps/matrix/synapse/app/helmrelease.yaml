@@ -239,7 +239,7 @@ spec:
       use_presence: true
       enable_search: true
       dynamic_thumbnails: true
-      max_upload_size: 10G
+      max_upload_size: 2048M
 
       enable_registration_without_verification: false
       registrations_require_3pid:
@@ -294,7 +294,7 @@ spec:
       className: external
       annotations:
         nginx.ingress.kubernetes.io/use-regex: "true"
-        nginx.ingress.kubernetes.io/proxy-body-size: 100m
+        nginx.ingress.kubernetes.io/proxy-body-size: 2048m
         external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
       tls:
         - secretName: synapse-tls

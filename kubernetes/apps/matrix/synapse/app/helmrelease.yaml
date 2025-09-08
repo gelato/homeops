@@ -239,6 +239,7 @@ spec:
       use_presence: true
       enable_search: true
       dynamic_thumbnails: true
+      max_upload_size: 10G
 
       enable_registration_without_verification: false
       registrations_require_3pid:

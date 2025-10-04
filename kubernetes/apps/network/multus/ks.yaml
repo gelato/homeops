@@ -5,6 +5,7 @@ kind: Kustomization
 metadata:
   name: &appname multus
 spec:
+  targetNamespace: network
   commonMetadata:
     labels:
       app.kubernetes.io/name: *appname

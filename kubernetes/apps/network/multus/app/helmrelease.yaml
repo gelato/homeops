@@ -8,6 +8,7 @@ spec:
   chartRef:
     kind: OCIRepository
     name: multus
+    namespace: flux-system
   interval: 30m
   values:
     controllers:

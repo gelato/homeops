@@ -73,14 +73,14 @@ spec:
                 # gpu.intel.com/i915: 1
                 nvidia.com/gpu: 1
         pod:
-          annotations:
-            k8s.v1.cni.cncf.io/networks: |
-              [{
-                "name":"multus-iot",
-                "namespace": "network",
-                "ips": ["192.168.108.55/24"],
-                "mac": "aa:42:2c:ac:3a:aa"
-              }]
+          # annotations:
+          #   k8s.v1.cni.cncf.io/networks: |
+          #     [{
+          #       "name":"multus-iot",
+          #       "namespace": "network",
+          #       "ips": ["192.168.108.55/24"],
+          #       "mac": "aa:42:2c:ac:3a:aa"
+          #     }]
           nodeSelector:
             google.feature.node.kubernetes.io/coral: "true"
             # intel.feature.node.kubernetes.io/gpu: "true"
@@ -88,10 +88,10 @@ spec:
     service:
       main:
         controller: main
-        # type: LoadBalancer
+        type: LoadBalancer
         externalTrafficPolicy: Cluster
-        # annotations:
-        #   io.cilium/lb-ipam-ips: 192.168.108.55
+        annotations:
+          io.cilium/lb-ipam-ips: 192.168.108.55
         ports:
           http:
             enabled: true

@@ -60,7 +60,7 @@ spec:
       snapshotDataIntegrity: enabled
       removeSnapshotsDuringFilesystemTrim: enabled
       allowCollectingLonghornUsageMetrics: disabled
-      snapshotMaxCount: 2
+      snapshotMaxCount: "20"
       freezeFilesystemForSnapshot: enabled
       autoCleanupSnapshotWhenDeleteBackup: enabled
       rwxVolumeFastFailover: enabled

@@ -20,10 +20,12 @@ spec:
     createNamespace: true
     remediation:
       retries: 3
+    timeout: 20m
   upgrade:
     cleanupOnFail: true
     remediation:
       retries: 3
+    timeout: 20m
   uninstall:
     keepHistory: false
   values:

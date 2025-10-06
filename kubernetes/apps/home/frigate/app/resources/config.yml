@@ -33,7 +33,7 @@ audio:
       threshold: 0.8
 
 logger:
-  default: debug
+  default: warning
   logs:
     frigate.event: debug
 

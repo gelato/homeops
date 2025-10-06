@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=https://frigate.skynerv.com/api/config/schema.json
 mqtt:
   enabled: True
-  host: 192.168.108.10
+  host: mosquitto.home.svc.cluster.local
   port: 1883
   topic_prefix: frigate
   client_id: frigate

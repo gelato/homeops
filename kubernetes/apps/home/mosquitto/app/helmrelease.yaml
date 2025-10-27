@@ -37,7 +37,7 @@ spec:
               repository: docker.io/library/eclipse-mosquitto
               tag: 2.0.22@sha256:fd9982f5ed92a6c2a90805601d2275f8fbd7f2d47c4cb3836f7db0bdc7a91bec
             command: ["/bin/sh", "-c"]
-            args: ["cp /tmp/secret/* /mosquitto/external_config/ && chmod 0700 /mosquitto/external_config/mosquitto_pwd && mosquitto_passwd -U /mosquitto/external_config/mosquitto_pwd && mosquitto_passwd -b /mosquitto/external_config/mosquitto_pwd rusclimate 87fcf5e2e441"]
+            args: ["cp /tmp/secret/* /mosquitto/external_config/ && chmod 0700 /mosquitto/external_config/mosquitto_pwd && mosquitto_passwd -U /mosquitto/external_config/mosquitto_pwd && mosquitto_passwd -b /mosquitto/external_config/mosquitto_pwd rusclimate ${RUSCLIMATE_PASSWORD}"]
         containers:
           main:
             image:

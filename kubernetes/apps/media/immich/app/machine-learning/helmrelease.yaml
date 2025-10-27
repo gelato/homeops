@@ -17,13 +17,13 @@ spec:
   install:
     remediation:
       retries: 3
-      timeout: 30m
+    timeout: 30m
   upgrade:
     cleanupOnFail: true
     remediation:
       strategy: rollback
       retries: 3
-      timeout: 30m
+    timeout: 30m
   dependsOn:
     - name: immich-server
       namespace: media

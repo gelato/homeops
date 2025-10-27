@@ -19,3 +19,10 @@ spec:
           dnsZones:
             - "${SECRET_DOMAIN}"
 ---
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: selfsigned
+  namespace: cert-manager
+spec:
+  selfSigned: {}

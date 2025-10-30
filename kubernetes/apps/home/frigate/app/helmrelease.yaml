@@ -41,7 +41,7 @@ spec:
           main:
             image:
               repository: ghcr.io/blakeblackshear/frigate
-              tag: 0.16.1-tensorrt@sha256:935dbe9b18f416bea4cdb11ab02bdb8f24c928b4f773bf2bca8d02db9c68d87a
+              tag: 0.16.2-tensorrt@sha256:7351ca2ddbce6d712c8a13842eeb4248844e5334565e71b4f6ae438ddaf9d04d
             env:
               TZ: ${TIMEZONE}
             envFrom:
@@ -73,6 +73,14 @@ spec:
                 # gpu.intel.com/i915: 1
                 nvidia.com/gpu: 1
         pod:
+          # annotations:
+          #   k8s.v1.cni.cncf.io/networks: |
+          #     [{
+          #       "name":"multus-tau",
+          #       "namespace": "network",
+          #       "ips": ["192.168.108.55/24"],
+          #       "mac": "aa:42:2c:ac:3a:aa"
+          #     }]
           nodeSelector:
             google.feature.node.kubernetes.io/coral: "true"
             # intel.feature.node.kubernetes.io/gpu: "true"

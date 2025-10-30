@@ -1,0 +1,29 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.bjw-s.dev/k8s.cni.cncf.io/networkattachmentdefinition_v1.json
+apiVersion: "k8s.cni.cncf.io/v1"
+kind: NetworkAttachmentDefinition
+metadata:
+  name: multus-tau
+  namespace: network
+spec:
+  config: |-
+    {
+      "cniVersion": "1.1.0",
+      "name": "lan-network",
+      "plugins": [
+        {
+          "type": "ipvlan",
+          "master": "eno1",
+          "mode": "l2",
+          "ipam": {
+            "type": "host-local",
+            "subnet": "192.168.96.0/20",
+            "rangeStart": "192.168.96.26",
+            "rangeEnd": "192.168.111.254",
+            "routes": [
+              { "dst": "0.0.0.0/0", "gw": "192.168.108.1" }
+            ]
+          }
+        }
+      ]
+    }

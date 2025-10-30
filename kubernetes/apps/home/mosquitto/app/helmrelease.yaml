@@ -35,14 +35,14 @@ spec:
           init-config:
             image:
               repository: docker.io/library/eclipse-mosquitto
-              tag: 2.0.22@sha256:d219d3a72847f3aed6a1d66975972d3b17f86e39e8f6f6b86b4088b879c1a2d6
+              tag: 1.5.11@sha256:a969883d583a7cc3dbb0886d9a2d7ad4f776d792b01df9f0bef86a68dca9d08d
             command: ["/bin/sh", "-c"]
-            args: ["cp /tmp/secret/* /mosquitto/external_config/ && mosquitto_passwd -U /mosquitto/external_config/mosquitto_pwd"]
+            args: ["cp /tmp/secret/* /mosquitto/external_config/ && chmod 0700 /mosquitto/external_config/mosquitto_pwd && mosquitto_passwd -U /mosquitto/external_config/mosquitto_pwd && mosquitto_passwd -b /mosquitto/external_config/mosquitto_pwd rusclimate 87fcf5e2e441"]
         containers:
           main:
             image:
               repository: docker.io/library/eclipse-mosquitto
-              tag: 2.0.22@sha256:d219d3a72847f3aed6a1d66975972d3b17f86e39e8f6f6b86b4088b879c1a2d6
+              tag: 1.5.11@sha256:a969883d583a7cc3dbb0886d9a2d7ad4f776d792b01df9f0bef86a68dca9d08d
             env:
               TZ: ${TIMEZONE}
             securityContext:
@@ -67,11 +67,12 @@ spec:
         controller: main
         type: LoadBalancer
         annotations:
-          external-dns.alpha.kubernetes.io/hostname: mosquitto.${SECRET_DOMAIN}
           io.cilium/lb-ipam-ips: 192.168.108.10
         ports:
-          http:
+          mqtt:
             port: 1883
+          mqtts:
+            port: 8883
     persistence:
       config:
         enabled: true
@@ -97,3 +98,7 @@ spec:
         type: emptyDir
         globalMounts:
           - path: /mosquitto/external_config
+      tls:
+        enabled: true
+        type: secret
+        name: mosquitto-tls

@@ -47,7 +47,7 @@ spec:
       resizerReplicaCount: 1
       snapshotterReplicaCount: 1
     defaultSettings:
-      defaultReplicaCount: 1
+      defaultReplicaCount: "1"
       backupTarget: s3://longhorn@us-east-1/
       backupTargetCredentialSecret: s3-secret
       taintToleration: node-role.kubernetes.io/control-plane:NoSchedule
@@ -60,7 +60,7 @@ spec:
       snapshotDataIntegrity: enabled
       removeSnapshotsDuringFilesystemTrim: enabled
       allowCollectingLonghornUsageMetrics: disabled
-      snapshotMaxCount: 2
+      snapshotMaxCount: "20"
       freezeFilesystemForSnapshot: enabled
       autoCleanupSnapshotWhenDeleteBackup: enabled
       rwxVolumeFastFailover: enabled

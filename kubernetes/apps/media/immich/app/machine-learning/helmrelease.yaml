@@ -43,7 +43,7 @@ spec:
             env:
               TZ: ${TIMEZONE}
               MPLCONFIGDIR: "/cache/matplotlib"
-              MACHINE_LEARNING_PRELOAD__CLIP: "ViT-L-16-SigLIP-256__webli"
+              # MACHINE_LEARNING_PRELOAD__CLIP: "ViT-L-16-SigLIP-256__webli"
               IMMICH_MEDIA_LOCATION: &mediaLocation /usr/src/app/upload
             envFrom:
               - configMapRef:

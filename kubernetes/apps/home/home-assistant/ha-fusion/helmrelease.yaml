@@ -43,7 +43,7 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/matt8707/ha-fusion
+              repository: ghcr.io/bogdanbotezatu/ha-fusion
               tag: latest
               pullPolicy: Always
             env:

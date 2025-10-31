@@ -78,7 +78,7 @@ spec:
     service:
       main:
         type: LoadBalancer
-        externalTrafficPolicy: Cluster
+        loadBalancerIP: 192.168.108.66
         annotations:
           io.cilium/lb-ipam-ips: 192.168.108.66
         ports:

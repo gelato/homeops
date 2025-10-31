@@ -40,16 +40,15 @@ spec:
     ollama:
       models:
         pull:
-          - llama3.1:8b
           - gemma3:12b
-          # - qwen2.5-coder:7b
-          # - llava-llama3:8b
-          - hf.co/t-tech/T-lite-it-1.0-Q8_0-GGUF
+          - gemma3n:latest
+          - mashriram/gemma3nTools:e4b
+          - hf.co/VanHolder/llava-saiga-8b-Q8_0-GGUF:Q8_0
+          - zongwei/gemma3-translator:4b
+          - hf.co/lmstudio-community/Qwen2.5-Coder-7B-Instruct-GGUF:latest
 
         run:
-          # - llama3.1:8b               # ??       - K8SGPT / OTerm / General
           - gemma3:12b
-          - hf.co/t-tech/T-lite-it-1.0-Q8_0-GGUF
 
       gpu:
         # Enable GPU integration
@@ -76,14 +75,11 @@ spec:
       privileged: true
 
     service:
-      main:
-        type: LoadBalancer
-        loadBalancerIP: 192.168.108.66
-        annotations:
-          io.cilium/lb-ipam-ips: 192.168.108.66
-        ports:
-          http:
-            port: 11434
+      type: LoadBalancer
+      loadBalancerIP: 192.168.108.66
+      annotations:
+        io.cilium/lb-ipam-ips: 192.168.108.66
+      port: 11434
 
     ingress:
       enabled: true

@@ -135,6 +135,8 @@ spec:
                 service:
                   identifier: main
                   port: *api-port
+          - host: "go2rtc.${SECRET_DOMAIN}/api/ws"
+            paths:
               - path: /api/ws
                 pathType: Prefix
                 service:

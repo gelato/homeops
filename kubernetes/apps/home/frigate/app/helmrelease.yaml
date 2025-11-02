@@ -132,6 +132,7 @@ spec:
           - host: "go2rtc.${SECRET_DOMAIN}"
             paths:
               - path: /
+                pathType: Prefix
                 service:
                   identifier: main
                   port: *api-port

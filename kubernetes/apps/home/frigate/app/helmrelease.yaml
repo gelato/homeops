@@ -123,14 +123,19 @@ spec:
               - path: /
                 service:
                   identifier: main
-                  port: http
+                  port: *port
+              - path: /ws
+                pathType: Prefix
+                service:
+                  identifier: main
+                  port: *port
           - host: "go2rtc.${SECRET_DOMAIN}"
             paths:
               - path: /
                 service:
                   identifier: main
                   port: *api-port
-              - path: /ws
+              - path: /api/ws
                 pathType: Prefix
                 service:
                   identifier: main

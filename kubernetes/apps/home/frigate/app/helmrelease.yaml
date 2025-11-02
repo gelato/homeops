@@ -134,7 +134,7 @@ spec:
                 pathType: Prefix
                 service:
                   identifier: main
-                  port: *port
+                  port: *api-port
         tls:
           - hosts:
               - *host

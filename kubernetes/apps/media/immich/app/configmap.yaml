@@ -18,3 +18,4 @@ data:
   REDIS_HOSTNAME: redis-sentinel-master.database.svc.cluster.local
   REDIS_DBINDEX: "38"
   REDIS_PORT: "6379"
+  REDIS_PASSWORD: ""

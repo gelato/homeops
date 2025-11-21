@@ -51,7 +51,7 @@ spec:
     rbac:
       create: true
     replica:
-      replicaCount: 2
+      replicaCount: 3
       updateStrategy:
         type: RollingUpdate
       persistentVolume:

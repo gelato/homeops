@@ -48,6 +48,9 @@ spec:
       enabled: false
       sentinel: false
       usePasswordFiles: false
+      acl:
+        enabled: false
+        sentinel: false
     rbac:
       create: true
     replica:

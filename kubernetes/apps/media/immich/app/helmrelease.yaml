@@ -275,6 +275,7 @@ spec:
 
     persistence:
       library:
+        enabled: true
         existingClaim: immich-upload
         globalMounts:
           - path: *mediaLocation

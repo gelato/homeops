@@ -8,6 +8,7 @@ spec:
   chartRef:
     kind: OCIRepository
     name: oci-app-template
+    namespace: flux-system
   install:
     timeout: 30m
   interval: 30m

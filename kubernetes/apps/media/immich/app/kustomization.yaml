@@ -5,5 +5,5 @@ resources:
   - ./pvc.yaml
   - ./configmap.yaml
   - ./secret.sops.yaml
-  # - ./helmrelease.yaml
+  - ./helmrelease.yaml
   - ../../../../templates/gatus/external

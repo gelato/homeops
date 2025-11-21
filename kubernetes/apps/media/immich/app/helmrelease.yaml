@@ -276,13 +276,8 @@ spec:
     persistence:
       library:
         existingClaim: immich-upload
-        advancedMounts:
-          server:
-            server:
-              - path: /data
-          microservices:
-            microservices:
-              - path: /data
+        globalMounts:
+          - path: *mediaLocation
       geocoding-dump:
         type: emptyDir
         advancedMounts:

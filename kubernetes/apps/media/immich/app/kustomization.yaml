@@ -5,7 +5,5 @@ resources:
   - ./pvc.yaml
   - ./configmap.yaml
   - ./secret.sops.yaml
-  - ./machine-learning
-  # - ./microservices
-  - ./server
+  - ./helmrelease.yaml
   - ../../../../templates/gatus/external

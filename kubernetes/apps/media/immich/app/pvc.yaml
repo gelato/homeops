@@ -13,11 +13,23 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: immich-machine-learning-cache
+  name: immich-ml-cache
 spec:
   accessModes:
     - ReadWriteMany
   resources:
     requests:
       storage: 20Gi
+  storageClassName: longhorn-fast
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: immich-thumbnails
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 3Gi
   storageClassName: longhorn-fast

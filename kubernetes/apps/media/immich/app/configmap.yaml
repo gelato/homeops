@@ -5,16 +5,11 @@ metadata:
   name: immich-configmap
   namespace: media
 data:
-  # URLS
+  DB_PORT: "5432"
+  NODE_ENV: "production"
+  REDIS_URL: eyJzZW50aW5lbHMiOlt7Imhvc3QiOiJyZWRpcy1zZW50aW5lbC1ub2RlLTAucmVkaXMtc2VudGluZWwtaGVhZGxlc3MuZGF0YWJhc2Uuc3ZjLmNsdXN0ZXIubG9jYWwiLCJwb3J0IjoyNjM3OX0seyJob3N0IjoicmVkaXMtc2VudGluZWwtbm9kZS0xLnJlZGlzLXNlbnRpbmVsLWhlYWRsZXNzLmRhdGFiYXNlLnN2Yy5jbHVzdGVyLmxvY2FsIiwicG9ydCI6MjYzNzl9LHsiaG9zdCI6InJlZGlzLXNlbnRpbmVsLW5vZGUtMi5yZWRpcy1zZW50aW5lbC1oZWFkbGVzcy5kYXRhYmFzZS5zdmMuY2x1c3Rlci5sb2NhbCIsInBvcnQiOjI2Mzc5fV0sIm5hbWUiOiJyZWRpcy1tYXN0ZXIiLCJkYiI6Mzh9
   IMMICH_SERVER_URL: http://immich-server.media.svc.cluster.local:3001
   IMMICH_MACHINE_LEARNING_URL: http://immich-machine-learning.media.svc.cluster.local:3003
   PUBLIC_IMMICH_SERVER_URL: https://photos.${SECRET_DOMAIN}
-  # SETTINGS
-  DB_PORT: "5432"
-  LOG_LEVEL: log
-  NODE_ENV: production
   UPLOAD_LOCATION: /usr/src/app/upload
-  # REDIS
-  REDIS_HOSTNAME: redis-sentinel-headless.database.svc.cluster.local
-  REDIS_DBINDEX: "38"
-  REDIS_PORT: "6379"
+  # IMMICH_METRICS: "true"

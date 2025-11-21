@@ -8,3 +8,4 @@ resources:
   - ./repos/prometheus-community.yaml
   - ./repos/matrix.yaml
   - ./repos/multus.yaml
+  - ./repos/immich.yaml

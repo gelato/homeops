@@ -5,4 +5,4 @@ metadata:
   name: media
   labels:
     goldilocks.fairwinds.com/enabled: "true"
-  #   kustomize.toolkit.fluxcd.io/prune: disabled
+    resource.kubernetes.io/admin-access: "true"

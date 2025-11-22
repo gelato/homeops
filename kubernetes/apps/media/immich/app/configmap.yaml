@@ -7,9 +7,10 @@ metadata:
 data:
   DB_PORT: "5432"
   NODE_ENV: "production"
-  REDIS_URL: ioredis://eyJzZW50aW5lbHMiOlt7Imhvc3QiOiJyZWRpcy1zZW50aW5lbC1ub2RlLTAucmVkaXMtc2VudGluZWwtaGVhZGxlc3MuZGF0YWJhc2Uuc3ZjLmNsdXN0ZXIubG9jYWwiLCJwb3J0Ijo2Mzc5fSx7Imhvc3QiOiJyZWRpcy1zZW50aW5lbC1ub2RlLTEucmVkaXMtc2VudGluZWwtaGVhZGxlc3MuZGF0YWJhc2Uuc3ZjLmNsdXN0ZXIubG9jYWwiLCJwb3J0Ijo2Mzc5fSx7Imhvc3QiOiJyZWRpcy1zZW50aW5lbC1ub2RlLTIucmVkaXMtc2VudGluZWwtaGVhZGxlc3MuZGF0YWJhc2Uuc3ZjLmNsdXN0ZXIubG9jYWwiLCJwb3J0Ijo2Mzc5fV0sIm5hbWUiOiJyZWRpcy1tYXN0ZXIiLCJkYiI6Mzh9
+  REDIS_HOSTNAME: "dragonfly.database.svc.cluster.local"
+  REDIS_PORT: "6379"
   IMMICH_SERVER_URL: http://immich-server.media.svc.cluster.local:3001
   IMMICH_MACHINE_LEARNING_URL: http://immich-machine-learning.media.svc.cluster.local:3003
   PUBLIC_IMMICH_SERVER_URL: https://photos.${SECRET_DOMAIN}
   UPLOAD_LOCATION: /usr/src/app/upload
-  # IMMICH_METRICS: "true"
+  IMMICH_METRICS: "true"

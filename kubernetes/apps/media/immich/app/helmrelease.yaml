@@ -195,6 +195,7 @@ spec:
               MACHINE_LEARNING_PRELOAD__CLIP__VISUAL: XLM-Roberta-Large-Vit-B-16Plus
               MACHINE_LEARNING_PRELOAD__FACIAL_RECOGNITION__RECOGNITION: buffalo_l
               MACHINE_LEARNING_PRELOAD__FACIAL_RECOGNITION__DETECTION: buffalo_l
+              MPLCONFIGDIR: /.config/matplotlib
               IMMICH_MEDIA_LOCATION: *mediaLocation
               THUMB_LOCATION: *thumbLocation
             resources:
@@ -310,6 +311,8 @@ spec:
                 subPath: cache
               - path: /.cache
                 subPath: dotCache
+              - path: /.config
+                subPath: matplotlib
       thumbnails:
         type: persistentVolumeClaim
         existingClaim: immich-thumbnails

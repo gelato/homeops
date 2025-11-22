@@ -10,3 +10,4 @@ resources:
   - ./repos/multus.yaml
   - ./repos/oci-app-template.yaml
   - ./repos/dragonfly-operator.yaml
+  - ./repos/intel-gpu-resource-driver.yaml

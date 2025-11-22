@@ -6,6 +6,8 @@ metadata:
   namespace: flux-system
 spec:
   targetNamespace: media
+  components:
+    - ../../../../components/gpu
   dependsOn:
     - name: cloudnative-pg
     - name: redis

@@ -129,8 +129,8 @@ spec:
           configmap.reloader.stakater.com/reload: *configmap
         pod:
           resourceClaims:
-            - name: intel-gpu-immich
-              resourceClaimTemplateName: i915
+            - name: intel-gpu
+              resourceClaimTemplateName: immich-gpu
           securityContext:
             runAsUser: 568
             runAsGroup: 568
@@ -160,7 +160,7 @@ spec:
               THUMB_LOCATION: *thumbLocation
             resources:
               claims:
-                - name: intel-gpu-immich
+                - name: intel-gpu
               requests:
                 cpu: 100m
                 memory: 250Mi

@@ -6,4 +6,5 @@ resources:
   - ./configmap.yaml
   - ./secret.sops.yaml
   - ./helmrelease.yaml
+  - ./i915-gpu-template.yaml
   - ../../../../templates/gatus/external

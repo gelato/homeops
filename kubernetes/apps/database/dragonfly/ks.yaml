@@ -4,8 +4,9 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app dragonfly
-  namespace: &namespace database
+  namespace: flux-system
 spec:
+  targetNamespace: database
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
@@ -20,8 +21,6 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-    namespace: flux-system
-  targetNamespace: *namespace
   timeout: 5m
   wait: false
 ---
@@ -30,8 +29,9 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app dragonfly-cluster
-  namespace: &namespace database
+  namespace: flux-system
 spec:
+  targetNamespace: database
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
@@ -48,7 +48,5 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-    namespace: flux-system
-  targetNamespace: *namespace
   timeout: 5m
   wait: false

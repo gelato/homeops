@@ -67,12 +67,12 @@ spec:
 
                 echo "Final directory structure:"
                 ls -la /usr/src/app/upload/
-                find /usr/src/app/upload/ -name ".immich" -ls
+                find /usr/src/app/upload/ -name ".immich"
 
                 echo "Folder structure created successfully"
             securityContext:
-              runAsUser: 1000
-              runAsGroup: 1000
+              runAsUser: 568
+              runAsGroup: 568
         pod:
           securityContext:
             runAsUser: 568

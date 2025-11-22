@@ -14,6 +14,21 @@ spec:
   uninstall:
     keepHistory: false
   values:
+
     cdi:
       staticPath: /var/cdi/static
       dynamicPath: /var/cdi/dynamic
+
+    kubeletPlugin:
+      podAnnotations: {}
+      nodeSelector: {} # ignored when .Values.nodeFeatureRules.enabled or .Values.nfd.enabled
+      tolerations: {}
+      affinity: {}
+
+    nodeFeatureRules:
+      enabled: true
+
+    nfd:
+      enabled: false # change to true to install NFD to the cluster
+      nameOverride: intel-gpu-nfd
+      enableNodeFeatureApi: true

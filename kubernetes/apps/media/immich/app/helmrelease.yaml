@@ -129,8 +129,8 @@ spec:
           configmap.reloader.stakater.com/reload: *configmap
         pod:
           resourceClaims:
-            - name: gpu
-              resourceClaimTemplateName: immich-gpu
+            - name: intel-gpu-immich
+              resourceClaimTemplateName: i915
           securityContext:
             runAsUser: 568
             runAsGroup: 568
@@ -160,7 +160,7 @@ spec:
               THUMB_LOCATION: *thumbLocation
             resources:
               claims:
-                - name: gpu
+                - name: intel-gpu-immich
               requests:
                 cpu: 100m
                 memory: 250Mi
@@ -238,23 +238,23 @@ spec:
           http:
             port: *mlport
 
-    # serviceMonitor:
-    #   immich:
-    #     serviceName: immich-server
-    #     endpoints:
-    #       - port: metrics
-    #         scheme: http
-    #         path: /metrics
-    #         interval: 1m
-    #         scrapeTimeout: 30s
-    #   microservices:
-    #     serviceName: immich-microservices
-    #     endpoints:
-    #       - port: metrics
-    #         scheme: http
-    #         path: /metrics
-    #         interval: 1m
-    #         scrapeTimeout: 30s
+    serviceMonitor:
+      immich:
+        serviceName: immich-server
+        endpoints:
+          - port: metrics
+            scheme: http
+            path: /metrics
+            interval: 1m
+            scrapeTimeout: 30s
+      microservices:
+        serviceName: immich-microservices
+        endpoints:
+          - port: metrics
+            scheme: http
+            path: /metrics
+            interval: 1m
+            scrapeTimeout: 30s
 
     ingress:
       app:

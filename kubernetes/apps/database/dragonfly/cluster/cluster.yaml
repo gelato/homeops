@@ -17,7 +17,7 @@ spec:
   args:
     - --maxmemory=$(MAX_MEMORY)Mi
     - --proactor_threads=2
-    - --cluster_mode=yes
+    - --cluster_mode=emulated
     - --lock_on_hashtags
     - --lua_allow_undeclared_auto_correct=true
   resources:
@@ -26,11 +26,3 @@ spec:
       memory: 128Mi
     limits:
       memory: 512Mi
-  priorityClassName: database-high-priority
-  topologySpreadConstraints:
-    - maxSkew: 1
-      topologyKey: "kubernetes.io/hostname"
-      whenUnsatisfiable: "DoNotSchedule"
-      labelSelector:
-        matchLabels:
-          kubernetes.io/arch: amd64

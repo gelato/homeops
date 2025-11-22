@@ -17,7 +17,7 @@ spec:
   args:
     - --maxmemory=$(MAX_MEMORY)Mi
     - --proactor_threads=2
-    - --cluster_mode=emulated
+    - --cluster_mode=yes
     - --lock_on_hashtags
     - --lua_allow_undeclared_auto_correct=true
   resources:

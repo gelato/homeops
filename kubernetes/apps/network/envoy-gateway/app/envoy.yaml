@@ -3,6 +3,7 @@ apiVersion: gateway.envoyproxy.io/v1alpha1
 kind: EnvoyProxy
 metadata:
   name: envoy
+  namespace: network
 spec:
   logging:
     level:
@@ -33,6 +34,7 @@ apiVersion: gateway.networking.k8s.io/v1
 kind: GatewayClass
 metadata:
   name: envoy
+  namespace: network
 spec:
   controllerName: gateway.envoyproxy.io/gatewayclass-controller
   parametersRef:
@@ -45,6 +47,7 @@ apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
   name: envoy-external
+  namespace: network
   annotations:
     external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
 spec:
@@ -75,6 +78,7 @@ apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
   name: envoy-internal
+  namespace: network
   annotations:
     external-dns.alpha.kubernetes.io/target: internal.${SECRET_DOMAIN}
 spec:
@@ -105,6 +109,7 @@ apiVersion: gateway.envoyproxy.io/v1alpha1
 kind: BackendTrafficPolicy
 metadata:
   name: envoy
+  namespace: network
 spec:
   compression:
     - type: Brotli
@@ -123,6 +128,7 @@ apiVersion: gateway.envoyproxy.io/v1alpha1
 kind: ClientTrafficPolicy
 metadata:
   name: envoy
+  namespace: network
 spec:
   clientIPDetection:
     xForwardedFor:
@@ -152,6 +158,7 @@ apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
   name: https-redirect
+  namespace: network
   annotations:
     external-dns.alpha.kubernetes.io/controller: none
 spec:

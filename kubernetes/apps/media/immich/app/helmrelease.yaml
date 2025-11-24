@@ -10,11 +10,11 @@ spec:
     name: oci-app-template
     namespace: flux-system
   install:
-    timeout: 10m
-  interval: 15m
+    timeout: 30m
+  interval: 30m
   maxHistory: 3
   upgrade:
-    timeout: 10m
+    timeout: 30m
   uninstall:
     keepHistory: false
   values:

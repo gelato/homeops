@@ -11,3 +11,7 @@ resources:
   - ./repos/oci-app-template.yaml
   - ./repos/dragonfly-operator.yaml
   - ./repos/intel-gpu-resource-driver.yaml
+  - ./repos/envoy-gateway.yaml
+  - ./repos/k8s-gateway.yaml
+  - ./repos/cloudflare-tunnel.yaml
+  - ./repos/cloudflare-dns.yaml

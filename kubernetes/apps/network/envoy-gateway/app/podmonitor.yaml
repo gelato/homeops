@@ -3,7 +3,6 @@ apiVersion: monitoring.coreos.com/v1
 kind: PodMonitor
 metadata:
   name: envoy-proxy
-  namespace: network
 spec:
   jobLabel: envoy-proxy
   namespaceSelector:

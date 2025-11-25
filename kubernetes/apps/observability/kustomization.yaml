@@ -2,7 +2,12 @@
 # yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+
+components:
+  - ../../components/sops
+
 resources:
+  - ./namespace.yaml
   - ./prometheus-operator-crds/ks.yaml
   - ./gatus/ks.yaml
   # - ./smartctl-exporter/ks.yaml
@@ -19,13 +24,3 @@ resources:
   - ./kube-prometheus-stack/ks.yaml
   # Exporters
   - ./exporters
-components:
-  - ../../flux/components/namespace
-patches:
-  - # Add the name to the namespace
-    patch: |
-      - op: add
-        path: /metadata/name
-        value: observability
-    target:
-      kind: Namespace

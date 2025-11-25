@@ -5,6 +5,7 @@ kind: Kustomization
 
 components:
   - ../../components/sops
+  - ../../components/gpu
 
 resources:
   - ./namespace.yaml

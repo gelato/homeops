@@ -27,7 +27,6 @@ spec:
       name: jellyseerr
       namespace: media
   postBuild:
-    substitute:
-      APP: *app
-      GATUS_SUBDOMAIN: js
-      GATUS_PATH: /api/v1/status
+    substituteFrom:
+      - name: cluster-secrets
+        kind: Secret

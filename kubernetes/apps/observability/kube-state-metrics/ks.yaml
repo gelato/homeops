@@ -18,3 +18,7 @@ spec:
     kind: GitRepository
     name: flux-system
   wait: false
+  postBuild:
+    substituteFrom:
+      - name: cluster-secrets
+        kind: Secret

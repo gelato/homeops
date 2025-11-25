@@ -12,8 +12,9 @@ spec:
   interval: 1h
   path: ./kubernetes/apps/kyverno/kyverno/app
   postBuild:
-    substitute:
-      APP: *app
+    substituteFrom:
+      - name: cluster-secrets
+        kind: Secret
   prune: true
   retryInterval: 2m
   sourceRef:
@@ -39,8 +40,9 @@ spec:
   interval: 1h
   path: ./kubernetes/apps/kyverno/kyverno/policies
   postBuild:
-    substitute:
-      APP: *app
+    substituteFrom:
+      - name: cluster-secrets
+        kind: Secret
   prune: true
   retryInterval: 2m
   sourceRef:

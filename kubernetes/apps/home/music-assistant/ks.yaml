@@ -18,7 +18,6 @@ spec:
     name: flux-system
   wait: false
   postBuild:
-    substitute:
-      APP: *appname
-      APP_UID: "1000"
-      APP_GID: "1000"
+    substituteFrom:
+      - name: cluster-secrets
+        kind: Secret

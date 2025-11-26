@@ -9,3 +9,4 @@ spec:
     requests:
       storage: 256Mi
   storageClassName: longhorn-ssd
+  volumename: pvc-850ed7d5-51db-49e3-9fe4-b4e6895503f2

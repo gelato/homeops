@@ -21,3 +21,4 @@ spec:
     requests:
       storage: 150Gi
   storageClassName: openebs-hostpath
+  volumename: pvc-1c6951ed-9411-463d-918d-e3c79f6ffe76

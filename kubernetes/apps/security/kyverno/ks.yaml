@@ -4,7 +4,6 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app kyverno
-  namespace: &namespace flux-system
 spec:
   commonMetadata:
     labels:
@@ -30,7 +29,6 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app kyverno-policies
-  namespace: &namespace flux-system
 spec:
   commonMetadata:
     labels:

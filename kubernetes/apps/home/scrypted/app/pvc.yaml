@@ -9,6 +9,7 @@ spec:
     requests:
       storage: 3Gi
   storageClassName: longhorn-fast
+  volumename: pvc-4cf5305e-e420-4f32-87fd-0ef615fdcb1a
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -20,3 +21,4 @@ spec:
     requests:
       storage: 5Gi
   storageClassName: longhorn-ssd
+  volumename: pvc-6fe1449c-fdb4-4bf5-83c5-6afb51403e39

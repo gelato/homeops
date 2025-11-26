@@ -4,7 +4,6 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app dragonfly-operator
-  namespace: flux-system
 spec:
   targetNamespace: database
   commonMetadata:
@@ -29,7 +28,6 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app dragonfly-cluster
-  namespace: flux-system
 spec:
   targetNamespace: database
   commonMetadata:

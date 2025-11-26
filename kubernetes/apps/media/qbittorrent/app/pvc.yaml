@@ -9,6 +9,7 @@ spec:
     requests:
       storage: 1Gi
   storageClassName: longhorn-fast
+  volumename: pvc-3d2f3c7d-982e-49f5-b5da-de636f54ba00
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -20,3 +21,4 @@ spec:
     requests:
       storage: 1Ti
   storageClassName: longhorn-fast
+  volumename: pvc-2df24ad0-804d-4450-8e62-abedf1e0a595

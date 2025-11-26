@@ -9,6 +9,7 @@ spec:
     requests:
       storage: 30Gi
   storageClassName: longhorn-fast
+  volumename: pvc-f4d62948-ebfb-4ee7-93ae-a90327c47a9c
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim

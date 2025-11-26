@@ -9,3 +9,4 @@ spec:
     requests:
       storage: 1Gi
   storageClassName: longhorn-fast
+  volumename: pvc-08678d2b-fbe0-4035-a17f-151e65aaa36e

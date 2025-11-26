@@ -9,3 +9,4 @@ spec:
     requests:
       storage: 5Gi
   storageClassName: longhorn-ssd
+  volumename: pvc-cbe526ec-d05e-412d-9cd9-7226eaad3639

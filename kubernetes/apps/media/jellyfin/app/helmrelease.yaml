@@ -106,10 +106,10 @@ spec:
         existingClaim: jellyfin-config
         globalMounts:
           - path: /config
-      transcode:
-        existingClaim: jellyfin-transcode
-        globalMounts:
-          - path: /config/cache/transcodes
+      # transcode:
+      #   existingClaim: jellyfin-transcode
+      #   globalMounts:
+      #     - path: /config/cache/transcodes
       cache:
         enabled: true
         type: emptyDir
